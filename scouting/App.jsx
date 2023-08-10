@@ -1,20 +1,20 @@
 import React from 'react';
-import {Text, TextInput, View} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
-const App = () => {
+import Loading from './components/Loading';
+
+export default function App() {
   return (
-    <View>
-      <Text>Hello, I am...</Text>
-      <TextInput
-        style={{
-          height: 40,
-          borderColor: 'gray',
-          borderWidth: 1,
-        }}
-        defaultValue="Name me!"
-      />
-    </View>
-  );
-};
+    <>
 
-export default App;
+      <Loading />
+
+    </>
+);
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
