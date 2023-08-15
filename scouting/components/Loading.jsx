@@ -70,5 +70,5 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-ExtraBold',
         color: 'grey',
         fontSize: 20,
-    }
+    },
 });
