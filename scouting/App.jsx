@@ -11,10 +11,11 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator   screenOptions={{
+    headerShown: false}}>
 
-        <Stack.Screen name="Home" component={Home} options={{title: 'Home Page'}} />
         <Stack.Screen name="Loading" component={Loading} options={{title: 'Loading Page'}} />
+        <Stack.Screen name="Home" component={Home} options={{title: 'Home Page'}} />
 
       </Stack.Navigator>
     </NavigationContainer>

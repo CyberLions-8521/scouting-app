@@ -25,6 +25,6 @@ For VSC, you to settings and type in settings.json. Then make sure that your Jav
 To change the version of your gradle, do the following:
 
 1. Find the `build.gradle` file in the `android` folder
-2. Find `classpath("com.android.tools.build:gradle")` and replace with `classpath("com.android.tools.build:gradle:7.0.4")`
+2. Find `classpath("com.android.tools.build:gradle")` and replace with `classpath("com.android.tools.build:gradle:7.0.2")`
 3. In your command prompt, find the scouting-app directory and run `cd scouting/android/gradle`
 5. Run `.\gradlew` and it will change the version of gradle

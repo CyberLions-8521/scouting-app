@@ -1,7 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 
-export default function Loading() {
+export default function Loading({ navigation }) {
+
+    setTimeout(() => {
+        navigation.navigate('Home');
+    }, 2000);
+
     return (
         <>
             <View style={styles.container}>
