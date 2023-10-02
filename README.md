@@ -15,3 +15,6 @@ For this, you need to install `android studio` [[HERE]](https://developer.androi
 Android Studio also uses chocolatey, a command line interface. Another example of a CLI would be npm or yarn.
 ## Useful Links
 - https://reactnative.dev/docs/environment-setup?guide=native
+- https://www.youtube.com/watch?v=8ejuHsaXiwU
+
+The YouTube video above is the most useful video of all time. If you're stuck let me know in person or dm me and I'll walk you through
