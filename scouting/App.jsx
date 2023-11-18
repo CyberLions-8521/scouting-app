@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Loading from './components/Loading.jsx';
+import Launch from './components/Launch.jsx';
 import Home from './components/Home.jsx';
 
 export default function App() {
@@ -14,7 +14,7 @@ export default function App() {
       <Stack.Navigator   screenOptions={{
     headerShown: false}}>
 
-        <Stack.Screen name="Loading" component={Loading} options={{title: 'Loading Page'}} />
+        <Stack.Screen name="Launch" component={Launch} options={{title: 'Launch Screen'}} />
         <Stack.Screen name="Home" component={Home} options={{title: 'Home Page'}} />
 
       </Stack.Navigator>
