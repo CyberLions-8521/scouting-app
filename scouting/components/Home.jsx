@@ -1,17 +1,32 @@
 import React from 'react';
-import { View, Text, Button, Alert } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
 
 export default function Home({ navigation }) {
   return (
     <>
-        <View>
-            <Text>Home Page</Text>
-        </View>
+        <View style={styles.container}>
+            <Text style={styles.Header}>Scouting App</Text>
+            <Text>Record data about other teams, such as their drivebase, win/loss ratio, and more! </Text>
 
-        <Button
-            title="Press me"
-            onPress={() => Alert.alert('Simple Button pressed')}
-      />
+        </View>
     </>
  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+      backgroundColor: 'white',
+      width: '100%',
+
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+  },
+  launchImage: {
+      width: '50%',
+      height: '30%',
+  },
+  Header: {
+    fontSize: 5,
+  },
+});
