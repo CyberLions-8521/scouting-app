@@ -1,14 +1,28 @@
 import robbie from '../assets/images/robbie-transparent.png';
 import logo from '../assets/images/logo.png';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
 
-export default function Loading({ navigation }) {
+export default function Launch({ navigation }) {
 
-    // setTimeout(() => {
-    //     navigation.navigate('Home');
-    // }, 2000);
+    let [isLoading, setIsLoading] = useState(true);
+
+
+    // In the future, use a prefetch to load content and switch to the home screen
+    useEffect(() => {
+        setIsLoading(false);
+
+        if (isLoading === false){
+            setTimeout(() => {
+                navigation.navigate('Home');
+            }, 2000);
+          }
+          else {
+            navigation.navigate('Launch');
+          }
+    }, [navigation, isLoading]);
+
 
     return (
         <>
@@ -21,7 +35,10 @@ export default function Loading({ navigation }) {
 
                 <View style={styles.credits}>
                     <Text style={styles.smallText}>By Team 8521</Text>
-                    <Image style={styles.creditsImage} alt="team logo 8521" source={logo} />
+
+                    <View style={styles.creditsImageBackground}>
+                        <Image style={styles.creditsImage} alt="team logo 8521" source={logo} />
+                    </View>
                 </View>
 
             </View>
@@ -60,17 +77,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 15,
         position: 'absolute',
-        bottom: 25,
+        bottom: 30,
         flexDirection: 'row',
+    },
+    creditsImageBackground: {
+        width: 50,
+        height: 50,
+        backgroundColor: '#3A3B3C',
+        borderRadius: 25,
+
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     creditsImage: {
         width:  40,
         height: 40,
-        backgroundColor: '#3A3B3C',
-        borderRadius: 20,
     },
     smallText: {
         color: 'white',
-        fontSize: 15,
-    }
+        fontSize: 20,
+    },
 });
