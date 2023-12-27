@@ -8,18 +8,13 @@ export default function Launch({ navigation }) {
 
     let [isLoading, setIsLoading] = useState(true);
 
-
-    // In the future, use a prefetch to load content and switch to the home screen
     useEffect(() => {
         setIsLoading(false);
 
         if (isLoading === false){
             setTimeout(() => {
-                navigation.navigate('Home');
+                navigation.navigate('Navigation');
             }, 2000);
-          }
-          else {
-            navigation.navigate('Launch');
           }
     }, [navigation, isLoading]);
 

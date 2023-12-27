@@ -33,9 +33,10 @@ const styles = StyleSheet.create({
     scoutingDataGlimpsePiece: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'flex-end',
 
-        paddingTop: 15,
-        paddingBottom: 15,
+        paddingTop: 20,
+        paddingBottom: 20,
         borderBottomWidth: 3,
         borderBottomColor: '#d3d3d3',
     },
@@ -43,10 +44,7 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     fillerImage: {
-      width: 50,
-      height: 50,
-    },
-    stats: {
-
+      width: 120,
+      height: '100%',
     },
   });
