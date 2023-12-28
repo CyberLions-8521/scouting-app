@@ -7,6 +7,9 @@ import Information from '../assets/components/Information';
 export default function Home({ navigation }) {
   return (
     <>
+      <View style={styles.container}>
+        <View style={styles.topPiece} />
+
         <View style={styles.middlePiece}>
 
           <View style={styles.getStarted}>
@@ -27,6 +30,7 @@ export default function Home({ navigation }) {
           <Text style={styles.text2}>For more information of all teams, click on the search icon</Text>
 
         </View>
+      </View>
     </>
  );
 }
@@ -37,7 +41,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
 
-    justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'column',
   },

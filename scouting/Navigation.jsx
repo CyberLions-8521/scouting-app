@@ -15,6 +15,15 @@ export default function Navigation() {
         <Tab.Navigator
           screenOptions={{
             headerShown: false,
+            tabBarStyle: {
+              backgroundColor: '#E1584B',
+              position: 'absolute',
+              bottom: 20,
+              width: '95%',
+              borderRadius: 15,
+
+              left: 10,
+            },
           }}
         >
             <Tab.Screen name="Home" component={Home}
@@ -23,7 +32,7 @@ export default function Navigation() {
                 tabBarIcon: () => (
 
                     // Entypo is a library of icons. Refer to this video https://www.youtube.com/watch?v=1d5Dtc1UL1c&ab_channel=CodeBig
-                    <Entypo name="home" size={24} />
+                    <Entypo name="home" size={30} color={'white'}  />
                   ),
                 tabBarShowLabel: false,
               }}
@@ -33,7 +42,7 @@ export default function Navigation() {
               options={{
                 title: 'Search Page',
                 tabBarIcon: () => (
-                    <AntDesign name="search1" size={24} />
+                    <AntDesign name="search1" size={30} color={'black'} />
                   ),
                 tabBarShowLabel: false,
               }}
@@ -43,7 +52,7 @@ export default function Navigation() {
               options={{
                 title: 'Record Page',
                 tabBarIcon: () => (
-                    <AntDesign name="pluscircleo" size={24} />
+                    <AntDesign name="pluscircleo" size={30} color={'black'} />
                   ),
                 tabBarShowLabel: false,
               }}
@@ -53,7 +62,7 @@ export default function Navigation() {
               options={{
                 title: 'Settings Page',
                 tabBarIcon: () => (
-                    <Ionicons name="settings-outline" size={24} />
+                    <Ionicons name="settings-outline" size={30} color={'black'} />
                   ),
                 tabBarShowLabel: false,
               }}
