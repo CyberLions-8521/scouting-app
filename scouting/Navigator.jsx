@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Entypo, FontAwesome, AntDesign, MaterialCommunityIcons, Ionicons } from './index.js';
 
-export default function Navigation() {
+export default function Navigator() {
 
   const Tab = createBottomTabNavigator();
 

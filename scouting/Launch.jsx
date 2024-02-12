@@ -1,5 +1,5 @@
-import robbie from '../assets/images/robbie-transparent.png';
-import logo from '../assets/images/logo.png';
+import robbie from './assets/images/robbie-transparent.png';
+import logo from './assets/images/logo.png';
 
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
@@ -13,7 +13,7 @@ export default function Launch({ navigation }) {
 
         if (isLoading === false){
             setTimeout(() => {
-                navigation.navigate('Navigation');
+                navigation.navigate('Navigator');
             }, 2000);
           }
     }, [navigation, isLoading]);
