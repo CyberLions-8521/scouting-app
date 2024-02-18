@@ -1,8 +1,10 @@
-import React from 'react';
-import { View, Text, StyleSheet, Suspense } from 'react-native';
+import React, { useState} from 'react';
+import { View, Text, StyleSheet, Pressable, Image, Suspense, Alert } from 'react-native';
 
 import StatGlimpse from '../components/home/StatGlimpse.jsx';
 import Information from '../components/home/Information.jsx';
+
+import informationIcon from '../assets/interface-icons/info.png';
 
 export default function Home({ navigation }) {
 
@@ -48,6 +50,12 @@ export default function Home({ navigation }) {
     </View>
   );
 
+  const [closeInfo, setCloseInfo] = useState(false);
+
+  let manageCloseInfo = () => {
+    setCloseInfo((prev) => true);
+  };
+
   return (
     <>
       <View style={styles.container}>
@@ -55,23 +63,36 @@ export default function Home({ navigation }) {
 
         <View style={styles.middlePiece}>
 
-          <View style={styles.getStarted}>
-            <Text style={styles.header}>Get Started Scouting</Text>
-            <Information />
-          </View>
+          {closeInfo ? <></> :
+            <View style={styles.getStarted}>
+              <Text style={styles.header}>Get Started Scouting</Text>
 
-          <View style={styles.viewScoutingData}>
-            <Text style={styles.header}>View Scouting Data</Text>
-            <View style={styles.scoutingDataGlimpses}>
+              <View style={styles.important}>
+                <View style={styles.importantHero}>
+                  <Image style={styles.importantIconImage} alt="important icon" source={informationIcon} />
+                  <Text style={styles.headerSmaller}>Important</Text>
+                </View>
 
-              {displayRobotList}
+                <Text style={styles.importantText}>Scouting is the process of recording data for strategy, so take note!</Text>
 
+                <Pressable onPress={manageCloseInfo}>
+                  <Text style={styles.hyperlink}>Let's Get Going!</Text>
+                </Pressable>
+              </View>
+            </View>}
+
+            <View style={styles.viewScoutingData}>
+              <Text style={styles.header}>View Scouting Data</Text>
+              <View style={styles.scoutingDataGlimpses}>
+
+                {displayRobotList}
+
+              </View>
             </View>
+
+            <Text style={styles.text2}>For more information of all teams, click on the search icon</Text>
+
           </View>
-
-          <Text style={styles.text2}>For more information of all teams, click on the search icon</Text>
-
-        </View>
       </View>
     </>
  );
@@ -130,5 +151,32 @@ const styles = StyleSheet.create({
   text2: {
     color: '#616161',
     fontSize: 14.05,
+  },
+  hyperlink: {
+    color: '#82d0f6',
+    fontSize: 11.5,
+  },
+
+  important: {
+    maxWidth: '100%',
+    maxHeight: '100%',
+    backgroundColor: '#e9ebee',
+    borderRadius: 5,
+    gap: 5,
+    padding: 10,
+    justifyContent: 'space-between',
+  },
+  importantHero: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+  },
+  importantText: {
+    color: '#616161',
+    fontSize: 12,
+  },
+  importantIconImage: {
+    width: 15,
+    height: 15,
   },
 });

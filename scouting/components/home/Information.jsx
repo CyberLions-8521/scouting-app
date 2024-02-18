@@ -1,21 +1,31 @@
 import informationIcon from '../../assets/interface-icons/info.png';
 
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 
-export default function Information() {
+export default function Information({ closedState }) {
+
+  let hi = () => {
+    closedState = true;
+  };
+
   return (
+    <>
+      {
+          closedState ? <></> : <View style={styles.important}>
+          <View style={styles.importantHero}>
+              <Image style={styles.importantHeroImage} alt="important icon" source={informationIcon} />
+              <Text style={styles.headerSmaller}>Important</Text>
+          </View>
 
-    <View style={styles.important}>
-    <View style={styles.importantHero}>
-      <Image style={styles.importantHeroImage} alt="important icon" source={informationIcon} />
-      <Text style={styles.headerSmaller}>Important</Text>
-    </View>
+          <Text style={styles.text}>Scouting is the process of recording data for strategy, so take note!</Text>
 
-    <Text style={styles.text}>Scouting is the process of recording data for strategy, so take note!</Text>
-    <Text style={styles.hyperlink}>Let's Get Going!</Text>
-  </View>
-
+            <Pressable onClick={hi()}>
+              <Text style={styles.hyperlink}>Let's Get Going!</Text>
+            </Pressable>
+          </View>
+      }
+    </>
   );
 }
 
