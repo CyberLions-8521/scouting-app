@@ -6,37 +6,41 @@ import Information from '../components/home/Information.jsx';
 
 export default function Home({ navigation }) {
 
-  const theoreticalData = {
-    robot1: {
+  const theoreticalData = [
+    {
       name: 'The Cyberlions',
       teamNumber: 8521,
       rank: 1,
       winLossRatio: '3:1',
+      index: 1,
     },
-    robot2: {
+    {
       name: 'High Rollers',
       teamNumber: 987,
       rank: 2,
       winLossRatio: '2:2',
+      index: 2,
     },
-    robot3: {
+    {
       name: 'Mubotics',
       teamNumber: 7157,
       rank: 3,
       winLossRatio: '2:2',
+      index: 3,
     },
-    robot4: {
+    {
       name: 'OP Robotics',
       teamNumber: 2056,
       rank: 4,
       winLossRatio: '1:3',
+      index: 4,
     },
-  };
+  ];
 
   const displayRobotList = theoreticalData.map((robot, index) =>
-    <div key={robot.name + index}>
+    <View key={robot.name + index}>
       <StatGlimpse name={robot.name} teamNumber={robot.teamNumber} rank={robot.rank} winLossRatio={robot.winLossRatio} />
-    </div>
+    </View>
   );
 
   return (
