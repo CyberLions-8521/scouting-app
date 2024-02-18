@@ -1,4 +1,4 @@
-import fillerImage from '../interface-icons/filler-image.png';
+import fillerImage from '../../assets/interface-icons/filler-image.png';
 
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';

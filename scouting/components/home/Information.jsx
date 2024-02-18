@@ -1,4 +1,4 @@
-import informationIcon from '../interface-icons/info.png';
+import informationIcon from '../../assets/interface-icons/info.png';
 
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
