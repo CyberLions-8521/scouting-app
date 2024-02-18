@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Suspense } from 'react-native';
+import { View, Text, StyleSheet, Suspense } from 'react-native';
 
 import StatGlimpse from '../components/home/StatGlimpse.jsx';
 import Information from '../components/home/Information.jsx';
