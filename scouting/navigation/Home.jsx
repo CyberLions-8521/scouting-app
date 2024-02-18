@@ -12,6 +12,7 @@ export default function Home({ navigation }) {
       teamNumber: 8521,
       rank: 1,
       winLossRatio: '3:1',
+      teamImage: require('../assets/images/robbie-transparent.png'),
       index: 1,
     },
     {
@@ -19,6 +20,7 @@ export default function Home({ navigation }) {
       teamNumber: 987,
       rank: 2,
       winLossRatio: '2:2',
+      teamImage: require('../assets/images/robbie-transparent.png'),
       index: 2,
     },
     {
@@ -26,6 +28,7 @@ export default function Home({ navigation }) {
       teamNumber: 7157,
       rank: 3,
       winLossRatio: '2:2',
+      teamImage: require('../assets/images/robbie-transparent.png'),
       index: 3,
     },
     {
@@ -33,12 +36,14 @@ export default function Home({ navigation }) {
       teamNumber: 2056,
       rank: 4,
       winLossRatio: '1:3',
+      teamImage: require('../assets/images/robbie-transparent.png'),
       index: 4,
     },
   ];
 
-  const displayRobotList = theoreticalData.map((robot, index) =>
-    <View key={robot.name + index}>
+  // Map through each object in the array
+  const displayRobotList = theoreticalData.map((robot) =>
+    <View key={robot.index}>
       <StatGlimpse name={robot.name} teamNumber={robot.teamNumber} rank={robot.rank} winLossRatio={robot.winLossRatio} />
     </View>
   );
@@ -58,7 +63,6 @@ export default function Home({ navigation }) {
           <View style={styles.viewScoutingData}>
             <Text style={styles.header}>View Scouting Data</Text>
             <View style={styles.scoutingDataGlimpses}>
-              {/* <StatGlimpse name={'The Cyberlions'} teamNumber={8521} rank={1} winLossRatio={'3:1'} /> */}
 
               {displayRobotList}
 

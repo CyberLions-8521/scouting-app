@@ -5,53 +5,93 @@ import { View, Text, StyleSheet, ScrollView, Image, Pressable } from 'react-nati
 // This will be where most of the post requests will happen. People will record data here
 export default function SelectProfile({ navigation }) {
 
+  // Wrapping the data in useState because more objects will be added to the array
+  // We'll use a useEffect and update the useState when the backend is called
   const [scoutData, setScoutData] = useState([
     {
-      teamName: 'The Cyberlions (8521)',
+      name: 'The Cyberlions',
+      teamNumber: 8521,
+      rank: 1,
+      winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      key: 1,
+      index: 1,
     },
     {
-      teamName: 'High Rollers (987)',
+      name: 'High Rollers',
+      teamNumber: 987,
+      rank: 1,
+      winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      key: 2,
+      index: 2,
     },
     {
-      teamName: 'Mubotics (7157)',
+      name: 'Mubotics',
+      teamNumber: 7157,
+      rank: 1,
+      winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      key: 3,
+      index: 3,
     },
     {
-      teamName: 'OP Robotics (2056)',
+      name: 'OP Robotics',
+      teamNumber: 2056,
+      rank: 1,
+      winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      key: 4,
+      index: 4,
     },
     {
-      teamName: 'RoboLancers (321)',
+      name: 'RoboLancers',
+      teamNumber: 321,
+      rank: 1,
+      winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      key: 5,
+      index: 5,
     },
     {
-      teamName: 'Bionic Black Hawks (2834)',
+      name: 'Bionic Black Hawks',
+      teamNumber: 2834,
+      rank: 1,
+      winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      key: 6,
+      index: 6,
     },
     {
-      teamName: 'The Holy Cows (1538)',
+      name: 'The Holy Cows',
+      teamNumber: 1538,
+      rank: 1,
+      winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      key: 7,
+      index: 7,
     },
     {
-      teamName: 'Simbotics (1114)',
+      name: 'Simbotics',
+      teamNumber: 1114,
+      rank: 1,
+      winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      key: 8,
+      index: 8,
     },
     {
-      teamName: 'The Cheesy Poofs (254)',
+      name: 'The Cheesy Poofs',
+      teamNumber: 254,
+      rank: 1,
+      winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      key: 9,
+      index: 9,
     },
   ]);
+
+  // Wrap a pressable around this and navigate to the RecordGame Screen
+  // When your navigate bring the object index of the robot with you to the next screen so react knows which robot to record for
+  const displayData = scoutData.map((robot) =>
+    <View key={robot.index} style={styles.teamSelection}>
+        <View style={styles.teamName}>
+          <Text>{robot.name}</Text>
+        </View>
+        <Image source={robot.teamImage} style={styles.teamImage} />
+    </View>
+  );
 
   return (
     <>
@@ -60,16 +100,9 @@ export default function SelectProfile({ navigation }) {
         <View style={styles.middlePiece}>
           <Text style={styles.header}>Select Robot to Scout</Text>
           <ScrollView style={styles.viewSelection}>
-            {scoutData.map((data) => {
-              return (
-                <View key={data.key} style={styles.teamSelection}>
-                  <View style={styles.teamName}>
-                    <Text>{data.teamName}</Text>
-                  </View>
-                  <Image source={data.teamImage} style={styles.teamImage} />
-                </View>
-              );
-            })}
+
+            {displayData}
+
           </ScrollView>
           <Pressable style={styles.createButton} onPress={() => navigation.navigate('CreateProfile')}>
             <Text style={styles.createButtonText}>Create New Robot Profile</Text>
