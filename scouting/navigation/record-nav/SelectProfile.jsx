@@ -14,7 +14,7 @@ export default function SelectProfile({ navigation }) {
       rank: 1,
       winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 1,
+      index: 0,
     },
     {
       name: 'High Rollers',
@@ -22,7 +22,7 @@ export default function SelectProfile({ navigation }) {
       rank: 1,
       winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 2,
+      index: 1,
     },
     {
       name: 'Mubotics',
@@ -30,7 +30,7 @@ export default function SelectProfile({ navigation }) {
       rank: 1,
       winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 3,
+      index: 2,
     },
     {
       name: 'OP Robotics',
@@ -38,7 +38,7 @@ export default function SelectProfile({ navigation }) {
       rank: 1,
       winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 4,
+      index: 3,
     },
     {
       name: 'RoboLancers',
@@ -46,7 +46,7 @@ export default function SelectProfile({ navigation }) {
       rank: 1,
       winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 5,
+      index: 4,
     },
     {
       name: 'Bionic Black Hawks',
@@ -54,7 +54,7 @@ export default function SelectProfile({ navigation }) {
       rank: 1,
       winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 6,
+      index: 5,
     },
     {
       name: 'The Holy Cows',
@@ -62,7 +62,7 @@ export default function SelectProfile({ navigation }) {
       rank: 1,
       winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 7,
+      index: 6,
     },
     {
       name: 'Simbotics',
@@ -70,7 +70,7 @@ export default function SelectProfile({ navigation }) {
       rank: 1,
       winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 8,
+      index: 7,
     },
     {
       name: 'The Cheesy Poofs',
@@ -78,19 +78,21 @@ export default function SelectProfile({ navigation }) {
       rank: 1,
       winLossRatio: '3:1',
       teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 9,
+      index: 8,
     },
   ]);
 
   // Wrap a pressable around this and navigate to the RecordGame Screen
   // When your navigate bring the object index of the robot with you to the next screen so react knows which robot to record for
   const displayData = scoutData.map((robot) =>
-    <View key={robot.index} style={styles.teamSelection}>
-        <View style={styles.teamName}>
-          <Text>{robot.name}</Text>
-        </View>
-        <Image source={robot.teamImage} style={styles.teamImage} />
-    </View>
+    <Pressable onPress={() => navigation.navigate('RecordGame', { robotIndex: robot.index })}>  
+      <View key={robot.index} style={styles.teamSelection}>
+          <View style={styles.teamName}>
+            <Text>{robot.name}</Text>
+          </View>
+          <Image source={robot.teamImage} style={styles.teamImage} />
+      </View>
+    </Pressable>
   );
 
   return (
