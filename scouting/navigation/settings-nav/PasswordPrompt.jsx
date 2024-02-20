@@ -4,17 +4,18 @@ import { useState } from 'react';
 
 export default function PasswordPrompt({ navigation }) {
 
-    const [passValue, setPassValue] = useState('')
-    
+    const [passValue, setPassValue] = useState();
+
     let submitPassword = () => {
-        if (passValue == 'cyberlions8521') {
+        // will hide password in the backend later
+        if (passValue === 'cyberlions8521') {
             navigation.navigate('SettingsPanel');
         }
     };
 
     return (
-    <>        
-        <View style={styles.topPiece}></View>
+    <>
+        <View style={styles.topPiece} />
 
         <View style={styles.container}>
             <Text style={styles.title}>Settings Panel</Text>
@@ -22,7 +23,7 @@ export default function PasswordPrompt({ navigation }) {
             <Text style={styles.header}>Admin Access Only</Text>
 
             <View style={styles.inputs}>
-                <TextInput style={[styles.inputText, styles.inputBox]} placeholder='Password' onChangeText={setPassValue} value={passValue} secureTextEntry/>
+                <TextInput style={[styles.inputText, styles.inputBox]} placeholder={'Password'} onChangeText={setPassValue} value={passValue} secureTextEntry/>
                 <Pressable style={styles.submitButton} onPress={submitPassword}>
                     <Text style={styles.submitText}>Submit</Text>
                 </Pressable>
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'left',
-      gap: 20
+      gap: 20,
     },
 
     title: {
@@ -74,8 +75,8 @@ const styles = StyleSheet.create({
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'center',
-      gap:20
-    }, 
+      gap:20,
+    },
 
     inputText: {
       fontSize:10,
@@ -100,10 +101,8 @@ const styles = StyleSheet.create({
 
     submitText: {
       fontSize: 15,
-      color: 'white'
-    }
-
-
+      color: 'white',
+    },
   }
 );
 

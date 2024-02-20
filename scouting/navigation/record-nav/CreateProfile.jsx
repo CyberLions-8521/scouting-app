@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Pressable, Image } from 'react-native';
-import { Entypo } from '../..';
+import { View, Text, TextInput, StyleSheet, Pressable, Image } from 'react-native';
+import { Entypo } from '../../index.js';
 
 export default function CreateProfile({ navigation }) {
     return (
@@ -8,7 +8,7 @@ export default function CreateProfile({ navigation }) {
             <View style={styles.topPiece} />
             <View style={styles.middlePiece}>
                 <View style={styles.header}>
-                    <Entypo name='chevron-left' size={30} color='#616161' onPress={() => navigation.goBack()} />
+                    <Entypo name={'chevron-left'} size={30} color={'#616161'} onPress={() => navigation.goBack()} />
                     <Text style={styles.headerText}>Create Robot Profile</Text>
                     <Pressable style={styles.submitButton} onPress={() => navigation.goBack() }>
                         <Text style={styles.submitButtonText}>Submit</Text>
@@ -17,24 +17,24 @@ export default function CreateProfile({ navigation }) {
                 <View style={{flexDirection: 'row'}}>
                     <View style={styles.inputContainer}>
                         <View>
-                            <TextInput style={styles.bigInput} placeholder='Team Name'/>
+                            <TextInput style={styles.bigInput} placeholder={'Team Name'} />
                         </View>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                            <TextInput style={styles.smallInput} placeholder='Team Number' keyboardType='numeric'/>
-                            <TextInput style={styles.smallInput} placeholder='Weight' keyboardType='numeric'/>
+                            <TextInput style={styles.smallInput} placeholder={'Team Number'} keyboardType={'numeric'} />
+                            <TextInput style={styles.smallInput} placeholder={'Weight'} keyboardType={'numeric'} />
                         </View>
                         <View>
-                            <TextInput style={styles.bigInput} placeholder='Drivebase'/>
+                            <TextInput style={styles.bigInput} placeholder={'Drivebase'} />
                         </View>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                            <TextInput style={styles.smallInput} placeholder='Autonomous'/>
-                            <TextInput style={styles.smallInput} placeholder='Intake'/> 
+                            <TextInput style={styles.smallInput} placeholder={'Autonomous'}/>
+                            <TextInput style={styles.smallInput} placeholder={'Intake'} />
                         </View>
                     </View>
                     <Image style={styles.teamImage} source={require('../../assets/images/robbie-transparent.png')} />
                 </View>
                 <View>
-                    <TextInput style={styles.detailInput} placeholder='Additional Details' multiline={true}/>
+                    <TextInput style={styles.detailInput} placeholder={'Additional Details'} multiline={true}/>
                 </View>
             </View>
         </View>
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         width: '100%',
         height: '100%',
-    
+
         alignItems: 'center',
         flexDirection: 'column',
     },
@@ -125,5 +125,5 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         paddingHorizontal: 10,
         textAlignVertical: 'top',
-    }
+    },
   });

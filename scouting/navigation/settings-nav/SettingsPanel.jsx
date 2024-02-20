@@ -5,7 +5,7 @@ import { Entypo } from '../..';
 
 export default function SettingsPanel({ navigation }) {
     return (
-    <>        
+    <>
           <View style={styles.topPiece} />
           <View style={styles.container}>
 
@@ -16,7 +16,6 @@ export default function SettingsPanel({ navigation }) {
               <Text style={styles.title}>Settings Panel</Text>
             </View>
 
-            
             <Pressable style={styles.button} onPress={() => navigation.navigate('DeleteRobot')}>
               <Text style={styles.buttonText}>Delete Robot Profile</Text>
             </Pressable>
@@ -44,13 +43,13 @@ const styles = StyleSheet.create({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'left',
-      gap: 20
+      gap: 20,
     },
 
     titleContainer: {
       display: 'flex',
       flexDirection: 'row',
-      gap:10
+      gap:10,
     },
 
     title: {
@@ -73,7 +72,7 @@ const styles = StyleSheet.create({
 
       display: 'flex',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
     },
 
     buttonText: {

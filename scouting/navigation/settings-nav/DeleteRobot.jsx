@@ -1,10 +1,9 @@
-import { React, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
 import { Entypo } from '../..';
 
 
 export default function DeleteRobot({ navigation }) {
-
 
     const [scoutData, setScoutData] = useState([
         {
@@ -65,7 +64,7 @@ export default function DeleteRobot({ navigation }) {
 
 
     return (
-    <>        
+    <>
           <View style={styles.topPiece} />
           <View style={styles.container}>
 
@@ -77,7 +76,7 @@ export default function DeleteRobot({ navigation }) {
             </View>
 
             <Text style={styles.normalText}>This action CANNOT BE UNDONE. DO NOT CLICK PROFILES YOU DO NOT WANT TO DELETE.</Text>
-            
+
             {displayData}
 
           </View>
@@ -104,13 +103,13 @@ const styles = StyleSheet.create({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'left',
-      gap: 20
+      gap: 20,
     },
 
     titleContainer: {
       display: 'flex',
       flexDirection: 'row',
-      gap:10
+      gap:10,
     },
 
     title: {
@@ -133,7 +132,7 @@ const styles = StyleSheet.create({
 
       display: 'flex',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
     },
 
     buttonText: {

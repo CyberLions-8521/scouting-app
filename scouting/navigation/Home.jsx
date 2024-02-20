@@ -2,7 +2,6 @@ import React, { useState} from 'react';
 import { View, Text, StyleSheet, Pressable, Image, Suspense, Alert } from 'react-native';
 
 import StatGlimpse from '../components/home/StatGlimpse.jsx';
-import Information from '../components/home/Information.jsx';
 
 import informationIcon from '../assets/interface-icons/info.png';
 
