@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, Image, Button } from 'react-native';
+import { View, Text, Image, Button, StyleSheet } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
+import { Entypo } from '../..';
 
 export default function RecordGame({ navigation, route: { params: { robotIndex } } }) {
 
@@ -84,11 +86,64 @@ export default function RecordGame({ navigation, route: { params: { robotIndex }
     );
 
     return (
-        <View>
-            <Button onPress={() => navigation.navigate('SelectProfile')} title="Go Back" />
-            <Text>Record Game</Text>
-            <Text>{robotView.name}</Text>
-            <Image source={robotView.teamImage} />
+        <View style={styles.container}>
+            <View style={styles.topPiece} />
+            <View style={styles.middlePiece}>
+                <View style={styles.header}>
+                    <Entypo name='chevron-left' size={30} color='#616161' onPress={() => navigation.goBack()} />
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <View style={{flexDirection: 'column'}}>
+                        <Text style={styles.headerText}>{robotView.name}</Text>
+                        <Text style={styles.subText}>Team {robotView.teamNumber}</Text>
+                    </View>
+                    <Image style={styles.teamImage} source={robotView.teamImage} />
+                </View>
+            </View>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'white',
+        width: '100%',
+        height: '100%',
+    
+        alignItems: 'center',
+        flexDirection: 'column',
+    },
+    topPiece: {
+        width: '100%',
+        height: '8%',
+        backgroundColor: '#E1584B',
+    },
+    middlePiece: {
+        width: '90%',
+        minHeight: '100%',
+        backgroundColor: 'white',
+
+        paddingTop: 20,
+        paddingBottom: 20,
+    },
+    header: {
+        width: '100%',
+        maxHeight: 27,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    headerText: {
+        fontSize: 17,
+        color: '#616161',
+    },
+    subText: {
+        fontSize: 15,
+        color: '#616161',
+    },
+    teamImage: {
+        width: 200,
+        height: 200,
+    },
+    });

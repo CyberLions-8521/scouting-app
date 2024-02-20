@@ -85,10 +85,11 @@ export default function SelectProfile({ navigation }) {
   // Wrap a pressable around this and navigate to the RecordGame Screen
   // When your navigate bring the object index of the robot with you to the next screen so react knows which robot to record for
   const displayData = scoutData.map((robot) =>
-    <Pressable onPress={() => navigation.navigate('RecordGame', { robotIndex: robot.index })}>  
-      <View key={robot.index} style={styles.teamSelection}>
+    <Pressable key={robot.index} onPress={() => navigation.navigate('RecordGame', { robotIndex: robot.index })}>  
+      <View style={styles.teamSelection}>
           <View style={styles.teamName}>
             <Text>{robot.name}</Text>
+            <Text>{robot.teamNumber}</Text>
           </View>
           <Image source={robot.teamImage} style={styles.teamImage} />
       </View>
