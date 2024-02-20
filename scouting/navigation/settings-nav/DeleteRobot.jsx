@@ -1,5 +1,7 @@
 import { React, useState } from 'react';
 import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
+import { Entypo } from '../..';
+
 
 export default function DeleteRobot({ navigation }) {
 
@@ -69,7 +71,7 @@ export default function DeleteRobot({ navigation }) {
 
             <View style={styles.titleContainer}>
               <Pressable onPress={() => navigation.navigate('SettingsPanel')}>
-                <Text style={[styles.title, {fontWeight:'bold'}]}>{'<'}</Text>
+                <Entypo name='chevron-left' size={42} color='#616161'/>
               </Pressable>
               <Text style={styles.title}>Select Robot to Delete</Text>
             </View>

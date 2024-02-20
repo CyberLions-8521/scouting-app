@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
+import { View, Text, StyleSheet, Pressable, } from 'react-native';
+import { Entypo } from '../..';
+
 
 export default function SettingsPanel({ navigation }) {
     return (
@@ -9,7 +11,7 @@ export default function SettingsPanel({ navigation }) {
 
             <View style={styles.titleContainer}>
               <Pressable onPress={() => navigation.navigate('PasswordPrompt')}>
-                <Text style={[styles.title, {fontWeight:'bold'}]}>{'<'}</Text>
+              <Entypo name='chevron-left' size={42} color='#616161'/>
               </Pressable>
               <Text style={styles.title}>Settings Panel</Text>
             </View>
