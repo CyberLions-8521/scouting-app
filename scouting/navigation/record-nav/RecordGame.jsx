@@ -5,7 +5,6 @@ import { Entypo } from '../..';
 
 export default function RecordGame({ navigation, route: { params: { robotIndex } } }) {
 
-    
     const [scoutData, setScoutData] = useState([
         {
             name: 'The Cyberlions',
@@ -80,7 +79,7 @@ export default function RecordGame({ navigation, route: { params: { robotIndex }
             index: 9,
         },
     ]);
-    
+
     const [robotView, setRobotView] = useState(
         scoutData[robotIndex]
     );
@@ -90,7 +89,7 @@ export default function RecordGame({ navigation, route: { params: { robotIndex }
             <View style={styles.topPiece} />
             <View style={styles.middlePiece}>
                 <View style={styles.header}>
-                    <Entypo name='chevron-left' size={30} color='#616161' onPress={() => navigation.goBack()} />
+                    <Entypo name={'chevron-left'} size={30} color={'#616161'} onPress={() => navigation.goBack()} />
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                     <View style={{flexDirection: 'column'}}>
@@ -109,7 +108,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         width: '100%',
         height: '100%',
-    
+
         alignItems: 'center',
         flexDirection: 'column',
     },
@@ -146,4 +145,4 @@ const styles = StyleSheet.create({
         width: 200,
         height: 200,
     },
-    });
+});
