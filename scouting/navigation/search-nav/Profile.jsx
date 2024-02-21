@@ -22,13 +22,19 @@ export default function Profile({ navigation }) {
             <View style={style.topPiece} />
             <View style={style.middlePiece}>
                 <View style={style.basicInfo}>
-                    <Text style={style.header}>Robot Name</Text>
-                    <Text style={style.subText}>Team Number</Text>
+                    <Text style={style.header}>{scoutData.name}</Text>
+                    <Text style={style.subText}>Team {scoutData.teamNumber}</Text>
+                    <Image source={scoutData.teamImage}/>
                 </View>
                 <View style={style.robotDetails}>
+                    <Text style={style.text}>Drivebase: {scoutData.drivebase}</Text>
+                    <Text style={style.text}>Autonomous: {scoutData.autonomous}</Text>
+                    <Text style={style.text}>Weight: {scoutData.weight}</Text>
+                    <Text style={style.text}>Intake: {scoutData.intake}</Text>
+                </View>
+                <View style={style.matches}>
 
                 </View>
-                <View style={style.matches}></View>
             </View>
 
         </View>
@@ -56,10 +62,25 @@ const style = StyleSheet.create({
         gap: 10,
         alignItems: 'center',
       },
+    basicInfo:{
+
+    },
+    robotDetails:{
+        paddingRight: '70%',
+    },
+    matches:{
+        flexDirection: 'row',
+    },
       bottomPiece: {
         width: '100%',
         height: '8%',
         backgroundColor: '#E1584B',
+      },
+      text: {
+        fontSize: 14,
+      },
+      subText: {
+        fontSize: 12,
       },
 });
 
