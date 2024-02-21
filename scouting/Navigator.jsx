@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { Home, Search, Record, Settings} from './index.js';
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Entypo, FontAwesome, AntDesign, MaterialCommunityIcons, Ionicons } from './index.js';

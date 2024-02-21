@@ -13,7 +13,7 @@ export default function Launch({ navigation }) {
 
         if (isLoading === false){
             setTimeout(() => {
-                navigation.navigate('Navigator');
+                navigation.navigate('Welcome');
             }, 2000);
           }
     }, [navigation, isLoading]);
