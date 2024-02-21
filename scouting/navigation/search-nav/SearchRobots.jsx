@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, ScrollView, Pressable } from 'react-native';
+import { Entypo, FontAwesome, AntDesign, MaterialCommunityIcons, Ionicons } from '../../index';
 
 import StatGlimpse from '../../components/home/StatGlimpse.jsx';
 
@@ -12,15 +13,19 @@ export default function SearchRobots({ navigation }) {
                 <View style={styles.middlePiece}>
                 <Text style={styles.header}>Get Started Scouting</Text>
                 <View style={styles.getStarted}>
+                  <View style={styles.searchSection}>
+                    <AntDesign style={styles.searchIcon}name="search1" size={30} color={'black'} />
                     <TextInput 
                     style={styles.searchbar} placeholder={'Search'}
-
                     />
+                  </View>
                 </View>
                 <View style={styles.viewScoutingData}>
                     <ScrollView>
                     <View style={styles.scoutingDataGlimpses}> 
+                      <Pressable onPress={()=>navigation.navigate("Profile")}>
                         <StatGlimpse name={'The Cyberlions'} teamNumber={8521} rank={1} winLossRatio={'3:1'} />
+                      </Pressable>
                         <StatGlimpse name={'High Rollers'} teamNumber={987} rank={2} winLossRatio={'2:2'} />
                         <StatGlimpse name={'Mubotics'} teamNumber={7157} rank={3} winLossRatio={'2:2'} />
                         <StatGlimpse name={'OP Robotics'} teamNumber={2056} rank={4} winLossRatio={'1:3'} />
@@ -39,7 +44,6 @@ const styles = StyleSheet.create({
       backgroundColor: 'white',
       width: '100%',
       height: '100%',
-
       alignItems: 'center',
       flexDirection: 'column',
     },
@@ -51,7 +55,6 @@ const styles = StyleSheet.create({
     middlePiece: {
       width: '90%',
       maxHeight: '84%',
-      backgroundColor: 'white',
       paddingTop: 20,
       paddingBottom: 20,
       gap: 10,
@@ -60,15 +63,23 @@ const styles = StyleSheet.create({
     getStarted: {
       minHeight: '15%',
       width: '100%',
-      gap: 10,
+    },
+    searchSection: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#fff',
+      borderColor: '#616161',
+      borderWidth: 2.5,
+    },
+    searchIcon:{
+      marginLeft: 50,
     },
     searchbar: {
       fontSize: 15,
-      borderColor: '#616161',
-      borderWidth: 2.5,
+      width: '100%',
       paddingLeft: 10,
     },
-
     viewScoutingData: {
       width: '100%',
       maxHeight: '84%',
@@ -82,6 +93,7 @@ const styles = StyleSheet.create({
       color: '#616161',
       textAlign: 'center',
       fontSize: 17,
+      marginBottom: 10,
     },
     headerSmaller: {
       color: '#616161',
