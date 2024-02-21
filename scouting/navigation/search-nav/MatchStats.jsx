@@ -1,5 +1,7 @@
-import React from 'react';
-import { View, Text, Entypo } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, StyleSheet } from 'react-native';
+
+import { Entypo } from '../../index.js';
 
 export default function MatchStats({ navigation }) {
 
@@ -19,18 +21,17 @@ export default function MatchStats({ navigation }) {
         },
     ]);
 
-
     return (
         <View style={s.container}>
             <View style={s.topPiece} />
-            <Entypo name='chevron-left' size={42} color='#616161'/>
+            <Entypo name={'chevron-left'} size={42} color={'#616161'} />
 
             <View style={s.teamMain}>
                 <View style={s.teamNameNum}>
                     <Text style={s.header}>TEST</Text>
                     <Text style={s.subHeader}>SUBTEST</Text>
                 </View>
-                <Image source={scoutData.teamImage[1]}/>
+                <Image source={scoutData.teamImage[1]} />
             </View>
 
         </View>
@@ -47,8 +48,6 @@ const s = StyleSheet.create({
         flexDirection: 'column',
         gap: 20,
     },
-
-    
     topPiece: {
         width: '100%',
         height: '8%',
@@ -65,13 +64,11 @@ const s = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
     },
-      
     header: {
         fontSize: 20,
     },
 
     subHeader: {
         fontSize: 14,
-    }
-    
-})
+    },
+});
