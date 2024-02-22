@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 
 import { Entypo } from '../../index.js';
 
@@ -22,19 +22,39 @@ export default function MatchStats({ navigation }) {
     ]);
 
     return (
-        <View style={s.container}>
+        
+        <>
             <View style={s.topPiece} />
-            <Entypo name={'chevron-left'} size={42} color={'#616161'} />
+            <View style={s.container}>
+                <Pressable onPress={() => navigation.navigate('Profile')}>
+                    <Entypo name={'chevron-left'} size={42} color={'#616161'} />
+                </Pressable>
 
-            <View style={s.teamMain}>
-                <View style={s.teamNameNum}>
-                    <Text style={s.header}>TEST</Text>
-                    <Text style={s.subHeader}>SUBTEST</Text>
+                <View style={s.teamMain}>
+                    <View style={s.teamNameNum}>
+                        <Text style={s.header}>High Rollers</Text>
+                        <Text style={s.subHeader}>Team 987</Text>
+                    </View>
+                    <Image style={s.image} source={require('../../assets/interface-icons/filler-image.png')} />
                 </View>
-                <Image source={scoutData.teamImage[1]} />
-            </View>
 
-        </View>
+                <View style={s.teamDesc}>
+                    <Text style={s.teamDescText}>Match Number: 29</Text>
+                    <Text style={s.teamDescText}>Score: 78</Text>
+                    <Text style={s.teamDescText}>Match Type: Qualifiers</Text>
+                    <Text style={s.teamDescText} />
+
+                    <Text style={s.teamDescText}>Teleop Score: 72</Text>
+                    <Text style={s.teamDescText}>Autonomous Score: 12</Text>
+                    <Text style={s.teamDescText} />
+
+                    <Text style={s.teamDescText}>Mounted: Yes</Text>
+                    <Text style={s.teamDescText}>Keynote: Yes</Text>
+                    <Text style={s.teamDescText}>Harmony with others: Yes</Text>
+                    <Text style={s.teamDescText} />
+                </View>
+            </View>
+        </>
     );
 }
 
@@ -43,10 +63,13 @@ const s = StyleSheet.create({
     container: {
         width: '100%',
         height: '100%',
+        backgroundColor: 'white',
 
         display: 'flex',
         flexDirection: 'column',
-        gap: 20,
+
+
+
     },
     topPiece: {
         width: '100%',
@@ -58,17 +81,40 @@ const s = StyleSheet.create({
     teamMain: {
         display: 'flex',
         flexDirection: 'row',
+        margin: 20,
+        gap: 20,
+
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 
     teamNameNum: {
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
+        width: '45%',
+        height: 120,
     },
+
     header: {
         fontSize: 20,
     },
 
     subHeader: {
-        fontSize: 14,
+        fontSize: 17,
     },
+
+    image: {
+        width: '45%',
+        height: 120,
+    },
+
+    teamDesc: {
+        margin: 20,
+        minHeight: '60%',
+    },
+
+    teamDescText: {
+        fontSize: 15,
+        lineHeight: 30,
+    }
 });
