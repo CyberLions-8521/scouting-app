@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-
-import StatGlimpse from '../../components/home/StatGlimpse.jsx';
+import { View, Text, Image, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { Entypo } from '../../index.js';
 
 export default function Profile({ navigation }) {
     const [scoutData, setScoutData] = useState([
@@ -17,14 +16,33 @@ export default function Profile({ navigation }) {
         },
     ]);
 
+    const [matchData, setMatchData] = useState([
+        {
+            index: 1,
+            matchNumber: 42,
+            score: 95,
+        },
+        {
+            index: 2,
+            matchNumber: 73,
+            score: 42,
+        },
+        {
+            index: 3,
+            matchNumber: 76,
+            score: 110,
+        },
+    ]);
+
     return (
         <View style={style.container}>
             <View style={style.topPiece} />
+            <Entypo style={style.backButton} name={'chevron-left'} size={30} color={'#616161'} onPress={() => navigation.goBack()} />
             <View style={style.middlePiece}>
                 <View style={style.basicInfo}>
                     <Text style={style.header}>{scoutData.name}</Text>
                     <Text style={style.subText}>Team {scoutData.teamNumber}</Text>
-                    <Image source={scoutData.teamImage}/>
+                    <Image style={style.image}source={scoutData.teamImage}/>
                 </View>
                 <View style={style.robotDetails}>
                     <Text style={style.text}>Drivebase: {scoutData.drivebase}</Text>
@@ -32,9 +50,14 @@ export default function Profile({ navigation }) {
                     <Text style={style.text}>Weight: {scoutData.weight}</Text>
                     <Text style={style.text}>Intake: {scoutData.intake}</Text>
                 </View>
-                <View style={style.matches}>
-
-                </View>
+                <ScrollView style={style.matchSection}>
+                    <Pressable onPress={()=>navigation.navigate("MatchStats")}>
+                        <View style={style.matches}>
+                            <Text style={style.text}>Match Number: {matchData.matchNumber}</Text>
+                            <Text style={style.text}>Score: {matchData.score}</Text>
+                        </View>
+                    </Pressable>
+                </ScrollView>
             </View>
 
         </View>
@@ -46,13 +69,15 @@ const style = StyleSheet.create({
         backgroundColor: 'white',
         width: '100%',
         height: '100%',
-        alignItems: 'center',
         flexDirection: 'column',
     },
     topPiece: {
         width: '100%',
         height: '8%',
         backgroundColor: '#E1584B',
+    },
+    backButton:{
+        padding: 20,
     },
     middlePiece: {
         width: '90%',
@@ -67,9 +92,21 @@ const style = StyleSheet.create({
     },
     robotDetails:{
         paddingRight: '70%',
+        gap: 5,
+        padding: 20,
+    },
+    matchSection:{
+        gap: 5,
+        marginLeft: 40,
+        width: 385,
     },
     matches:{
-        flexDirection: 'row',
+        flexDirection: 'column',
+        borderWidth: 2.5,
+        borderColor: '#C8C8C8',
+        padding: 15,
+        paddingRight: 200,
+        margin: 5,
     },
       bottomPiece: {
         width: '100%',
@@ -81,6 +118,9 @@ const style = StyleSheet.create({
       },
       subText: {
         fontSize: 12,
+      },
+      image: {
+        flexDirection: 'row',
       },
 });
 
