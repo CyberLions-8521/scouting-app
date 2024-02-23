@@ -10,46 +10,55 @@ export default function DeleteRobot({ navigation }) {
           name: 'The Cyberlions',
           teamNumber: 8521,
           teamImage: require('../../assets/images/robbie-transparent.png'),
+          index: 0
         },
         {
           name: 'High Rollers',
           teamNumber: 987,
           teamImage: require('../../assets/images/robbie-transparent.png'),
+          index: 1
         },
         {
           name: 'Mubotics',
           teamNumber: 7157,
           teamImage: require('../../assets/images/robbie-transparent.png'),
+          index: 2
         },
         {
           name: 'OP Robotics',
           teamNumber: 2056,
           teamImage: require('../../assets/images/robbie-transparent.png'),
+          index: 3
         },
         {
           name: 'RoboLancers',
           teamNumber: 321,
           teamImage: require('../../assets/images/robbie-transparent.png'),
+          index: 4
         },
         {
           name: 'Bionic Black Hawks',
           teamNumber: 2834,
           teamImage: require('../../assets/images/robbie-transparent.png'),
+          index: 5
         },
         {
           name: 'The Holy Cows',
           teamNumber: 1538,
           teamImage: require('../../assets/images/robbie-transparent.png'),
+          index: 6
         },
         {
           name: 'Simbotics',
           teamNumber: 1114,
           teamImage: require('../../assets/images/robbie-transparent.png'),
+          index: 7
         },
         {
           name: 'The Cheesy Poofs',
           teamNumber: 254,
           teamImage: require('../../assets/images/robbie-transparent.png'),
+          index: 8
         },
       ]);
 
