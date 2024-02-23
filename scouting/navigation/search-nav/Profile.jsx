@@ -39,10 +39,12 @@ export default function Profile({ navigation }) {
             <View style={style.topPiece} />
             <Entypo style={style.backButton} name={'chevron-left'} size={30} color={'#616161'} onPress={() => navigation.goBack()} />
             <View style={style.middlePiece}>
-                <View style={style.basicInfo}>
-                    <Text style={style.header}>{scoutData.name}</Text>
-                    <Text style={style.subText}>Team {scoutData.teamNumber}</Text>
-                    <Image style={style.image}source={scoutData.teamImage}/>
+                <View style={style.teamMain}>
+                    <View style={style.teamSubMain}>
+                        <Text style={style.header}>Cyberlions</Text>
+                        <Text style={style.subText}>Team 8521{scoutData.teamNumber}</Text>
+                    </View>
+                    <Image style={style.image}source={require('../../assets/interface-icons/filler-image.png')}/>
                 </View>
                 <View style={style.robotDetails}>
                     <Text style={style.text}>Drivebase: {scoutData.drivebase}</Text>
@@ -79,6 +81,7 @@ const style = StyleSheet.create({
     backButton:{
         padding: 20,
     },
+
     middlePiece: {
         width: '90%',
         maxHeight: '84%',
@@ -87,19 +90,45 @@ const style = StyleSheet.create({
         gap: 10,
         alignItems: 'center',
       },
+
+
+    teamMain: {
+        display: 'flex',
+        flexDirection: 'row',
+
+
+        alignItems: 'center',
+        justifyContent: 'center',
+        width:'100%',
+
+        gap: 0,
+        padding: 0,
+        margin: 0,
+    },
+
+    teamSubMain: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '35%',
+        height: 120,
+    },
+
     basicInfo:{
 
     },
+    
     robotDetails:{
         paddingRight: '70%',
         gap: 5,
         padding: 20,
     },
+
     matchSection:{
         gap: 5,
         marginLeft: 40,
-        width: 385,
+        minWidth: '100%',
     },
+
     matches:{
         flexDirection: 'column',
         borderWidth: 2.5,
@@ -108,19 +137,28 @@ const style = StyleSheet.create({
         paddingRight: 200,
         margin: 5,
     },
-      bottomPiece: {
+
+    bottomPiece: {
         width: '100%',
         height: '8%',
         backgroundColor: '#E1584B',
-      },
-      text: {
+    },
+
+    text: {
         fontSize: 14,
-      },
-      subText: {
+    },
+
+    subText: {
         fontSize: 12,
-      },
-      image: {
-        flexDirection: 'row',
-      },
+    },
+    
+    image: {
+        width: '50%',
+        height: 120,
+    },
+
+    header: {
+        fontSize: 20,
+    }    
 });
 
