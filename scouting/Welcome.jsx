@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '50%',
         zIndex: 1,
-        bottom: 76,
+        bottom: 85,
     },
     // whitespace on robbie (not due to code)
     robbie: {
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         zIndex: 4,
         fontWeight: 'bold',
-        color: 'black',
+        color: 'white',
     },
     FIRSTlogo: {
         width: 35,

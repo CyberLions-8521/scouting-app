@@ -84,7 +84,7 @@ export default function Home({ navigation }) {
               <Text style={styles.header}>View Scouting Data</Text>
               <View style={styles.scoutingDataGlimpses}>
 
-                {displayRobotList}
+                  {displayRobotList}
 
               </View>
             </View>

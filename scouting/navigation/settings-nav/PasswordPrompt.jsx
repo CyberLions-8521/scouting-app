@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, Pressable } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Pressable, TouchableHighlight } from 'react-native';
 import { useState } from 'react';
 
 export default function PasswordPrompt({ navigation }) {
@@ -24,9 +24,12 @@ export default function PasswordPrompt({ navigation }) {
 
             <View style={styles.inputs}>
                 <TextInput style={[styles.inputText, styles.inputBox]} placeholder={'Password'} onChangeText={setPassValue} value={passValue} secureTextEntry/>
-                <Pressable style={styles.submitButton} onPress={submitPassword}>
-                    <Text style={styles.submitText}>Submit</Text>
-                </Pressable>
+
+                <TouchableHighlight activeOpacity={0.6} underlayColor="#DDDDDD">
+                  <Pressable style={styles.submitButton} onPress={submitPassword}>
+                      <Text style={styles.submitText}>Submit</Text>
+                  </Pressable>
+                </TouchableHighlight>
             </View>
         </View>
     </>
@@ -45,7 +48,7 @@ const styles = StyleSheet.create({
     container: {
       width: '100%',
       height: '100%',
-      padding: 10,
+      paddingTop: 20,
       paddingHorizontal: 20,
       backgroundColor: 'white',
 
@@ -56,11 +59,14 @@ const styles = StyleSheet.create({
     },
 
     title: {
-      fontSize: 30,
+      width: '100%',
+      minHeight: '6%',
+      color: '#616161',
+      fontSize: 17,
     },
 
     header: {
-      fontSize: 22,
+      fontSize: 18,
       fontWeight: 'bold',
     },
 
@@ -70,11 +76,10 @@ const styles = StyleSheet.create({
 
     inputs: {
       width: '100%',
-      height: 40,
+      maxHeight: 40,
 
       display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'center',
       gap:20,
     },
 
@@ -90,10 +95,10 @@ const styles = StyleSheet.create({
 
     submitButton: {
       backgroundColor: '#E1584B',
-      width:'25%',
+      width:'100%',
       height: '100%',
-      borderWidth: 2,
-      borderColor: '#E1584B',
+      paddingLeft: 20,
+      paddingRight: 20,
 
       justifyContent: 'center',
       alignItems: 'center',

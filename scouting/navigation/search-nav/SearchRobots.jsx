@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, ScrollView, Pressable } from 'react-native';
-import { Entypo, FontAwesome, AntDesign, MaterialCommunityIcons, Ionicons } from '../../index';
+import { AntDesign } from '../../index';
 
 import StatGlimpse from '../../components/home/StatGlimpse.jsx';
 
@@ -15,15 +15,15 @@ export default function SearchRobots({ navigation }) {
                 <View style={styles.getStarted}>
                   <View style={styles.searchSection}>
                     <AntDesign style={styles.searchIcon}name="search1" size={30} color={'black'} />
-                    <TextInput 
+                    <TextInput
                     style={styles.searchbar} placeholder={'Search'}
                     />
                   </View>
                 </View>
                 <View style={styles.viewScoutingData}>
                     <ScrollView>
-                    <View style={styles.scoutingDataGlimpses}> 
-                      <Pressable onPress={()=>navigation.navigate("Profile")}>
+                    <View style={styles.scoutingDataGlimpses}>
+                      <Pressable onPress={()=>navigation.navigate('Profile')}>
                         <StatGlimpse name={'The Cyberlions'} teamNumber={8521} rank={1} winLossRatio={'3:1'} />
                       </Pressable>
                         <StatGlimpse name={'High Rollers'} teamNumber={987} rank={2} winLossRatio={'2:2'} />
@@ -109,4 +109,3 @@ const styles = StyleSheet.create({
       fontSize: 14.05,
     },
   });
-  

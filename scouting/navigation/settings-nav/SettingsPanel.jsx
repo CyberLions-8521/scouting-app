@@ -11,7 +11,7 @@ export default function SettingsPanel({ navigation }) {
 
             <View style={styles.titleContainer}>
               <Pressable onPress={() => navigation.navigate('PasswordPrompt')}>
-              <Entypo name='chevron-left' size={42} color='#616161'/>
+              <Entypo name={'chevron-left'} size={42} color={'#616161'} />
               </Pressable>
               <Text style={styles.title}>Settings Panel</Text>
             </View>
@@ -53,7 +53,10 @@ const styles = StyleSheet.create({
     },
 
     title: {
-      fontSize: 30,
+      width: '100%',
+      minHeight: '6%',
+      color: '#616161',
+      fontSize: 17,
     },
 
     header: {
