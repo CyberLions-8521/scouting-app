@@ -102,9 +102,9 @@ const styles = StyleSheet.create({
 
         // Size is 100% of its parent and not itself due to position: absolute
         width: '100%',
-        height: '100%',
+        height: '50%',
         zIndex: 1,
-        bottom: -50,
+        bottom: 76,
     },
     // whitespace on robbie (not due to code)
     robbie: {

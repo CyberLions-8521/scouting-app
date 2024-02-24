@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
 
         paddingTop: 20,
-        paddingBottom: 20,
+        paddingBottom: 10,
     },
     header: {
         width: '100%',

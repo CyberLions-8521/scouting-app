@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     getStarted: {
-      minHeight: '15%',
+      maxHeight: '15%',
+      backgroundColor: '#E1584B',
       width: '100%',
     },
     searchSection: {
