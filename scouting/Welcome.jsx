@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     mainContentImage: {
-        height: '37.5%',
+        height: '30%',
         width: '100%',
         overflow: 'hidden',
 
@@ -102,9 +102,9 @@ const styles = StyleSheet.create({
 
         // Size is 100% of its parent and not itself due to position: absolute
         width: '100%',
-        height: '50%',
+        height: '90%',
         zIndex: 1,
-        bottom: 85,
+        bottom: 0,
     },
     // whitespace on robbie (not due to code)
     robbie: {
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
 
         // weird bug where bottom: 0 makes the content come off the screen even though that shouldn't happen
         // currently using alternative until a fix is found
-        top: '60%',
+        top: '70%',
         left: '15%',
         zIndex: 4,
         alignItems: 'center',
