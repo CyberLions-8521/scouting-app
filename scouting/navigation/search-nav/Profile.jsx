@@ -63,7 +63,7 @@ export default function Profile({ navigation }) {
                     </View>
 
                     <ScrollView style={styles.matchSection}>
-                    <Pressable onPress={()=>navigation.navigate('MatchStats')}>
+                        <Pressable onPress={()=>navigation.navigate('MatchStats')}>
                             <View style={styles.matches}>
                                 <Text style={styles.text}>Match Number: {matchData.matchNumber}</Text>
                                 <Text style={styles.text}>Score: {matchData.score}</Text>

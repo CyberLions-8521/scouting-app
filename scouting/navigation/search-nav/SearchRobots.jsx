@@ -9,19 +9,17 @@ export default function SearchRobots({ navigation }) {
     return (
         <>
             <View style={styles.container}>
-                <View style={styles.topPiece} />
-                <View style={styles.middlePiece}>
+              <View style={styles.topPiece} />
+              <View style={styles.middlePiece}>
                 <Text style={styles.header}>Get Started Scouting</Text>
-                <View style={styles.getStarted}>
-                  <View style={styles.searchSection}>
-                    <AntDesign style={styles.searchIcon}name="search1" size={30} color={'black'} />
-                    <TextInput
-                    style={styles.searchbar} placeholder={'Search'}
-                    />
-                  </View>
+                <View style={styles.searchSection}>
+                  <AntDesign style={styles.searchIcon}name="search1" size={25} color={'black'} />
+                  <TextInput
+                  style={styles.searchbar} placeholder={'Search'}
+                  />
                 </View>
                 <View style={styles.viewScoutingData}>
-                    <ScrollView>
+                  <ScrollView>
                     <View style={styles.scoutingDataGlimpses}>
                       <Pressable onPress={()=>navigation.navigate('Profile')}>
                         <StatGlimpse name={'The Cyberlions'} teamNumber={8521} rank={1} winLossRatio={'3:1'} />
@@ -31,9 +29,9 @@ export default function SearchRobots({ navigation }) {
                         <StatGlimpse name={'OP Robotics'} teamNumber={2056} rank={4} winLossRatio={'1:3'} />
                         <StatGlimpse name={'Test'} teamNumber={0} rank={0} winLossRatio={'0:0'}/>
                     </View>
-                    </ScrollView>
+                  </ScrollView>
                 </View>
-                </View>
+              </View>
             </View>
         </>
     );
@@ -54,7 +52,7 @@ const styles = StyleSheet.create({
     },
     middlePiece: {
       width: '90%',
-      maxHeight: '84%',
+      maxHeight: '100%',
       paddingTop: 20,
       paddingBottom: 20,
       gap: 10,
@@ -62,14 +60,13 @@ const styles = StyleSheet.create({
     },
     getStarted: {
       maxHeight: '15%',
-      backgroundColor: '#E1584B',
       width: '100%',
     },
     searchSection: {
+      width: '100%',
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#fff',
       borderColor: '#616161',
       borderWidth: 2.5,
     },
@@ -79,6 +76,7 @@ const styles = StyleSheet.create({
     searchbar: {
       fontSize: 15,
       width: '100%',
+      maxHeight: 40,
       paddingLeft: 10,
     },
     viewScoutingData: {

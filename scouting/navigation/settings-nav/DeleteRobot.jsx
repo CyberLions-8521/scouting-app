@@ -74,20 +74,21 @@ export default function DeleteRobot({ navigation }) {
 
     return (
     <>
-          <View style={styles.topPiece} />
           <View style={styles.container}>
+            <View style={styles.topPiece} />
+            <View style={styles.middlePiece}>
+              <View style={styles.titleContainer}>
+                <Pressable onPress={() => navigation.navigate('SettingsPanel')}>
+                  <Entypo name='chevron-left' size={30} color='#616161'/>
+                </Pressable>
+                <Text style={styles.title}>Select Robot to Delete</Text>
+              </View>
 
-            <View style={styles.titleContainer}>
-              <Pressable onPress={() => navigation.navigate('SettingsPanel')}>
-                <Entypo name='chevron-left' size={42} color='#616161'/>
-              </Pressable>
-              <Text style={styles.title}>Select Robot to Delete</Text>
+              <Text style={styles.subText}>This action CANNOT BE UNDONE. DO NOT CLICK PROFILES YOU DO NOT WANT TO DELETE.</Text>
+
+              {displayData}
+
             </View>
-
-            <Text style={styles.normalText}>This action CANNOT BE UNDONE. DO NOT CLICK PROFILES YOU DO NOT WANT TO DELETE.</Text>
-
-            {displayData}
-
           </View>
     </>
     );
@@ -95,6 +96,14 @@ export default function DeleteRobot({ navigation }) {
 
 
 const styles = StyleSheet.create({
+    container: {
+      backgroundColor: 'white',
+      width: '100%',
+      height: '100%',
+
+      alignItems: 'center',
+      flexDirection: 'column',
+    },
 
     topPiece: {
       width: '100%',
@@ -102,36 +111,33 @@ const styles = StyleSheet.create({
       backgroundColor: '#E1584B',
     },
 
-    container: {
-      width: '100%',
-      height: '100%',
-      padding: 10,
-      paddingHorizontal: 20,
+    middlePiece: {
+      width: '90%',
+      maxHeight: '84%',
       backgroundColor: 'white',
 
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'left',
-      gap: 20,
+      paddingTop: 20,
+      paddingBottom: 20,
+      gap: 30,
+      alignItems: 'center',
     },
 
     titleContainer: {
+      width: '100%',
       display: 'flex',
       flexDirection: 'row',
       gap:10,
     },
 
     title: {
-      fontSize: 30,
+      fontSize: 17,
+      color: '#616161',
     },
 
-    header: {
-      fontSize: 22,
-      fontWeight: 'bold',
-    },
-
-    normalText: {
-      fontSize:20,
+    subText: {
+      color: '#616161',
+      textAlign: 'center',
+      width: '100%',
     },
 
     button: {

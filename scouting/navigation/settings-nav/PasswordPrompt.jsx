@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
 
     title: {
       width: '100%',
-      minHeight: '6%',
+      maxHeight: '6%',
       color: '#616161',
       fontSize: 17,
     },
@@ -88,7 +88,8 @@ const styles = StyleSheet.create({
     },
 
     inputBox: {
-      borderWidth: 2,
+      borderWidth: 2.5,
+      borderColor: '#616161',
       width:'70%',
       fontSize:15,
     },
