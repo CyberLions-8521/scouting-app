@@ -25,15 +25,17 @@ export default function MatchStats({ navigation }) {
         
         <>
             <View style={s.topPiece} />
+
             <View style={s.container}>
-                <Pressable onPress={() => navigation.navigate('Profile')}>
-                    <Entypo name={'chevron-left'} size={42} color={'#616161'} />
-                </Pressable>
+
+            <View style={s.buttonPiece}>
+                <Entypo name={'chevron-left'} size={30} color={'#616161'} onPress={() => navigation.goBack()} />
+            </View>
 
                 <View style={s.teamMain}>
                     <View style={s.teamNameNum}>
-                        <Text style={s.header}>High Rollers</Text>
-                        <Text style={s.subHeader}>Team 987</Text>
+                        <Text style={s.header}>Cyberlions</Text>
+                        <Text style={s.subHeader}>Team 8521</Text>
                     </View>
                     <Image style={s.image} source={require('../../assets/interface-icons/filler-image.png')} />
                 </View>
@@ -66,23 +68,26 @@ const s = StyleSheet.create({
         backgroundColor: 'white',
 
         display: 'flex',
-        flexDirection: 'column',
-
-
-
+        flexDirection: 'column'
     },
+
     topPiece: {
         width: '100%',
         height: '8%',
         backgroundColor: '#E1584B',
     },
 
+    buttonPiece: {
+        width: '100%',
+        marginLeft: 20,
+        marginTop: 20,
+    },
 
     teamMain: {
         display: 'flex',
         flexDirection: 'row',
         margin: 20,
-        gap: 20,
+        width: '90%',
 
         alignItems: 'center',
         justifyContent: 'center',
@@ -92,7 +97,7 @@ const s = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         width: '45%',
-        height: 120,
+        height: 100,
     },
 
     header: {
@@ -100,21 +105,21 @@ const s = StyleSheet.create({
     },
 
     subHeader: {
-        fontSize: 17,
+        fontSize: 12,
     },
 
     image: {
-        width: '45%',
-        height: 120,
+        width: '55%',
+        height: 100,
     },
 
     teamDesc: {
         margin: 20,
+        gap: 5,
         minHeight: '60%',
     },
 
     teamDescText: {
-        fontSize: 15,
-        lineHeight: 30,
+        fontSize: 14,
     }
 });

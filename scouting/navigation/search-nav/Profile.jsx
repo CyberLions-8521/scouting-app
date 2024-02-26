@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
       width: '100%',
       height: '100%',
       gap: 20,
+      backgroundColor: 'white',
     },
     topPiece: {
       height: '8%',
