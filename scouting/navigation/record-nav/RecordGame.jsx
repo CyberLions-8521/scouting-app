@@ -7,90 +7,15 @@ import Counter from '../../components/record/Counter';
 
 export default function RecordGame({ navigation, route: { params: { robotIndex } } }) {
 
-    const [scoutData, setScoutData] = useState([
-        {
-            name: 'The Cyberlions',
-            teamNumber: 8521,
-            rank: 1,
-            winLossRatio: '3:1',
-            teamImage: require('../../assets/images/robbie-transparent.png'),
-            index: 1,
-        },
-        {
-            name: 'High Rollers',
-            teamNumber: 987,
-            rank: 1,
-            winLossRatio: '3:1',
-            teamImage: require('../../assets/images/robbie-transparent.png'),
-            index: 2,
-        },
-        {
-            name: 'Mubotics',
-            teamNumber: 7157,
-            rank: 1,
-            winLossRatio: '3:1',
-            teamImage: require('../../assets/images/robbie-transparent.png'),
-            index: 3,
-        },
-        {
-            name: 'OP Robotics',
-            teamNumber: 2056,
-            rank: 1,
-            winLossRatio: '3:1',
-            teamImage: require('../../assets/images/robbie-transparent.png'),
-            index: 4,
-        },
-        {
-            name: 'RoboLancers',
-            teamNumber: 321,
-            rank: 1,
-            winLossRatio: '3:1',
-            teamImage: require('../../assets/images/robbie-transparent.png'),
-            index: 5,
-        },
-        {
-            name: 'Bionic Black Hawks',
-            teamNumber: 2834,
-            rank: 1,
-            winLossRatio: '3:1',
-            teamImage: require('../../assets/images/robbie-transparent.png'),
-            index: 6,
-        },
-        {
-            name: 'The Holy Cows',
-            teamNumber: 1538,
-            rank: 1,
-            winLossRatio: '3:1',
-            teamImage: require('../../assets/images/robbie-transparent.png'),
-            index: 7,
-        },
-        {
-            name: 'Simbotics',
-            teamNumber: 1114,
-            rank: 1,
-            winLossRatio: '3:1',
-            teamImage: require('../../assets/images/robbie-transparent.png'),
-            index: 8,
-        },
-        {
-            name: 'The Cheesy Poofs',
-            teamNumber: 254,
-            rank: 1,
-            winLossRatio: '3:1',
-            teamImage: require('../../assets/images/robbie-transparent.png'),
-            index: 9,
-        },
-    ]);
-
     const [robotView, setRobotView] = useState(
-        scoutData[robotIndex]
+        profileData[robotIndex]
     );
 
     const matchTypeSelection = [
-        { label: 'Practice Match', value: 0 },
-        { label: 'Qualification Match', value: 1},
-        { label: 'Playoff Match', value: 2 },
-        { label: 'Semifinals', value: 3 },
+        { label: 'Practice Match', value: 'Practice Match' },
+        { label: 'Qualification Match', value: 'Qualification Match' },
+        { label: 'Playoff Match', value: 'Playoff Match' },
+        { label: 'Semifinals', value: 'Semifinals' },
     ]
 
     const [matchType, setMatchType] = useState(null);
@@ -102,6 +27,30 @@ export default function RecordGame({ navigation, route: { params: { robotIndex }
     const [teleOpSpeaker, setTeleOpSpeaker] = useState(0);
     const [autoSpeaker, setAutoSpeaker] = useState(0);
     const [teleOpAmp, setTeleOpAmp] = useState(0);
+
+    const submitMatch = async (robotIndex) => {
+        // This function will be used to submit the match data to the server through a POST request
+        const matchData = {
+            matchType,
+            coopertition,
+            harmony,
+            climbed,
+            teleOpSpeaker,
+            autoSpeaker,
+            teleOpAmp,
+        }
+
+        // The server will then add the match data to the database
+        await axios.post('', {matchData})
+            .then((response) => {
+                console.log(response);
+                // The app will then navigate back to the previous screen
+                navigation.goBack();
+            })
+            .catch((error) => {
+                console.error('Error making a POST request:', error);
+            });
+    };
 
     return (
         <View style={styles.container}>

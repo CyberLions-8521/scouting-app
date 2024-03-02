@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, Pressable } from 'react-native';
 
 
@@ -7,84 +7,23 @@ export default function SelectProfile({ navigation }) {
 
   // Wrapping the data in useState because more objects will be added to the array
   // We'll use a useEffect and update the useState when the backend is called
-  const [scoutData, setScoutData] = useState([
-    {
-      name: 'The Cyberlions',
-      teamNumber: 8521,
-      rank: 1,
-      winLossRatio: '3:1',
-      teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 0,
-    },
-    {
-      name: 'High Rollers',
-      teamNumber: 987,
-      rank: 1,
-      winLossRatio: '3:1',
-      teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 1,
-    },
-    {
-      name: 'Mubotics',
-      teamNumber: 7157,
-      rank: 1,
-      winLossRatio: '3:1',
-      teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 2,
-    },
-    {
-      name: 'OP Robotics',
-      teamNumber: 2056,
-      rank: 1,
-      winLossRatio: '3:1',
-      teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 3,
-    },
-    {
-      name: 'RoboLancers',
-      teamNumber: 321,
-      rank: 1,
-      winLossRatio: '3:1',
-      teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 4,
-    },
-    {
-      name: 'Bionic Black Hawks',
-      teamNumber: 2834,
-      rank: 1,
-      winLossRatio: '3:1',
-      teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 5,
-    },
-    {
-      name: 'The Holy Cows',
-      teamNumber: 1538,
-      rank: 1,
-      winLossRatio: '3:1',
-      teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 6,
-    },
-    {
-      name: 'Simbotics',
-      teamNumber: 1114,
-      rank: 1,
-      winLossRatio: '3:1',
-      teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 7,
-    },
-    {
-      name: 'The Cheesy Poofs',
-      teamNumber: 254,
-      rank: 1,
-      winLossRatio: '3:1',
-      teamImage: require('../../assets/images/robbie-transparent.png'),
-      index: 8,
-    },
-  ]);
+  const [profileData, setProfileData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios.get('') // This will be the endpoint to get the robot profiles
+        .then((response) => {
+          setProfileData(response.data);
+        })
+        .catch((error) => {
+          console.error('Error making a GET request:', error);
+        });
+    };
+  }, [setProfileData]);
 
   // Wrap a pressable around this and navigate to the RecordGame Screen
   // When your navigate bring the object index of the robot with you to the next screen so react knows which robot to record for
-  const displayData = scoutData.map((robot) =>
+  const displayData = profileData.map((robot) =>
     <Pressable key={robot.index} onPress={() => navigation.navigate('RecordGame', { robotIndex: robot.index })}>
       <View style={styles.teamSelection}>
           <View style={styles.teamName}>

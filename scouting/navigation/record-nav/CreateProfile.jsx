@@ -1,8 +1,56 @@
-import React from 'react';
-import { View, Text, TextInput, StyleSheet, Pressable, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, StyleSheet, Pressable, ScrollView } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
 import { Entypo } from '../../index.js';
 
 export default function CreateProfile({ navigation }) {
+
+    const [teamName, setTeamName] = useState('');
+    const [teamNumber, setTeamNumber] = useState('');
+    const [weight, setWeight] = useState('');
+
+    const drivebaseSelection = [
+        { label: 'Mecanum', value: 'Mecanum' },
+        { label: 'Tank', value: 'Tank' },
+        { label: 'Swerve', value: 'Swerve' },
+        { label: 'H-Drive', value: 'H-Drive' },
+        { label: 'Other', value: 'Other' },
+    ];
+    const [drivebase, setDrivebase] = useState('');
+    const [drivebaseDropdown, setDrivebaseDropdown] = useState('');
+
+    const [autonomous, setAutonomous] = useState('');
+    const [intake, setIntake] = useState('');
+    
+    const [additionalDetails, setAdditionalDetails] = useState('');
+
+    // Imports the axios library for making HTTP requests
+    const axios = require('axios');
+
+    const submitProfile = async () => {
+        // This function will be used to submit the robot profile to the server through a POST request
+        const profileData = {
+            teamName,
+            teamNumber,
+            weight,
+            drivebase,
+            autonomous,
+            intake,
+            additionalDetails,
+        }
+
+        // The server will then add the robot profile to the database
+        await axios.post('', {profileData})
+            .then((response) => {
+            console.log(response);
+                // The app will then navigate back to the previous screen
+                navigation.goBack();
+            })
+            .catch((error) => {
+                console.error('Error making a POST request:', error);
+            });
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.topPiece} />
@@ -14,28 +62,35 @@ export default function CreateProfile({ navigation }) {
                         <Text style={styles.submitButtonText}>Submit</Text>
                     </Pressable>
                 </View>
-                <View style={{flexDirection: 'row'}}>
-                    <View style={styles.inputContainer}>
-                        <View>
-                            <TextInput style={styles.bigInput} placeholder={'Team Name'} />
+                <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
+                    <Text style={styles.headerText}>General Information</Text>
+                    <View style={{flexDirection: 'row'}}>
+                        <View style={styles.inputContainer}>
+                            <View>
+                                <TextInput value={teamName} style={styles.bigInput} placeholder={'Team Name'} onChangeText={value => setTeamName(value)}/>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <TextInput value={teamNumber} style={styles.smallInput} placeholder={'Team Number'} keyboardType={'numeric'} onChangeText={value => setTeamNumber(value)}/>
+                                <TextInput value={weight} style={styles.smallInput} placeholder={'Weight'} keyboardType={'numeric'} onChangeText={value => setWeight(value)}/>
+                            </View>
+                            <View>
+                                <Dropdown style={styles.dropdown} selectedTextStyle={{color: 'white', fontSize: 15 }} placeholderStyle={{color: 'white', fontSize: 15}} iconColor={'white'} value={drivebaseDropdown} data={drivebaseSelection} onChange={(selection) => {setDrivebaseDropdown(selection.value); setDrivebase(selection.value)}} labelField={'label'} valueField={'value'} placeholder='Drivebase'/>
+                                
+                                {/*This ternary operator allows for manual input of drivebase if selected 'Other'*/}
+                                {drivebaseDropdown === 'Other' ? <TextInput style={styles.bigInput} placeholder={'Other Drivebase'} onChangeText={value => setDrivebase(value)}/> : <></>}
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <TextInput value={autonomous} style={styles.smallInput} placeholder={'Autonomous'} onChangeText={value => setAutonomous(value)}/>
+                                <TextInput value={intake} style={styles.smallInput} placeholder={'Intake'} onChangeText={value => setIntake(value)}/>
+                            </View>
                         </View>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                            <TextInput style={styles.smallInput} placeholder={'Team Number'} keyboardType={'numeric'} />
-                            <TextInput style={styles.smallInput} placeholder={'Weight'} keyboardType={'numeric'} />
-                        </View>
-                        <View>
-                            <TextInput style={styles.bigInput} placeholder={'Drivebase'} />
-                        </View>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                            <TextInput style={styles.smallInput} placeholder={'Autonomous'}/>
-                            <TextInput style={styles.smallInput} placeholder={'Intake'} />
-                        </View>
+                        {/*This is where image would go*/}
                     </View>
-                    <Image style={styles.teamImage} source={require('../../assets/images/robbie-transparent.png')} />
-                </View>
-                <View>
-                    <TextInput style={styles.detailInput} placeholder={'Additional Details'} multiline={true}/>
-                </View>
+                    <View style={{marginTop: 20}}>
+                        <Text style={styles.headerText}>Additional Details</Text>
+                        <TextInput value={additionalDetails} style={styles.detailInput} multiline={true} onChangeText={value => setAdditionalDetails(value)}/>
+                    </View>
+                </ScrollView>
             </View>
         </View>
     );
@@ -72,9 +127,8 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     headerText: {
-        minHeight: '100%',
-        color: '#616161',
         fontSize: 17,
+        color: '#616161',
     },
     submitButton: {
         width: 80,
@@ -91,39 +145,52 @@ const styles = StyleSheet.create({
         fontSize: 17,
     },
     inputContainer: {
-        width: '50%',
+        width: '75%',
         minHeight: '30%',
     },
     bigInput: {
-        fontSize: 10,
         width: '100%',
-        maxHeight: 40,
-        borderColor: '#616161',
-        borderWidth: 1,
-        marginBottom: 10,
+        fontSize: 15,
+        minHeight: 50,
+        marginTop: 10,
         paddingHorizontal: 10,
+        borderColor: 'gray',
+        borderWidth: 2,
+        borderRadius: 10,
     },
     smallInput: {
-        fontSize: 10,
         width: '48%',
-        maxHeight: 40,
-        borderColor: '#616161',
-        borderWidth: 1,
-        marginBottom: 10,
+        fontSize: 15,
+        minHeight: 50,
+        marginTop: 10,
         paddingHorizontal: 10,
+        borderColor: 'gray',
+        borderWidth: 2,
+        borderRadius: 10,
+    },
+    dropdown: {
+        width: '100%',
+        minHeight: 50,
+        backgroundColor: 'gray',
+        marginTop: 10,
+        paddingHorizontal: 10,
+        borderRadius: 10,
     },
     teamImage: {
-        width: '50%',
+        position: 'absolute',
+        width: '100%',
         height: '100%',
     },
     detailInput: {
-        fontSize: 10,
         width: '100%',
+        fontSize: 15,
         minHeight: 100,
-        maxHeight: 350,
-        borderColor: '#616161',
-        borderWidth: 1,
+        maxHeight: 200,
+        marginTop: 10,
         paddingHorizontal: 10,
+        borderColor: 'gray',
+        borderWidth: 2,
+        borderRadius: 10,
         textAlignVertical: 'top',
     },
   });
