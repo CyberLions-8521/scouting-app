@@ -1,11 +1,13 @@
 import React, { useState} from 'react';
 import { View, Text, StyleSheet, Pressable, Image, Suspense, Alert } from 'react-native';
-
 import StatGlimpse from '../components/home/StatGlimpse.jsx';
-
 import informationIcon from '../assets/interface-icons/info.png';
 
+import axios from 'axios';
+
 export default function Home({ navigation }) {
+
+  const [boilerData, modifyBoilerData] = useState();
 
   const theoreticalData = [
     {
@@ -44,9 +46,18 @@ export default function Home({ navigation }) {
 
   // Map through each object in the array
   const displayRobotList = theoreticalData.map((robot) =>
-    <View key={robot.index}>
-      <StatGlimpse name={robot.name} teamNumber={robot.teamNumber} rank={robot.rank} winLossRatio={robot.winLossRatio} />
-    </View>
+    <Pressable onPress={async () => {
+      let message = await axios.get('http://10.0.2.2:3000/');
+      // let message = await axios.get('http://bckend.team8521.com/frc');
+
+      Alert.alert(message.data);
+      }}
+    key={robot.index}>
+
+      <View>
+        <StatGlimpse name={robot.name} teamNumber={robot.teamNumber} rank={robot.rank} winLossRatio={robot.winLossRatio} />
+      </View>
+    </Pressable>
   );
 
   const [closeInfo, setCloseInfo] = useState(false);
