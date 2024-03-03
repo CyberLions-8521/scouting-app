@@ -1,74 +1,68 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Pressable, Image, ScrollView } from 'react-native';
 import { Entypo } from '../..';
+import axios from 'axios';
 
 
 export default function DeleteRobot({ navigation }) {
 
-    const [scoutData, setScoutData] = useState([
-        {
-          name: 'The Cyberlions',
-          teamNumber: 8521,
-          teamImage: require('../../assets/images/robbie-transparent.png'),
-          index: 0
-        },
-        {
-          name: 'High Rollers',
-          teamNumber: 987,
-          teamImage: require('../../assets/images/robbie-transparent.png'),
-          index: 1
-        },
-        {
-          name: 'Mubotics',
-          teamNumber: 7157,
-          teamImage: require('../../assets/images/robbie-transparent.png'),
-          index: 2
-        },
-        {
-          name: 'OP Robotics',
-          teamNumber: 2056,
-          teamImage: require('../../assets/images/robbie-transparent.png'),
-          index: 3
-        },
-        {
-          name: 'RoboLancers',
-          teamNumber: 321,
-          teamImage: require('../../assets/images/robbie-transparent.png'),
-          index: 4
-        },
-        {
-          name: 'Bionic Black Hawks',
-          teamNumber: 2834,
-          teamImage: require('../../assets/images/robbie-transparent.png'),
-          index: 5
-        },
-        {
-          name: 'The Holy Cows',
-          teamNumber: 1538,
-          teamImage: require('../../assets/images/robbie-transparent.png'),
-          index: 6
-        },
-        {
-          name: 'Simbotics',
-          teamNumber: 1114,
-          teamImage: require('../../assets/images/robbie-transparent.png'),
-          index: 7
-        },
-        {
-          name: 'The Cheesy Poofs',
-          teamNumber: 254,
-          teamImage: require('../../assets/images/robbie-transparent.png'),
-          index: 8
-        },
-      ]);
+    const tImg = '../../assets/images/robbie-transparent.png' //template image
 
-    const displayData = scoutData.map((robot) =>
+    const [robotList, setRobotList] = useState([
+      {
+        name: 'Robo Tigers',
+        teamNumber: '1258',
+        teamImage: require(tImg),
+        index: 0,
+      },
+
+      {
+        name: 'Mozzarella Spheres',
+        teamNumber: '9001',
+        teamImage: require(tImg),
+        index: 1
+      },
+
+    ]);
+
+    //comments are just notes for myself(henry)
+
+    const axios = require('axios'); //axios is used to make http requests
+
+    useEffect(() => {
+      const fetchData = async () => { 
+        await axios.get('') //imports data using axios
+          .then((response) => { //sets robotList to the data
+            setRobotList(response.data)
+          })
+          .catch((error) => {
+            console.error('Error!!! (Skill Issue TBH):', error)
+          })
+      }
+    }, [setRobotList]); //Updates on page load and when setRobotList changes
+
+    const removeRobot = async(item, id) => { //start of function
+      axios.delete('' + item.id).then(() => { //deletes the item with the parameter id
+        let newList = robotList;
+        newList.forEach((item, index) => {
+          if(item.id == id){
+            newList.splice(index, 1); //deletes item by trying to match the two lists?
+            return;
+          }
+        });
+        setRobotList(newList);
+      }) 
+    }
+
+    const displayData = robotList.map((robot) =>
+      <Pressable onPress={() => removeRobot(index)}>
         <View key={robot.index} style={styles.teamSelection}>
             <View style={styles.teamName}>
                 <Text>{robot.teamNumber} - {robot.name}</Text>
             </View>
             <Image source={robot.teamImage} style={styles.teamImage} />
         </View>
+      </Pressable>
     );
 
 
@@ -85,8 +79,10 @@ export default function DeleteRobot({ navigation }) {
               </View>
 
               <Text style={styles.subText}>This action CANNOT BE UNDONE. DO NOT CLICK PROFILES YOU DO NOT WANT TO DELETE.</Text>
-
-              {displayData}
+              
+              <ScrollView style={styles.robotListContainer}>
+                {displayData}
+              </ScrollView>
 
             </View>
           </View>
@@ -170,7 +166,7 @@ const styles = StyleSheet.create({
         borderColor: '#616161',
         borderWidth: 1,
         paddingHorizontal: 10,
-        marginBottom: 10,
+        marginBottom: '5%',
     },
 
     teamName: {
@@ -181,6 +177,11 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
     },
+
+    robotListContainer: {
+        width:'100%',
+    },
+
   }
 );
 
