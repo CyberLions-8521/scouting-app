@@ -1,11 +1,61 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, ScrollView, Pressable } from 'react-native';
 import { AntDesign } from '../../index';
-
+import axios from 'axios';
 import StatGlimpse from '../../components/home/StatGlimpse.jsx';
 
 // navigation can be called anything. this is just a component of the Stack.screen element
 export default function SearchRobots({ navigation }) {
+  const [genData, setGenData] = useState([
+    //sample data
+    {
+      index: 1,
+      name: 'The Cyberlions',
+      teamNumber: '8521',
+      rank: 1,
+      winLossRatio: '1:2',
+    },
+    {
+      index: 2,
+      name: 'High Rollers',
+      teamNumber: 987,
+      rank: 2,
+      winLossRatio: '1:2',
+    },
+    {
+      index: 3,
+      name: 'Mubotics',
+      teamNumber: 7157,
+      rank: 3,
+      winLossRatio: '1:2',
+    },
+    {
+      index: 4,
+      name: 'OP Robotics',
+      teamNumber: 2056,
+      rank: 4,
+      winLossRatio: '1:2',
+    },
+  ]);
+
+  useEffect(()=>{
+    const fetchRobotList = async () => {
+      await axios.get('')
+      .then((response)=>{
+        setGenData(response.data);
+      })
+      .catch((error) =>{
+        console.error("Error retrieving robotList:", error);
+      });
+    };
+  });
+
+  const displayRobotList = genData.map((robot) =>
+    <View key={robot.index}>
+      <StatGlimpse name={robot.name} teamNumber={robot.teamNumber} rank={robot.rank} winLossRatio={robot.winLossRatio} />
+    </View>
+  );
+
     return (
         <>
             <View style={styles.container}>
@@ -19,17 +69,15 @@ export default function SearchRobots({ navigation }) {
                   />
                 </View>
                 <View style={styles.viewScoutingData}>
+
                   <ScrollView>
                     <View style={styles.scoutingDataGlimpses}>
                       <Pressable onPress={()=>navigation.navigate('Profile')}>
-                        <StatGlimpse name={'The Cyberlions'} teamNumber={8521} rank={1} winLossRatio={'3:1'} />
+                        {displayRobotList}
                       </Pressable>
-                        <StatGlimpse name={'High Rollers'} teamNumber={987} rank={2} winLossRatio={'2:2'} />
-                        <StatGlimpse name={'Mubotics'} teamNumber={7157} rank={3} winLossRatio={'2:2'} />
-                        <StatGlimpse name={'OP Robotics'} teamNumber={2056} rank={4} winLossRatio={'1:3'} />
-                        <StatGlimpse name={'Test'} teamNumber={0} rank={0} winLossRatio={'0:0'}/>
                     </View>
                   </ScrollView>
+
                 </View>
               </View>
             </View>

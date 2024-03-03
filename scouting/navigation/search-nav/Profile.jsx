@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { Entypo } from '../../index.js';
+import axios from 'axios';
 
 export default function Profile({ navigation }) {
     const [scoutData, setScoutData] = useState([
@@ -47,8 +48,8 @@ export default function Profile({ navigation }) {
 
                     <View style={styles.teamMain}>
                         <View style={styles.teamSubMain}>
-                            <Text style={styles.header}>Cyberlions</Text>
-                            <Text style={styles.subText}>Team 8521{scoutData.teamNumber}</Text>
+                            <Text style={styles.header}>{scoutData.name}</Text>
+                            <Text style={styles.subText}>{scoutData.teamNumber}{scoutData.teamNumber}</Text>
                         </View>
 
                         <Image style={styles.image}source={require('../../assets/interface-icons/filler-image.png')}/>

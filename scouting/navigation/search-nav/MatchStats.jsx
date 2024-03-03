@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
+import axios from 'axios';
 
 import { Entypo } from '../../index.js';
 
@@ -12,6 +13,7 @@ export default function MatchStats({ navigation }) {
             teamNumber: 8521,
             score: 78,
             matchType: 'Qualifiers',
+            matchNum: 1,
             teleopScore: 60,
             autonomousScore: 14,
             mounted:'Yes',
@@ -34,25 +36,25 @@ export default function MatchStats({ navigation }) {
 
                 <View style={s.teamMain}>
                     <View style={s.teamNameNum}>
-                        <Text style={s.header}>Cyberlions</Text>
-                        <Text style={s.subHeader}>Team 8521</Text>
+                        <Text style={s.header}>{scoutData.name}</Text>
+                        <Text style={s.subHeader}>{scoutData.teamNumber}</Text>
                     </View>
                     <Image style={s.image} source={require('../../assets/interface-icons/filler-image.png')} />
                 </View>
 
                 <View style={s.teamDesc}>
-                    <Text style={s.teamDescText}>Match Number: 29</Text>
-                    <Text style={s.teamDescText}>Score: 78</Text>
-                    <Text style={s.teamDescText}>Match Type: Qualifiers</Text>
+                    <Text style={s.teamDescText}>Match Number: {scoutData.matchNum}</Text>
+                    <Text style={s.teamDescText}>Score: {scoutData.score}</Text>
+                    <Text style={s.teamDescText}>Match Type: {scoutData.matchType}</Text>
                     <Text style={s.teamDescText} />
 
-                    <Text style={s.teamDescText}>Teleop Score: 72</Text>
-                    <Text style={s.teamDescText}>Autonomous Score: 12</Text>
+                    <Text style={s.teamDescText}>Teleop Score: {scoutData.teleopScore}</Text>
+                    <Text style={s.teamDescText}>Autonomous Score: {scoutData.autonomousScore}</Text>
                     <Text style={s.teamDescText} />
 
-                    <Text style={s.teamDescText}>Mounted: Yes</Text>
-                    <Text style={s.teamDescText}>Keynote: Yes</Text>
-                    <Text style={s.teamDescText}>Harmony with others: Yes</Text>
+                    <Text style={s.teamDescText}>Mounted: {scoutData.mounted}</Text>
+                    <Text style={s.teamDescText}>Keynote: {scoutData.keynote}</Text>
+                    <Text style={s.teamDescText}>Harmony with others: {scoutData.harmony}</Text>
                     <Text style={s.teamDescText} />
                 </View>
             </View>
