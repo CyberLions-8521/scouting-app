@@ -8,6 +8,7 @@ export default function SettingsPanel({ navigation }) {
     <>
       <View style={styles.container}>
         <View style={styles.topPiece} />
+        
         <View style={styles.middlePiece}>
           <View style={styles.titleContainer}>
             <Pressable onPress={() => navigation.navigate('PasswordPrompt')}>
@@ -56,14 +57,13 @@ const styles = StyleSheet.create({
 
     titleContainer: {
       width: '100%',
-      display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
-      gap:10,
     },
 
     title: {
-      height: '100%',
+      // height: '100%', don't add 100% to the title because it's going to make the title text as big as its parent and
+      // then you can't expect the actual text in the <Text> to be centered anymore. Just let <View> be as big as its text naturally
       color: '#616161',
       fontSize: 17,
     },

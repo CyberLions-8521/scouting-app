@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
       maxHeight: 150,
     },
     image: {
-      maxWidth: 200,
+      maxWidth: '55%',
       maxHeight: 100,
     },
     robotDetails:{
