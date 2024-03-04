@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Pressable, Image, ScrollView } from 'react-nati
 import { Entypo } from '../..';
 import axios from 'axios';
 
-
 export default function DeleteRobot({ navigation }) {
 
     const tImg = '../../assets/images/robbie-transparent.png' //template image
@@ -27,11 +26,9 @@ export default function DeleteRobot({ navigation }) {
 
     //comments are just notes for myself(henry)
 
-    const axios = require('axios'); //axios is used to make http requests
-
     useEffect(() => {
       const fetchData = async () => { 
-        await axios.get('') //imports data using axios
+        await axios.get('http://10.0.2.2:3000/robotList') //imports data using axios
           .then((response) => { //sets robotList to the data
             setRobotList(response.data)
           })
@@ -39,26 +36,24 @@ export default function DeleteRobot({ navigation }) {
             console.error('Error!!! (Skill Issue TBH):', error)
           })
       }
+      fetchData()
     }, [setRobotList]); //Updates on page load and when setRobotList changes
 
-    const removeRobot = async(item, id) => { //start of function
-      axios.delete('' + item.id).then(() => { //deletes the item with the parameter id
-        let newList = robotList;
-        newList.forEach((item, index) => {
-          if(item.id == id){
-            newList.splice(index, 1); //deletes item by trying to match the two lists?
-            return;
-          }
-        });
-        setRobotList(newList);
-      }) 
-    }
-
+    const removeRobot = async (id) => {
+      try {
+        await axios.delete(`http://10.0.2.2:3000/robotList/${id}`);
+        const updatedList = robotList.filter((robot) => robot.id !== id);
+        setRobotList(updatedList);
+      } catch (error) {
+        console.error('Error deleting robot:', error);
+      }
+    };
+    
     const displayData = robotList.map((robot) =>
-      <Pressable onPress={() => removeRobot(index)}>
-        <View key={robot.index} style={styles.teamSelection}>
+      <Pressable onPress={() => removeRobot(robotID)}>
+        <View key={robot.robotID} style={styles.teamSelection}>
             <View style={styles.teamName}>
-                <Text>{robot.teamNumber} - {robot.name}</Text>
+                <Text>{robot.teamNumber} - {robot.teamName}</Text>
             </View>
             <Image source={robot.teamImage} style={styles.teamImage} />
         </View>
