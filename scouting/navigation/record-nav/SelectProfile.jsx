@@ -1,25 +1,25 @@
 import { React, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, Pressable } from 'react-native';
 
+import axios from 'axios';
 
-// This will be where most of the post requests will happen. People will record data here
 export default function SelectProfile({ navigation }) {
 
   // Wrapping the data in useState because more objects will be added to the array
   // We'll use a useEffect and update the useState when the backend is called
   const [profileData, setProfileData] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await axios.get('') // This will be the endpoint to get the robot profiles
-        .then((response) => {
-          setProfileData(response.data);
-        })
-        .catch((error) => {
-          console.error('Error making a GET request:', error);
-        });
-    };
-  }, [setProfileData]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     await axios.get('') // This will be the endpoint to get the robot profiles
+  //       .then((response) => {
+  //         setProfileData(response.data);
+  //       })
+  //       .catch((error) => {
+  //         console.error('Error making a GET request:', error);
+  //       });
+  //   };
+  // }, [setProfileData]);
 
   // Wrap a pressable around this and navigate to the RecordGame Screen
   // When your navigate bring the object index of the robot with you to the next screen so react knows which robot to record for

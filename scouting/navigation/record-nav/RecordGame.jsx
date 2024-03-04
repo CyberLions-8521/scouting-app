@@ -41,15 +41,15 @@ export default function RecordGame({ navigation, route: { params: { robotIndex }
         }
 
         // The server will then add the match data to the database
-        await axios.post('', {matchData})
-            .then((response) => {
-                console.log(response);
-                // The app will then navigate back to the previous screen
-                navigation.goBack();
-            })
-            .catch((error) => {
-                console.error('Error making a POST request:', error);
-            });
+        // await axios.post('', {matchData})
+        //     .then((response) => {
+        //         console.log(response);
+        //         // The app will then navigate back to the previous screen
+        //         navigation.goBack();
+        //     })
+        //     .catch((error) => {
+        //         console.error('Error making a POST request:', error);
+        //     });
     };
 
     return (

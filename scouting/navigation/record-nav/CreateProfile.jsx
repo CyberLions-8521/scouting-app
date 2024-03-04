@@ -3,11 +3,13 @@ import { View, Text, TextInput, StyleSheet, Pressable, ScrollView } from 'react-
 import { Dropdown } from 'react-native-element-dropdown';
 import { Entypo } from '../../index.js';
 
+import axios from 'axios';
+
 export default function CreateProfile({ navigation }) {
 
     const [teamName, setTeamName] = useState('');
-    const [teamNumber, setTeamNumber] = useState('');
-    const [weight, setWeight] = useState('');
+    const [teamNumber, setTeamNumber] = useState(0);
+    const [weight, setWeight] = useState(0);
 
     const drivebaseSelection = [
         { label: 'Mecanum', value: 'Mecanum' },
@@ -24,9 +26,6 @@ export default function CreateProfile({ navigation }) {
     
     const [additionalDetails, setAdditionalDetails] = useState('');
 
-    // Imports the axios library for making HTTP requests
-    const axios = require('axios');
-
     const submitProfile = async () => {
         // This function will be used to submit the robot profile to the server through a POST request
         const profileData = {
@@ -40,15 +39,15 @@ export default function CreateProfile({ navigation }) {
         }
 
         // The server will then add the robot profile to the database
-        await axios.post('', {profileData})
-            .then((response) => {
-            console.log(response);
-                // The app will then navigate back to the previous screen
-                navigation.goBack();
-            })
-            .catch((error) => {
-                console.error('Error making a POST request:', error);
-            });
+        try {
+            const reponse = await axios.post('http://10.0.2.2:3000/profile/post', profileData);
+            console.log(reponse);
+        }
+        catch (error) {
+            console.error('Error making a POST request:', error);
+        }
+
+        navigation.goBack();
     };
 
     return (
@@ -58,7 +57,7 @@ export default function CreateProfile({ navigation }) {
                 <View style={styles.header}>
                     <Entypo name={'chevron-left'} size={30} color={'#616161'} onPress={() => navigation.goBack()} />
                     <Text style={styles.headerText}>Create Robot Profile</Text>
-                    <Pressable style={styles.submitButton} onPress={() => navigation.goBack() }>
+                    <Pressable style={styles.submitButton} onPress={submitProfile}>
                         <Text style={styles.submitButtonText}>Submit</Text>
                     </Pressable>
                 </View>
