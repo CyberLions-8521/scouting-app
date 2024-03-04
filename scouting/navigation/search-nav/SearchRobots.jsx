@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, ScrollView, Pressable } from 'react-native';
+import { View, Text, StyleSheet, TextInput, ScrollView, Pressable, RefreshControl, Alert } from 'react-native';
 import { AntDesign } from '../../index';
 import axios from 'axios';
 import StatGlimpse from '../../components/home/StatGlimpse.jsx';
@@ -7,52 +7,36 @@ import StatGlimpse from '../../components/home/StatGlimpse.jsx';
 // navigation can be called anything. this is just a component of the Stack.screen element
 export default function SearchRobots({ navigation }) {
   const [genData, setGenData] = useState([
-    //sample data
     {
-      index: 1,
-      name: 'The Cyberlions',
-      teamNumber: '8521',
-      rank: 1,
-      winLossRatio: '1:2',
-    },
-    {
-      index: 2,
-      name: 'High Rollers',
-      teamNumber: 987,
-      rank: 2,
-      winLossRatio: '1:2',
-    },
-    {
-      index: 3,
-      name: 'Mubotics',
-      teamNumber: 7157,
-      rank: 3,
-      winLossRatio: '1:2',
-    },
-    {
-      index: 4,
-      name: 'OP Robotics',
-      teamNumber: 2056,
-      rank: 4,
-      winLossRatio: '1:2',
-    },
+      _id: '',
+      teamName: '',
+      teamNumber: '',
+      rank: '',
+      winLossRatio: '',
+    }
   ]);
+  
+
+  const axios = require('axios');
 
   useEffect(()=>{
     const fetchRobotList = async () => {
-      await axios.get('')
-      .then((response)=>{
+      try{
+        const response = await axios.get('http://10.0.2.2:3000/robotList');
         setGenData(response.data);
-      })
-      .catch((error) =>{
-        console.error("Error retrieving robotList:", error);
-      });
+        console.log(response.data);
+      } catch(error){
+        console.error('Error retrieving robotList:', error);
+      };
     };
-  });
+
+
+    fetchRobotList();
+  }, [setGenData]);
 
   const displayRobotList = genData.map((robot) =>
     <View key={robot.index}>
-      <StatGlimpse name={robot.name} teamNumber={robot.teamNumber} rank={robot.rank} winLossRatio={robot.winLossRatio} />
+      <StatGlimpse name={robot.teamName} teamNumber={robot.teamNumber} rank={robot.rank} winLossRatio={robot.winLossRatio} />
     </View>
   );
 
