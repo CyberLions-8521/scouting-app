@@ -9,48 +9,53 @@ export default function DeleteRobot({ navigation }) {
 
     const [robotList, setRobotList] = useState([
       {
-        name: 'Robo Tigers',
+        teamName: 'Robo Tigers',
         teamNumber: '1258',
         teamImage: require(tImg),
-        index: 0,
+        robotID: 0,
+        key: 0,
       },
 
       {
-        name: 'Mozzarella Spheres',
+        teamName: 'Mozzarella Spheres',
         teamNumber: '9001',
         teamImage: require(tImg),
-        index: 1
+        robotID: 1,
+        key: 1,
       },
 
     ]);
 
-    //comments are just notes for myself(henry)
+    //note to self: uncomment these when adding actual backend
 
-    useEffect(() => {
-      const fetchData = async () => { 
-        await axios.get('http://10.0.2.2:3000/robotList') //imports data using axios
-          .then((response) => { //sets robotList to the data
-            setRobotList(response.data)
-          })
-          .catch((error) => {
-            console.error('Error!!! (Skill Issue TBH):', error)
-          })
-      }
-      fetchData()
-    }, [setRobotList]); //Updates on page load and when setRobotList changes
+    // useEffect(() => {
+    //   const fetchData = async () => { 
+    //     await axios.get('http://10.0.2.2:3000/robotList') //imports data using axios
+    //       .then((response) => { //sets robotList to the data
+    //         setRobotList(response.data)
+    //       })
+    //       .catch((error) => {
+    //         console.error('Error!!! (Skill Issue TBH):', error)
+    //       })
+    //   }
+    //   fetchData()
+    // }, [setRobotList]); //Updates on page load and when setRobotList changes
 
-    const removeRobot = async (id) => {
-      try {
-        await axios.delete(`http://10.0.2.2:3000/robotList/${id}`);
-        const updatedList = robotList.filter((robot) => robot.id !== id);
-        setRobotList(updatedList);
-      } catch (error) {
-        console.error('Error deleting robot:', error);
-      }
-    };
+         const removeRobot = async (id) => {
+          try {
+
+            // await axios.delete(`http://10.0.2.2:3000/robotList/${id}`);
+            const newList = robotList.filter(robot => robot.robotID !== id);
+            
+            setRobotList(newList);
+          } catch (error) {
+            console.error('Error deleting robot:', error);
+          }
+        };
+        
     
     const displayData = robotList.map((robot) =>
-      <Pressable onPress={() => removeRobot(robotID)}>
+      <Pressable onPress={() => removeRobot(robot.robotID)}>
         <View key={robot.robotID} style={styles.teamSelection}>
             <View style={styles.teamName}>
                 <Text>{robot.teamNumber} - {robot.teamName}</Text>
