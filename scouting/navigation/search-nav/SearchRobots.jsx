@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, ScrollView, Pressable, RefreshControl, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, ScrollView, Pressable, RefreshControl } from 'react-native';
 import { AntDesign } from '../../index';
 import axios from 'axios';
 import StatGlimpse from '../../components/home/StatGlimpse.jsx';
@@ -15,8 +15,9 @@ export default function SearchRobots({ navigation }) {
       winLossRatio: '',
     }
   ]);
-  
 
+  const [refreshing, setRefreshing] = useState(false);
+  
   const axios = require('axios');
 
   useEffect(()=>{
@@ -29,10 +30,14 @@ export default function SearchRobots({ navigation }) {
         console.error('Error retrieving robotList:', error);
       };
     };
-
-
     fetchRobotList();
   }, [setGenData]);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchRobotList();
+    setRefreshing(false);
+  };
 
   const displayRobotList = genData.map((robot) =>
     <View key={robot.index}>
@@ -54,7 +59,7 @@ export default function SearchRobots({ navigation }) {
                 </View>
                 <View style={styles.viewScoutingData}>
 
-                  <ScrollView>
+                  <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
                     <View style={styles.scoutingDataGlimpses}>
                       <Pressable onPress={()=>navigation.navigate('Profile')}>
                         {displayRobotList}
