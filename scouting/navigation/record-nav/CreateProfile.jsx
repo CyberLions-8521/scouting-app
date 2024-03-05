@@ -8,8 +8,8 @@ import axios from 'axios';
 export default function CreateProfile({ navigation }) {
 
     const [teamName, setTeamName] = useState('');
-    const [teamNumber, setTeamNumber] = useState(0);
-    const [weight, setWeight] = useState(0);
+    const [teamNumber, setTeamNumber] = useState('');
+    const [weight, setWeight] = useState('');
 
     const drivebaseSelection = [
         { label: 'Mecanum', value: 'Mecanum' },

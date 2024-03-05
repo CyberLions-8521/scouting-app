@@ -1,5 +1,6 @@
-import { React, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, Pressable } from 'react-native';
+import { React, useState, useCallback } from 'react';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import axios from 'axios';
 
@@ -8,31 +9,37 @@ export default function SelectProfile({ navigation }) {
   // Wrapping the data in useState because more objects will be added to the array
   // We'll use a useEffect and update the useState when the backend is called
   const [profileData, setProfileData] = useState([]);
+  
+  useFocusEffect(
+    useCallback(() =>  {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get('http://10.0.2.2:3000/profile/get');
+          setProfileData(response.data);
+        }
+        catch (error) {
+          console.error('Error making a GET request:', error);
+        }
+      }
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     await axios.get('') // This will be the endpoint to get the robot profiles
-  //       .then((response) => {
-  //         setProfileData(response.data);
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error making a GET request:', error);
-  //       });
-  //   };
-  // }, [setProfileData]);
+      fetchData();
+    }, [])
+  );
+
 
   // Wrap a pressable around this and navigate to the RecordGame Screen
   // When your navigate bring the object index of the robot with you to the next screen so react knows which robot to record for
-  const displayData = profileData.map((robot) =>
-    <Pressable key={robot.index} onPress={() => navigation.navigate('RecordGame', { robotIndex: robot.index })}>
-      <View style={styles.teamSelection}>
-          <View style={styles.teamName}>
-            <Text>{robot.name}</Text>
-            <Text>{robot.teamNumber}</Text>
-          </View>
-          <Image source={robot.teamImage} style={styles.teamImage} />
-      </View>
-    </Pressable>
+  const displayData = profileData.map((robot, index) =>
+    index > 0 && (
+      <Pressable key={robot.robotID} onPress={() => navigation.navigate('RecordGame', { robot: robot })}>
+        <View style={styles.teamSelection}>
+            <View style={styles.teamName}>
+              <Text>{robot.profile.teamName}</Text>
+              <Text>{robot.profile.teamNumber}</Text>
+            </View>
+        </View>
+      </Pressable>
+    )
   );
 
   return (

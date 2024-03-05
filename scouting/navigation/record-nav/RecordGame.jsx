@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TextInput, Pressable, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Pressable, ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import CheckBox from '@react-native-community/checkbox';
 import { Entypo } from '../../index.js';
 import Counter from '../../components/record/Counter';
 
-export default function RecordGame({ navigation, route: { params: { robotIndex } } }) {
+import axios from 'axios';
 
-    const [robotView, setRobotView] = useState(
-        profileData[robotIndex]
-    );
+export default function RecordGame({ navigation, route: { params: { robot } } }) {
+
+    const robotView = robot;
+    const robotID = robotView.robotID;
 
     const matchTypeSelection = [
         { label: 'Practice Match', value: 'Practice Match' },
@@ -19,6 +20,7 @@ export default function RecordGame({ navigation, route: { params: { robotIndex }
     ]
 
     const [matchType, setMatchType] = useState(null);
+    const [matchNumber, setMatchNumber] = useState(null);
 
     const [coopertition, setCoopertition] = useState(false);
     const [harmony, setHarmony] = useState(false);
@@ -28,10 +30,11 @@ export default function RecordGame({ navigation, route: { params: { robotIndex }
     const [autoSpeaker, setAutoSpeaker] = useState(0);
     const [teleOpAmp, setTeleOpAmp] = useState(0);
 
-    const submitMatch = async (robotIndex) => {
+    const submitMatch = async () => {
         // This function will be used to submit the match data to the server through a POST request
         const matchData = {
             matchType,
+            matchNumber,
             coopertition,
             harmony,
             climbed,
@@ -41,15 +44,15 @@ export default function RecordGame({ navigation, route: { params: { robotIndex }
         }
 
         // The server will then add the match data to the database
-        // await axios.post('', {matchData})
-        //     .then((response) => {
-        //         console.log(response);
-        //         // The app will then navigate back to the previous screen
-        //         navigation.goBack();
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error making a POST request:', error);
-        //     });
+        await axios.post(`http://10.0.2.2:3000/match/post/${robotID}`, matchData)
+            .then((response) => {
+                console.log(response);
+
+                navigation.goBack();
+            })
+            .catch((error) => {
+                console.error('Error making a POST request:', error);
+            });
     };
 
     return (
@@ -62,14 +65,13 @@ export default function RecordGame({ navigation, route: { params: { robotIndex }
                 <ScrollView contentContainerStyle={{ paddingBottom: 130 }}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                         <View style={{flexDirection: 'column'}}>
-                            <Text style={styles.headerText}>{robotView.name}</Text>
-                            <Text style={styles.subText}>Team {robotView.teamNumber}</Text>
+                            <Text style={styles.headerText}>{robotView.profile.teamName}</Text>
+                            <Text style={styles.subText}>Team {robotView.profile.teamNumber}</Text>
                         </View>
-                        <Image style={styles.teamImage} source={robotView.teamImage} />
                     </View>
                     <View style={{ flexDirection: 'row', gap: 10 }}>
                         <Dropdown style={styles.dropdown} selectedTextStyle={{color: 'white', fontSize: 15 }} placeholderStyle={{color: 'white', fontSize: 15}} iconColor={'white'} value={matchType} data={matchTypeSelection} onChange={(selection) => setMatchType(selection.value)} labelField={'label'} valueField={'value'} placeholder='Match Type'/>
-                        <TextInput style={styles.matchNumber} placeholder={'Match Number'} keyboardType={'numeric'} />
+                        <TextInput value={matchNumber} style={styles.matchNumber} placeholder={'Match Number'} keyboardType={'numeric'} onChangeText={value => setMatchNumber(value)} />
                     </View>
                     <View style={styles.checkboxes}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -108,7 +110,7 @@ export default function RecordGame({ navigation, route: { params: { robotIndex }
                             </View>
                         </View>
                     </View>
-                    <Pressable style={styles.submitButton} onPress={() => navigation.goBack() }>
+                    <Pressable style={styles.submitButton} onPress={submitMatch}>
                         <Text style={styles.submitButtonText}>Submit</Text>
                     </Pressable>
                 </ScrollView>
