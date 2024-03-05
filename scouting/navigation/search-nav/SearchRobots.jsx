@@ -20,18 +20,19 @@ export default function SearchRobots({ navigation }) {
   
   const axios = require('axios');
 
-  useEffect(()=>{
+
     const fetchRobotList = async () => {
       try{
         const response = await axios.get('http://10.0.2.2:3000/robotList');
         setGenData(response.data);
-        console.log(response.data);
       } catch(error){
         console.error('Error retrieving robotList:', error);
       };
     };
+
+  useEffect(()=>{
     fetchRobotList();
-  }, [setGenData]);
+  });
 
   const onRefresh = async () => {
     setRefreshing(true);
