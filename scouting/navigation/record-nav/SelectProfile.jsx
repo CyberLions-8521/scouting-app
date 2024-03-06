@@ -1,6 +1,7 @@
 import { React, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import SelectProfileSkeleton from '../../components/record/SelectProfileSkeleton';
 
 import axios from 'axios';
 
@@ -14,7 +15,7 @@ export default function SelectProfile({ navigation }) {
     useCallback(() =>  {
       const fetchData = async () => {
         try {
-          const response = await axios.get('http://10.0.2.2:3000/profile/get');
+          const response = await axios.get('http://10.0.2.2:3000/getProfile');
           setProfileData(response.data);
         }
         catch (error) {
@@ -33,10 +34,8 @@ export default function SelectProfile({ navigation }) {
     index > 0 && (
       <Pressable key={robot.robotID} onPress={() => navigation.navigate('RecordGame', { robot: robot })}>
         <View style={styles.teamSelection}>
-            <View style={styles.teamName}>
-              <Text>{robot.profile.teamName}</Text>
-              <Text>{robot.profile.teamNumber}</Text>
-            </View>
+            <Text>{robot.profile.teamName}</Text>
+            <Text>{robot.profile.teamNumber}</Text>
         </View>
       </Pressable>
     )
@@ -98,16 +97,12 @@ const styles = StyleSheet.create({
     width: '100%',
     minHeight: 70,
     backgroundColor: 'white',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexDirection: 'row',
+    justifyContent: 'center',
     borderColor: 'lightgrey',
     borderWidth: 2.5,
     paddingHorizontal: 10,
     marginBottom: 10,
-  },
-  teamName: {
-    minHeight: 50,
+    gap: 2.5,
   },
   teamImage: {
     width: 50,
