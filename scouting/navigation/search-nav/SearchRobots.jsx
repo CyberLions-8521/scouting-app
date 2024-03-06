@@ -1,50 +1,19 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, Suspense } from 'react';
 import { View, Text, StyleSheet, TextInput, ScrollView, Pressable, RefreshControl } from 'react-native';
 import { AntDesign } from '../../index';
-import axios from 'axios';
-import StatGlimpse from '../../components/home/StatGlimpse.jsx';
+
+import displayRobotList from '../../components/search/DisplayRobotList';
 
 // navigation can be called anything. this is just a component of the Stack.screen element
 export default function SearchRobots({ navigation }) {
-  const [genData, setGenData] = useState([
-    {
-      _id: '',
-      teamName: '',
-      teamNumber: '',
-      rank: '',
-      winLossRatio: '',
-    }
-  ]);
-
   const [refreshing, setRefreshing] = useState(false);
-  
-  const axios = require('axios');
 
+  // const onRefresh = async () => {
+  //   setRefreshing(true);
+  //   await fetchRobotList();
+  //   setRefreshing(false);
+  // };
 
-    const fetchRobotList = async () => {
-      try{
-        const response = await axios.get('http://10.0.2.2:3000/robotList');
-        setGenData(response.data);
-      } catch(error){
-        console.error('Error retrieving robotList:', error);
-      };
-    };
-
-  useEffect(()=>{
-    fetchRobotList();
-  });
-
-  const onRefresh = async () => {
-    setRefreshing(true);
-    await fetchRobotList();
-    setRefreshing(false);
-  };
-
-  const displayRobotList = genData.map((robot) =>
-    <View key={robot.index}>
-      <StatGlimpse name={robot.teamName} teamNumber={robot.teamNumber} rank={robot.rank} winLossRatio={robot.winLossRatio} />
-    </View>
-  );
 
     return (
         <>
@@ -60,11 +29,16 @@ export default function SearchRobots({ navigation }) {
                 </View>
                 <View style={styles.viewScoutingData}>
 
-                  <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
+                  {/*  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>} */}
+                  <ScrollView> 
                     <View style={styles.scoutingDataGlimpses}>
-                      <Pressable onPress={()=>navigation.navigate('Profile')}>
-                        {displayRobotList}
-                      </Pressable>
+
+                      <Suspense fallback={<Text>Loading...</Text>}>
+                        <Pressable onPress={()=>navigation.navigate('Profile')}>
+                          {displayRobotList}
+                        </Pressable>
+                      </Suspense>
+
                     </View>
                   </ScrollView>
 
