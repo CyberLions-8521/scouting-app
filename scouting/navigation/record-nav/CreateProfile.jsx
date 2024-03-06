@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import CheckBox from '@react-native-community/checkbox';
 import { Entypo } from '../../index.js';
 
 import axios from 'axios';
@@ -20,9 +21,16 @@ export default function CreateProfile({ navigation }) {
     ];
     const [drivebase, setDrivebase] = useState('');
     const [drivebaseDropdown, setDrivebaseDropdown] = useState('');
-
-    const [autonomous, setAutonomous] = useState('');
+    
+    const [autonomous, setAutonomous] = useState(false);
+    
+    const intakeSelection = [
+        { label: 'Over', value: 'Over' },
+        { label: 'Under', value: 'Under' },
+        { label: 'Other', value: 'Other' },
+    ];
     const [intake, setIntake] = useState('');
+    const [intakeDropdown, setIntakeDropdown] = useState('');
     
     const [additionalDetails, setAdditionalDetails] = useState('');
 
@@ -40,7 +48,7 @@ export default function CreateProfile({ navigation }) {
 
         // The server will then add the robot profile to the database
         try {
-            const reponse = await axios.post('http://10.0.2.2:3000/profile/post', profileData);
+            const reponse = await axios.post('http://10.0.2.2:3000/addProfile', profileData);
             console.log(reponse);
         }
         catch (error) {
@@ -61,7 +69,7 @@ export default function CreateProfile({ navigation }) {
                         <Text style={styles.submitButtonText}>Submit</Text>
                     </Pressable>
                 </View>
-                <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
+                <ScrollView contentContainerStyle={{ paddingBottom: 130 }}>
                     <Text style={styles.headerText}>General Information</Text>
                     <View style={{flexDirection: 'row'}}>
                         <View style={styles.inputContainer}>
@@ -72,15 +80,24 @@ export default function CreateProfile({ navigation }) {
                                 <TextInput value={teamNumber} style={styles.smallInput} placeholder={'Team Number'} keyboardType={'numeric'} onChangeText={value => setTeamNumber(value)}/>
                                 <TextInput value={weight} style={styles.smallInput} placeholder={'Weight'} keyboardType={'numeric'} onChangeText={value => setWeight(value)}/>
                             </View>
-                            <View>
+                            <View style={{marginTop: 10}}>
+                                <Text style={styles.headerText}>Drivebase</Text>
                                 <Dropdown style={styles.dropdown} selectedTextStyle={{color: 'white', fontSize: 15 }} placeholderStyle={{color: 'white', fontSize: 15}} iconColor={'white'} value={drivebaseDropdown} data={drivebaseSelection} onChange={(selection) => {setDrivebaseDropdown(selection.value); setDrivebase(selection.value)}} labelField={'label'} valueField={'value'} placeholder='Drivebase'/>
                                 
                                 {/*This ternary operator allows for manual input of drivebase if selected 'Other'*/}
                                 {drivebaseDropdown === 'Other' ? <TextInput style={styles.bigInput} placeholder={'Other Drivebase'} onChangeText={value => setDrivebase(value)}/> : <></>}
                             </View>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <TextInput value={autonomous} style={styles.smallInput} placeholder={'Autonomous'} onChangeText={value => setAutonomous(value)}/>
-                                <TextInput value={intake} style={styles.smallInput} placeholder={'Intake'} onChangeText={value => setIntake(value)}/>
+                            <View style={{marginTop: 10}}>
+                                <Text style={styles.headerText}>Intake</Text>
+                                <Dropdown style={styles.dropdown} selectedTextStyle={{color: 'white', fontSize: 15 }} placeholderStyle={{color: 'white', fontSize: 15}} iconColor={'white'} value={intakeDropdown} data={intakeSelection} onChange={(selection) => {setIntakeDropdown(selection.value); setIntake(selection.value)}} labelField={'label'} valueField={'value'} placeholder='Intake'/>
+
+                                {intakeDropdown === 'Other' ? <TextInput style={styles.bigInput} placeholder={'Other Intake'} onChangeText={value => setIntake(value)}/> : <></>}
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                                <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
+                                    <CheckBox disabled={false} value={autonomous} onValueChange={(newVal) => {setAutonomous(newVal)}} tintColors={{ true: '#E1584B', false: '' }}/>
+                                    <Text style={styles.subText}>Autonomous</Text>
+                                </View>
                             </View>
                         </View>
                         {/*This is where image would go*/}
@@ -129,6 +146,10 @@ const styles = StyleSheet.create({
         fontSize: 17,
         color: '#616161',
     },
+    subText: {
+        fontSize: 15,
+        color: '#616161',
+    },
     submitButton: {
         width: 80,
         height: 40,
@@ -169,6 +190,14 @@ const styles = StyleSheet.create({
     },
     dropdown: {
         width: '100%',
+        minHeight: 50,
+        backgroundColor: 'gray',
+        marginTop: 10,
+        paddingHorizontal: 10,
+        borderRadius: 10,
+    },
+    smallDropdown: {
+        width: '50%',
         minHeight: 50,
         backgroundColor: 'gray',
         marginTop: 10,

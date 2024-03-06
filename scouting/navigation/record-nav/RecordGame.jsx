@@ -44,15 +44,15 @@ export default function RecordGame({ navigation, route: { params: { robot } } })
         }
 
         // The server will then add the match data to the database
-        await axios.post(`http://10.0.2.2:3000/match/post/${robotID}`, matchData)
-            .then((response) => {
-                console.log(response);
+        try {
+            const response = axios.post(`http://10.0.2.2:3000/addMatch/${robotID}`, matchData);
+            console.log(response);
+        }
+        catch (error) {
+            console .error('Error making a POST request:', error);
+        }
 
-                navigation.goBack();
-            })
-            .catch((error) => {
-                console.error('Error making a POST request:', error);
-            });
+        navigation.goBack();
     };
 
     return (
