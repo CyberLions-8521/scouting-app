@@ -1,66 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, ScrollView, Alert } from 'react-native';
 import { Entypo } from '../..';
 import axios from 'axios';
 
 export default function DeleteRobot({ navigation }) {
 
-    const tImg = '../../assets/images/robbie-transparent.png' //template image
+    const tImg = require('../../assets/images/robbie-transparent.png') //template image
 
-    const [robotList, setRobotList] = useState([
-      {
-        teamName: 'Robo Tigers',
-        teamNumber: '1258',
-        teamImage: require(tImg),
-        robotID: 0,
-        key: 0,
-      },
+    const [robotList, setRobotList] = useState([]);
 
-      {
-        teamName: 'Mozzarella Spheres',
-        teamNumber: '9001',
-        teamImage: require(tImg),
-        robotID: 1,
-        key: 1,
-      },
+    useEffect(() => {
+      const fetchData = async () => { 
+        await axios.get('http://10.0.2.2:3000/robotList') //imports data using axios
+          .then((response) => { //sets robotList to the data
+            setRobotList(response.data)
+          })
+          .catch((error) => {
+            console.error('Error!!! (Skill Issue TBH):', error)
+          })
+      }
+      fetchData()
+    }, [setRobotList]); //Updates on page load and when setRobotList changes
 
-    ]);
-
-    //note to self: uncomment these when adding actual backend
-
-    // useEffect(() => {
-    //   const fetchData = async () => { 
-    //     await axios.get('http://10.0.2.2:3000/robotList') //imports data using axios
-    //       .then((response) => { //sets robotList to the data
-    //         setRobotList(response.data)
-    //       })
-    //       .catch((error) => {
-    //         console.error('Error!!! (Skill Issue TBH):', error)
-    //       })
-    //   }
-    //   fetchData()
-    // }, [setRobotList]); //Updates on page load and when setRobotList changes
-
-         const removeRobot = async (id) => {
-          try {
-
-            // await axios.delete(`http://10.0.2.2:3000/robotList/${id}`);
-            const newList = robotList.filter(robot => robot.robotID !== id);
-            
-            setRobotList(newList);
-          } catch (error) {
-            console.error('Error deleting robot:', error);
-          }
-        };
+    const removeRobot = async (id) => {
+      try {
+        await axios.post(`http://10.0.2.2:3000/removeRobot/${id}`);
+        let newList = await axios.get('http://10.0.2.2:3000/robotList');
+        setRobotList(newList.data);
         
-    
+      } catch (error) {
+        console.error('Error deleting robot:', id, error);
+      }
+    };
+
     const displayData = robotList.map((robot) =>
       <Pressable onPress={() => removeRobot(robot.robotID)}>
         <View key={robot.robotID} style={styles.teamSelection}>
             <View style={styles.teamName}>
-                <Text>{robot.teamNumber} - {robot.teamName}</Text>
+                <Text>{robot.profile.teamNumber} - {robot.profile.teamName}</Text>
             </View>
-            <Image source={robot.teamImage} style={styles.teamImage} />
+            <Image source={tImg} style={styles.teamImage} />
         </View>
       </Pressable>
     );
