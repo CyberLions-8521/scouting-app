@@ -3,7 +3,7 @@ import { Pressable, View } from 'react-native';
 import axios from 'axios';
 import StatGlimpse from '../../components/home/StatGlimpse.jsx';
 
-export default function DisplayRobotList({ navigation }) {
+export default function DisplayRobotList() {
     const [genData, setGenData] = useState();
 
     useEffect(() => {
