@@ -10,13 +10,17 @@ export default function SelectProfile({ navigation }) {
   // Wrapping the data in useState because more objects will be added to the array
   // We'll use a useEffect and update the useState when the backend is called
   const [profileData, setProfileData] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(false);
   
   useFocusEffect(
     useCallback(() =>  {
       const fetchData = async () => {
         try {
+          setIsLoading(true);
           const response = await axios.get('http://10.0.2.2:3000/getProfile');
           setProfileData(response.data);
+          setIsLoading(false);
         }
         catch (error) {
           console.error('Error making a GET request:', error);
@@ -30,8 +34,8 @@ export default function SelectProfile({ navigation }) {
 
   // Wrap a pressable around this and navigate to the RecordGame Screen
   // When your navigate bring the object index of the robot with you to the next screen so react knows which robot to record for
-  const displayData = profileData.map((robot, index) =>
-    index > 0 && (
+  const displayData = profileData.filter(robot => robot._id != 'robotID').map((robot, index) =>
+    (
       <Pressable key={robot.robotID} onPress={() => navigation.navigate('RecordGame', { robot: robot })}>
         <View style={styles.teamSelection}>
             <Text>{robot.profile.teamName}</Text>
@@ -49,7 +53,7 @@ export default function SelectProfile({ navigation }) {
           <Text style={styles.header}>Select Robot to Scout</Text>
           <ScrollView style={styles.viewSelection}>
 
-            {displayData}
+            {isLoading ? <SelectProfileSkeleton /> : displayData}
 
           </ScrollView>
           <Pressable style={styles.createButton} onPress={() => navigation.navigate('CreateProfile')}>
