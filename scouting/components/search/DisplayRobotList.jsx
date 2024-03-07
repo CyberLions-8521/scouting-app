@@ -18,7 +18,7 @@ export default function DisplayRobotList() {
 
     return (
         <>
-            {genData?.map((robot) =>
+            {genData?.filter((robot) => robot._id != 'robotID').map((robot) =>
                 <View key={robot.robotID}>
                     <StatGlimpse name={robot.profile.teamName} teamNumber={robot.profile.teamName} rank={5} winLossRatio={'3:5'} />
                 </View>

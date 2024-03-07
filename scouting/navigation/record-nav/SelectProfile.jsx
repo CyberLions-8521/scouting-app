@@ -1,49 +1,9 @@
-import { React, useState, useCallback } from 'react';
+import { React, Suspense } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
 import SelectProfileSkeleton from '../../components/record/SelectProfileSkeleton';
-
-import axios from 'axios';
+import DisplayProfile from '../../components/record/DisplayProfile';
 
 export default function SelectProfile({ navigation }) {
-
-  // Wrapping the data in useState because more objects will be added to the array
-  // We'll use a useEffect and update the useState when the backend is called
-  const [profileData, setProfileData] = useState([]);
-
-  const [isLoading, setIsLoading] = useState(false);
-  
-  useFocusEffect(
-    useCallback(() =>  {
-      const fetchData = async () => {
-        try {
-          setIsLoading(true);
-          const response = await axios.get('http://10.0.2.2:3000/getProfile');
-          setProfileData(response.data);
-          setIsLoading(false);
-        }
-        catch (error) {
-          console.error('Error making a GET request:', error);
-        }
-      }
-
-      fetchData();
-    }, [])
-  );
-
-
-  // Wrap a pressable around this and navigate to the RecordGame Screen
-  // When your navigate bring the object index of the robot with you to the next screen so react knows which robot to record for
-  const displayData = profileData.filter(robot => robot._id != 'robotID').map((robot, index) =>
-    (
-      <Pressable key={robot.robotID} onPress={() => navigation.navigate('RecordGame', { robot: robot })}>
-        <View style={styles.teamSelection}>
-            <Text>{robot.profile.teamName}</Text>
-            <Text>{robot.profile.teamNumber}</Text>
-        </View>
-      </Pressable>
-    )
-  );
 
   return (
     <>
@@ -52,9 +12,9 @@ export default function SelectProfile({ navigation }) {
         <View style={styles.middlePiece}>
           <Text style={styles.header}>Select Robot to Scout</Text>
           <ScrollView style={styles.viewSelection}>
-
-            {isLoading ? <SelectProfileSkeleton /> : displayData}
-
+            <Suspense fallback={<SelectProfileSkeleton />}>
+              <DisplayProfile />
+            </Suspense>
           </ScrollView>
           <Pressable style={styles.createButton} onPress={() => navigation.navigate('CreateProfile')}>
             <Text style={styles.createButtonText}>Create New Robot Profile</Text>
@@ -96,17 +56,6 @@ const styles = StyleSheet.create({
   viewSelection: {
     width: '100%',
     maxHeight: '71%',
-  },
-  teamSelection: {
-    width: '100%',
-    minHeight: 70,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    borderColor: 'lightgrey',
-    borderWidth: 2.5,
-    paddingHorizontal: 10,
-    marginBottom: 10,
-    gap: 2.5,
   },
   teamImage: {
     width: 50,
