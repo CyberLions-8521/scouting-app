@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, isValidElement } from 'react';
 import { View, Text, StyleSheet, Pressable, Image, ScrollView, Alert } from 'react-native';
 import { Entypo } from '../..';
 import axios from 'axios';
@@ -22,19 +22,20 @@ export default function DeleteRobot({ navigation }) {
       fetchData()
     }, [setRobotList]); //Updates on page load and when setRobotList changes
 
-    const removeRobot = async (id) => {
+    const removeRobot = async (tNum) => {
       try {
-        await axios.post(`http://10.0.2.2:3000/removeRobot/${id}`);
+
+        await axios.post(`http://10.0.2.2:3000/removeRobot/${tNum}`);
         let newList = await axios.get('http://10.0.2.2:3000/robotList');
         setRobotList(newList.data);
         
       } catch (error) {
-        console.error('Error deleting robot:', id, error);
+        console.error('Error deleting robot:', tNum, error);
       }
     };
 
     const displayData = robotList.map((robot) =>
-      <Pressable onPress={() => removeRobot(robot.robotID)}>
+      <Pressable onPress={() => removeRobot(robot.profile.teamNumber)}>
         <View key={robot.robotID} style={styles.teamSelection}>
             <View style={styles.teamName}>
                 <Text>{robot.profile.teamNumber} - {robot.profile.teamName}</Text>
