@@ -2,18 +2,24 @@ import { React, useState, Suspense } from 'react';
 import { View, Text, StyleSheet, TextInput, ScrollView, Pressable, RefreshControl } from 'react-native';
 import { AntDesign } from '../../index';
 
-import displayRobotList from '../../components/search/DisplayRobotList';
+import DisplayRobotList from '../../components/search/DisplayRobotList';
 
 // navigation can be called anything. this is just a component of the Stack.screen element
 export default function SearchRobots({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
+  //const [searchQuery, setSearchQuery] = useState('');
 
-  // const onRefresh = async () => {
-  //   setRefreshing(true);
-  //   await fetchRobotList();
-  //   setRefreshing(false);
-  // };
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchRobotList();
+    setRefreshing(false);
+  };
 
+  /*
+  const handleSearch = (query) => {
+    setSearchQuery(query)
+  };
+  */
 
     return (
         <>
@@ -24,7 +30,10 @@ export default function SearchRobots({ navigation }) {
                 <View style={styles.searchSection}>
                   <AntDesign style={styles.searchIcon}name="search1" size={25} color={'black'} />
                   <TextInput
-                  style={styles.searchbar} placeholder={'Search'}
+                  style={styles.searchbar} 
+                  placeholder={'Search'}
+                  //value={searchQuery}
+                  //onChangeText={setSearchQuery}
                   />
                 </View>
                 <View style={styles.viewScoutingData}>
@@ -35,7 +44,7 @@ export default function SearchRobots({ navigation }) {
 
                       <Suspense fallback={<Text>Loading...</Text>}>
                         <Pressable onPress={()=>navigation.navigate('Profile')}>
-                          {displayRobotList}
+                          {DisplayRobotList}
                         </Pressable>
                       </Suspense>
 
