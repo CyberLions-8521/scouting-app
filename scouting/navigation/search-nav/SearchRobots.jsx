@@ -1,8 +1,8 @@
 import { React, useState, Suspense } from 'react';
 import { View, Text, StyleSheet, TextInput, ScrollView, Pressable, RefreshControl } from 'react-native';
 import { AntDesign } from '../../index';
-
 import DisplayRobotList from '../../components/search/DisplayRobotList';
+import SearchRobotsSkeleton from '../../components/search/SearchRobotsSkeleton';
 
 // navigation can be called anything. this is just a component of the Stack.screen element
 export default function SearchRobots({ navigation }) {
@@ -41,8 +41,7 @@ export default function SearchRobots({ navigation }) {
                   {/*  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>} */}
                   <ScrollView> 
                     <View style={styles.scoutingDataGlimpses}>
-
-                      <Suspense fallback={<Text>Loading...</Text>}>
+                      <Suspense fallback={<SearchRobotsSkeleton/>}>
                         <Pressable onPress={()=>navigation.navigate('Profile')}>
                           {DisplayRobotList}
                         </Pressable>
