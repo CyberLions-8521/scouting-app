@@ -17,7 +17,7 @@ export default function RecordGame({ navigation, route: { params: { robot } } })
         { label: 'Qualification Match', value: 'Qualification Match' },
         { label: 'Playoff Match', value: 'Playoff Match' },
         { label: 'Semifinals', value: 'Semifinals' },
-    ]
+    ];
 
     const [matchType, setMatchType] = useState(null);
     const [matchNumber, setMatchNumber] = useState(null);
@@ -41,7 +41,7 @@ export default function RecordGame({ navigation, route: { params: { robot } } })
             teleOpSpeaker,
             autoSpeaker,
             teleOpAmp,
-        }
+        };
 
         // The server will then add the match data to the database
         try {
@@ -70,20 +70,20 @@ export default function RecordGame({ navigation, route: { params: { robot } } })
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', gap: 10 }}>
-                        <Dropdown style={styles.dropdown} selectedTextStyle={{color: 'white', fontSize: 15 }} placeholderStyle={{color: 'white', fontSize: 15}} iconColor={'white'} value={matchType} data={matchTypeSelection} onChange={(selection) => setMatchType(selection.value)} labelField={'label'} valueField={'value'} placeholder='Match Type'/>
+                        <Dropdown style={styles.dropdown} selectedTextStyle={{color: 'white', fontSize: 15 }} placeholderStyle={{color: 'white', fontSize: 15}} iconColor={'white'} value={matchType} data={matchTypeSelection} onChange={(selection) => setMatchType(selection.value)} labelField={'label'} valueField={'value'} placeholder={'Match Type'} />
                         <TextInput value={matchNumber} style={styles.matchNumber} placeholder={'Match Number'} keyboardType={'numeric'} onChangeText={value => setMatchNumber(value)} />
                     </View>
                     <View style={styles.checkboxes}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <CheckBox disabled={false} value={coopertition} onValueChange={(newVal) => {setCoopertition(newVal)}} tintColors={{ true: '#E1584B', false: '' }}/>
+                            <CheckBox disabled={false} value={coopertition} onValueChange={(newVal) => setCoopertition(newVal)} tintColors={{ true: '#E1584B', false: '' }}/>
                             <Text style={styles.subText}>Coopertition</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <CheckBox disabled={false} value={harmony} onValueChange={(newVal) => {setHarmony(newVal)}} tintColors={{ true: '#E1584B', false: '' }}/>
+                            <CheckBox disabled={false} value={harmony} onValueChange={(newVal) => setHarmony(newVal)} tintColors={{ true: '#E1584B', false: '' }}/>
                             <Text style={styles.subText}>Harmony</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <CheckBox disabled={false} value={climbed} onValueChange={(newVal) => {setClimbed(newVal)}} tintColors={{ true: '#E1584B', false: '' }}/>
+                            <CheckBox disabled={false} value={climbed} onValueChange={(newVal) => setClimbed(newVal)} tintColors={{ true: '#E1584B', false: '' }}/>
                             <Text style={styles.subText}>Climbed</Text>
                         </View>
                     </View>
@@ -185,13 +185,13 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     pointInput: {
-        width: 75, 
-        height: 40, 
+        width: 75,
+        height: 40,
         textAlign: 'center',
-        paddingHorizontal: 10, 
-        borderColor: 'gray', 
-        borderWidth: 4, 
-        borderRadius: 30 
+        paddingHorizontal: 10,
+        borderColor: 'gray',
+        borderWidth: 4,
+        borderRadius: 30,
     },
     pointContainer: {
         width: '49%',
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 2,
         borderRadius: 5,
-        borderColor: 'lightgray'
+        borderColor: 'lightgray',
     },
     submitButton: {
         width: 80,
@@ -213,10 +213,10 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         justifyContent: 'center',
         alignItems: 'center',
-        alignSelf: 'flex-end'
+        alignSelf: 'flex-end',
     },
     submitButtonText: {
         color: 'white',
         fontSize: 17,
-    }
+    },
 });
