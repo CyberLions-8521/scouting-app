@@ -4,6 +4,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import CheckBox from '@react-native-community/checkbox';
 import { Entypo } from '../../index.js';
 import Counter from '../../components/record/Counter';
+import CheckRecord from '../../components/record/CheckRecord.jsx';
 
 import axios from 'axios';
 
@@ -25,10 +26,14 @@ export default function RecordGame({ navigation, route: { params: { robot } } })
     const [coopertition, setCoopertition] = useState(false);
     const [harmony, setHarmony] = useState(false);
     const [climbed, setClimbed] = useState(false);
+    const [trap, setTrap] = useState(false);
 
     const [teleOpSpeaker, setTeleOpSpeaker] = useState(0);
-    const [autoSpeaker, setAutoSpeaker] = useState(0);
     const [teleOpAmp, setTeleOpAmp] = useState(0);
+    const [autoSpeaker, setAutoSpeaker] = useState(0);
+    const [autoAmp, setAutoAmp] = useState(0);
+
+    const [comment, setComment] = useState('');
 
     const submitMatch = async () => {
         // This function will be used to submit the match data to the server through a POST request
@@ -39,8 +44,10 @@ export default function RecordGame({ navigation, route: { params: { robot } } })
             harmony,
             climbed,
             teleOpSpeaker,
-            autoSpeaker,
             teleOpAmp,
+            autoSpeaker,
+            autoAmp,
+            comment,
         };
 
         // The server will then add the match data to the database
@@ -74,18 +81,10 @@ export default function RecordGame({ navigation, route: { params: { robot } } })
                         <TextInput value={matchNumber} style={styles.matchNumber} placeholder={'Match Number'} keyboardType={'numeric'} onChangeText={value => setMatchNumber(value)} />
                     </View>
                     <View style={styles.checkboxes}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <CheckBox disabled={false} value={coopertition} onValueChange={(newVal) => setCoopertition(newVal)} tintColors={{ true: '#E1584B', false: '' }}/>
-                            <Text style={styles.subText}>Coopertition</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <CheckBox disabled={false} value={harmony} onValueChange={(newVal) => setHarmony(newVal)} tintColors={{ true: '#E1584B', false: '' }}/>
-                            <Text style={styles.subText}>Harmony</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <CheckBox disabled={false} value={climbed} onValueChange={(newVal) => setClimbed(newVal)} tintColors={{ true: '#E1584B', false: '' }}/>
-                            <Text style={styles.subText}>Climbed</Text>
-                        </View>
+                        <CheckRecord checkboxTitle={'Cooperition'} stateValue={coopertition} changeState={setCoopertition} />
+                        <CheckRecord checkboxTitle={'High Note'} stateValue={harmony} changeState={setHarmony} />
+                        <CheckRecord checkboxTitle={'Climbed'} stateValue={climbed} changeState={setClimbed} />
+                        <CheckRecord checkboxTitle={'Trap'} stateValue={trap} changeState={setTrap} />
                     </View>
                     <Text style={{ marginTop: 30 }}>Add +1 for each NOTE scored below. The point value of each note will be calculated automatically</Text>
                     <View style={{ marginTop: 30, gap: 20 }}>
@@ -102,20 +101,28 @@ export default function RecordGame({ navigation, route: { params: { robot } } })
                                 </View>
                             </View>
                         </View>
-                        <View>
                             <Text style={styles.headerText}>Autonomous</Text>
-                            <View style={styles.pointContainer}>
-                                <Text>Speaker</Text>
-                                <Counter target={autoSpeaker} setTarget={setAutoSpeaker} style={styles.pointInput} />
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <View style={styles.pointContainer}>
+                                    <Text>Speaker</Text>
+                                    <Counter target={autoSpeaker} setTarget={setAutoSpeaker} style={styles.pointInput} />
+                                </View>
+                                <View style={styles.pointContainer}>
+                                    <Text>Amp</Text>
+                                    <Counter target={autoAmp} setTarget={setAutoAmp} style={styles.pointInput} />
+                                </View>
                             </View>
                         </View>
-                    </View>
-                    <Pressable style={styles.submitButton} onPress={submitMatch}>
-                        <Text style={styles.submitButtonText}>Submit</Text>
-                    </Pressable>
-                </ScrollView>
+                        <View style={{marginTop: 20}}>
+                            <Text style={styles.headerText}>Additional Comments</Text>
+                            <TextInput value={comment} style={styles.detailInput} multiline={true} onChangeText={value => setComment(value)}/>
+                        </View>
+                        <Pressable style={styles.submitButton} onPress={submitMatch}>
+                            <Text style={styles.submitButtonText}>Submit</Text>
+                        </Pressable>
+                    </ScrollView>
+                </View>
             </View>
-        </View>
     );
 }
 
@@ -218,5 +225,17 @@ const styles = StyleSheet.create({
     submitButtonText: {
         color: 'white',
         fontSize: 17,
+    },
+    detailInput: {
+        width: '100%',
+        fontSize: 15,
+        minHeight: 100,
+        maxHeight: 200,
+        marginTop: 10,
+        paddingHorizontal: 10,
+        borderColor: 'gray',
+        borderWidth: 2,
+        borderRadius: 10,
+        textAlignVertical: 'top',
     },
 });

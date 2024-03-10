@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import { View, Text, StyleSheet, Pressable, Image, Suspense, Alert } from 'react-native';
 import StatGlimpse from '../components/home/StatGlimpse.jsx';
 import informationIcon from '../assets/interface-icons/info.png';
@@ -7,58 +7,14 @@ import axios from 'axios';
 
 export default function Home({ navigation }) {
 
-  const [boilerData, modifyBoilerData] = useState();
+  const [robotList, alterRobotList] = useState();
 
-  const theoreticalData = [
-    {
-      name: 'The Cyberlions',
-      teamNumber: 8521,
-      rank: 1,
-      winLossRatio: '3:1',
-      teamImage: require('../assets/images/robbie-transparent.png'),
-      index: 1,
-    },
-    {
-      name: 'High Rollers',
-      teamNumber: 987,
-      rank: 2,
-      winLossRatio: '2:2',
-      teamImage: require('../assets/images/robbie-transparent.png'),
-      index: 2,
-    },
-    {
-      name: 'Mubotics',
-      teamNumber: 7157,
-      rank: 3,
-      winLossRatio: '2:2',
-      teamImage: require('../assets/images/robbie-transparent.png'),
-      index: 3,
-    },
-    {
-      name: 'OP Robotics',
-      teamNumber: 2056,
-      rank: 4,
-      winLossRatio: '1:3',
-      teamImage: require('../assets/images/robbie-transparent.png'),
-      index: 4,
-    },
-  ];
+  useEffect(() => {
+    // code returns undefined
+    alterRobotList((prev) => axios.get('http://10.0.2.2:3000/robotList').data);
 
-  // Map through each object in the array
-  const displayRobotList = theoreticalData.map((robot) =>
-    <Pressable onPress={async () => {
-      let message = await axios.get('http://10.0.2.2:3000/');
-      // let message = await axios.get('http://bckend.team8521.com/frc');
-
-      Alert.alert(message.data);
-      }}
-    key={robot.index}>
-
-      <View>
-        <StatGlimpse name={robot.name} teamNumber={robot.teamNumber} rank={robot.rank} winLossRatio={robot.winLossRatio} />
-      </View>
-    </Pressable>
-  );
+    console.log(robotList);
+  }, [robotList]);
 
   const [closeInfo, setCloseInfo] = useState(false);
 
@@ -95,7 +51,17 @@ export default function Home({ navigation }) {
               <Text style={styles.header}>View Scouting Data</Text>
               <View style={styles.scoutingDataGlimpses}>
 
-                  {displayRobotList}
+                {robotList?.map((robot) =>
+                  <Pressable onPress={async () => {
+                    let message = await axios.get('http://10.0.2.2:3000/');
+                    Alert.alert(message.data);
+                    }}
+                    key={robot.profile.teamNumber}>
+                    <View>
+                      <StatGlimpse name={robot.profile.teamNumber} teamNumber={robot.profile.teamNumber} rank={'robot.rank'} winLossRatio={'robot.winLossRatio'} />
+                    </View>
+                  </Pressable>
+                )}
 
               </View>
             </View>

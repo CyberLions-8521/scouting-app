@@ -21,9 +21,9 @@ export default function CreateProfile({ navigation }) {
     ];
     const [drivebase, setDrivebase] = useState('');
     const [drivebaseDropdown, setDrivebaseDropdown] = useState('');
-    
+
     const [autonomous, setAutonomous] = useState(false);
-    
+
     const intakeSelection = [
         { label: 'Over', value: 'Over' },
         { label: 'Under', value: 'Under' },
@@ -31,7 +31,7 @@ export default function CreateProfile({ navigation }) {
     ];
     const [intake, setIntake] = useState('');
     const [intakeDropdown, setIntakeDropdown] = useState('');
-    
+
     const [additionalDetails, setAdditionalDetails] = useState('');
 
     const submitProfile = async () => {
@@ -44,7 +44,7 @@ export default function CreateProfile({ navigation }) {
             autonomous,
             intake,
             additionalDetails,
-        }
+        };
 
         // The server will then add the robot profile to the database
         try {
@@ -78,18 +78,26 @@ export default function CreateProfile({ navigation }) {
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <TextInput value={teamNumber} style={styles.smallInput} placeholder={'Team Number'} keyboardType={'numeric'} onChangeText={value => setTeamNumber(value)}/>
-                                <TextInput value={weight} style={styles.smallInput} placeholder={'Weight'} keyboardType={'numeric'} onChangeText={value => setWeight(value)}/>
+                                {/* <TextInput value={weight} style={styles.smallInput} placeholder={'Weight'} keyboardType={'numeric'} onChangeText={value => setWeight(value)}/> */}
                             </View>
                             <View style={{marginTop: 10}}>
                                 <Text style={styles.headerText}>Drivebase</Text>
-                                <Dropdown style={styles.dropdown} selectedTextStyle={{color: 'white', fontSize: 15 }} placeholderStyle={{color: 'white', fontSize: 15}} iconColor={'white'} value={drivebaseDropdown} data={drivebaseSelection} onChange={(selection) => {setDrivebaseDropdown(selection.value); setDrivebase(selection.value)}} labelField={'label'} valueField={'value'} placeholder='Drivebase'/>
-                                
+                                <Dropdown style={styles.dropdown} selectedTextStyle={{color: 'white', fontSize: 15 }} placeholderStyle={{color: 'white', fontSize: 15}} iconColor={'white'} value={drivebaseDropdown} data={drivebaseSelection} 
+                                onChange={(selection) => {
+                                    setDrivebaseDropdown(selection.value);
+                                    setDrivebase(selection.value);
+                                }}
+                                    labelField={'label'}
+                                    valueField={'value'}
+                                    placeholder={'Drivebase'}
+                                />
+
                                 {/*This ternary operator allows for manual input of drivebase if selected 'Other'*/}
                                 {drivebaseDropdown === 'Other' ? <TextInput style={styles.bigInput} placeholder={'Other Drivebase'} onChangeText={value => setDrivebase(value)}/> : <></>}
                             </View>
                             <View style={{marginTop: 10}}>
                                 <Text style={styles.headerText}>Intake</Text>
-                                <Dropdown style={styles.dropdown} selectedTextStyle={{color: 'white', fontSize: 15 }} placeholderStyle={{color: 'white', fontSize: 15}} iconColor={'white'} value={intakeDropdown} data={intakeSelection} onChange={(selection) => {setIntakeDropdown(selection.value); setIntake(selection.value)}} labelField={'label'} valueField={'value'} placeholder='Intake'/>
+                                <Dropdown style={styles.dropdown} selectedTextStyle={{color: 'white', fontSize: 15 }} placeholderStyle={{color: 'white', fontSize: 15}} iconColor={'white'} value={intakeDropdown} data={intakeSelection} onChange={(selection) => {setIntakeDropdown(selection.value); setIntake(selection.value)}} labelField={'label'} valueField={'value'} placeholder={'Intake'} />
 
                                 {intakeDropdown === 'Other' ? <TextInput style={styles.bigInput} placeholder={'Other Intake'} onChangeText={value => setIntake(value)}/> : <></>}
                             </View>

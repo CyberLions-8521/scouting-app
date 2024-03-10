@@ -1,9 +1,26 @@
-import { React, Suspense } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import SelectProfileSkeleton from '../../components/record/SelectProfileSkeleton';
 import DisplayProfile from '../../components/record/DisplayProfile';
 
+import axios from 'axios';
+
 export default function SelectProfile({ navigation }) {
+
+  const [profileData, setProfileData] = useState([]);
+
+	useEffect(() => {
+		async function fetchData() {
+			try {
+				const response = await axios.get('http://10.0.2.2:3000/getProfile');
+				setProfileData(response.data);
+			}
+			catch (error) {
+				console.error('Error making a GET request:', error);
+			}
+		}
+		fetchData();
+	}, [setProfileData]);
 
   return (
     <>
@@ -13,9 +30,16 @@ export default function SelectProfile({ navigation }) {
           <Text style={styles.header}>Select Robot to Scout</Text>
           <ScrollView style={styles.viewSelection}>
             <Suspense fallback={<SelectProfileSkeleton />}>
-              <DisplayProfile />
+
+              {profileData?.map(robot => {
+                <Pressable key={robot.robotID} onPress={() => navigation.navigate('RecordGame', { robot: robot })}>
+                  <DisplayProfile profileData={profileData} />
+                </Pressable>;
+              })}
+
             </Suspense>
           </ScrollView>
+
           <Pressable style={styles.createButton} onPress={() => navigation.navigate('CreateProfile')}>
             <Text style={styles.createButtonText}>Create New Robot Profile</Text>
           </Pressable>
