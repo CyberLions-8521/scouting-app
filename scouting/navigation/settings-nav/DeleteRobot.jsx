@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable, Image, ScrollView } from 'react-native';
+import DeleteRobotSkeleton from '../../components/settings/DeleteRobotSkeleton';
 import { Entypo } from '../..';
 import axios from 'axios';
 
@@ -27,14 +28,14 @@ export default function DeleteRobot({ navigation }) {
     };
 
     const displayData = robotList.map((robot) =>
-      <Pressable onPress={() => removeRobot(robot.profile.teamNumber)}>
-        <View key={robot.robotID} style={styles.teamSelection}>
-            <View style={styles.teamName}>
-                <Text>{robot.profile.teamNumber} - {robot.profile.teamName}</Text>
-            </View>
-            <Image source={tImg} style={styles.teamImage} />
-        </View>
-      </Pressable>
+        <Pressable onPress={() => removeRobot(robot.profile.teamNumber)}>
+          <View key={robot.robotID} style={styles.teamSelection}>
+              <View style={styles.teamName}>
+                  <Text>{robot.profile.teamNumber} - {robot.profile.teamName}</Text>
+              </View>
+              <Image source={tImg} style={styles.teamImage} />
+          </View>
+        </Pressable>
     );
 
     return (
@@ -52,7 +53,9 @@ export default function DeleteRobot({ navigation }) {
           <Text style={styles.subText}>This action CANNOT BE UNDONE. DO NOT CLICK PROFILES YOU DO NOT WANT TO DELETE.</Text>
 
           <ScrollView style={styles.robotListContainer}>
-            {displayData}
+            <Suspense fallback={ <DeleteRobotSkeleton/> }>
+              {displayData}
+            </Suspense>
           </ScrollView>
 
         </View>
