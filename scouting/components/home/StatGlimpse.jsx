@@ -3,7 +3,7 @@ import fillerImage from '../../assets/interface-icons/filler-image.png';
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 
-export default function StatGlimpse({ name, teamNumber, rank, winLossRatio }) {
+export default function StatGlimpse({ name, teamNumber, driveBase, intake }) {
   return (
     <View style={styles.scoutingDataGlimpsePiece}>
 
@@ -11,8 +11,8 @@ export default function StatGlimpse({ name, teamNumber, rank, winLossRatio }) {
             <Text style={styles.headerSmaller}>{name} ({teamNumber})</Text>
 
             <View style={styles.stats}>
-                <Text style={styles.text}>Rank: {rank}</Text>
-                <Text style={styles.text}>Win/Loss Ratio: {winLossRatio}</Text>
+                <Text style={styles.text}>Intake: {intake}</Text>
+                <Text style={styles.text}>Drive Base: {driveBase}</Text>
             </View>
         </View>
 
@@ -42,6 +42,8 @@ const styles = StyleSheet.create({
     },
     metadata: {
         gap: 10,
+        maxWidth: '60%',
+        flexWrap: 'wrap',
     },
     fillerImage: {
       width: 120,

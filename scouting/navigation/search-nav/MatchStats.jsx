@@ -24,7 +24,7 @@ export default function MatchStats({ navigation }) {
     ]);
 
     return (
-        
+
         <>
             <View style={s.topPiece} />
 

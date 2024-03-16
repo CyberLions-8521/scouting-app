@@ -21,8 +21,10 @@ export default function DeleteRobot({ navigation }) {
 
     }, [setRobotList]); //Updates on page load and when setRobotList changes
 
-    const removeRobot = async (tNum) => {
-        // await axios.post(`http://10.0.2.2:3000/removeRobot/${tNum}`);
+    const removeRobot = async (teamNumber) => {
+
+      // remove robot from robotList and update list on screen
+      await axios.get(`http://10.0.2.2:3000/removeRobot/${teamNumber}`);
         let newList = await axios.get('http://10.0.2.2:3000/robotList');
         setRobotList((prev) => newList.data);
     };

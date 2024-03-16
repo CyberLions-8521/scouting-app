@@ -15,7 +15,7 @@ export default function Counter({ target, setTarget, style }) {
                 if (!isNaN(parsedValue)) {
                     setTarget(parsedValue);
                 }
-                else {
+                else if (parsedValue === 0) {
                     setTarget(0);
                 }
             }}/>

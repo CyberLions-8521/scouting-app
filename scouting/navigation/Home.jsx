@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { View, Text, StyleSheet, Pressable, Image, Suspense, Alert } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, Suspense, Alert, ScrollView } from 'react-native';
 import StatGlimpse from '../components/home/StatGlimpse.jsx';
 import informationIcon from '../assets/interface-icons/info.png';
 
@@ -10,11 +10,15 @@ export default function Home({ navigation }) {
   const [robotList, alterRobotList] = useState();
 
   useEffect(() => {
-    // code returns undefined
-    alterRobotList((prev) => axios.get('http://10.0.2.2:3000/robotList').data);
+    axios.get('http://10.0.2.2:3000/robotList')
+    .then((response) => {
+      alterRobotList(response.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 
-    console.log(robotList);
-  }, [robotList]);
+  }, []);
 
   const [closeInfo, setCloseInfo] = useState(false);
 
@@ -49,24 +53,22 @@ export default function Home({ navigation }) {
 
             <View style={styles.viewScoutingData}>
               <Text style={styles.header}>View Scouting Data</Text>
-              <View style={styles.scoutingDataGlimpses}>
+              <ScrollView style={styles.scoutingDataGlimpses}>
 
                 {robotList?.map((robot) =>
-                  <Pressable onPress={async () => {
-                    let message = await axios.get('http://10.0.2.2:3000/');
-                    Alert.alert(message.data);
-                    }}
-                    key={robot.profile.teamNumber}>
-                    <View>
-                      <StatGlimpse name={robot.profile.teamNumber} teamNumber={robot.profile.teamNumber} rank={'robot.rank'} winLossRatio={'robot.winLossRatio'} />
-                    </View>
+
+                  <Pressable key={robot.profile.teamNumber} onPress={() => {
+                    navigation.navigate('Profile');
+                  }}>
+                    <StatGlimpse name={robot.profile.teamName} teamNumber={robot.profile.teamNumber} driveBase={robot.profile.driveBase} intake={robot.profile.intake} />
                   </Pressable>
+
                 )}
 
-              </View>
-            </View>
+              </ScrollView>
 
-            <Text style={styles.text2}>For more information of all teams, click on the search icon</Text>
+              <Text style={styles.text2}>For more information of all teams, click on the search icon</Text>
+            </View>
 
           </View>
       </View>
@@ -106,6 +108,10 @@ const styles = StyleSheet.create({
   viewScoutingData: {
     width: '100%',
     maxHeight: '84%',
+    gap: 10,
+  },
+  scoutingDataGlimpses: {
+    maxHeight: '82%',
   },
   bottomPiece: {
     width: '100%',
