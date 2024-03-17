@@ -1,15 +1,26 @@
 import fillerImage from '../../assets/interface-icons/filler-image.png';
 
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, Animated } from 'react-native';
 
 export default function StatGlimpse({ name, teamNumber, driveBase, intake, isLoading }) {
+  const greyBoxWidth = useRef(new Animated.Value(0)).current;
+
+  useEffect({
+    if (isLoading) {
+      Animated.timing(greyBoxWidth, {
+        toValue: 0,
+        duration: 0,
+        useNativeDriver: false,
+      }).start();
+    }
+  }, [isLoading]);
   return (
     <View style={styles.scoutingDataGlimpsePiece}>
 
         <View style={styles.metadata}>
           {isLoading? (
-            <View style={styles.greyBox}/>
+            <Animated.View style={[styles.greyBox, {width: greyBoxWidth}]}/>
           ):(
             <>
             <Text style={styles.headerSmaller}>{name} ({teamNumber})</Text>
