@@ -1,4 +1,3 @@
-
 import { React } from 'react';
 import { View, Skeleton, StyleSheet, Text } from 'react-native';
 import { AntDesign } from '../../index';
@@ -13,7 +12,7 @@ export default function SearchRobotsSkeleton(){
                     <AntDesign style={styles.searchIcon}name="search1" size={25} color={'black'} />
                 </View>
                 <View styles={styles.viewScoutingData}>
-                    <StatGlimpse/>
+                    <StatGlimpse isLoading={true}/>
 
                 </View>
             </View>
@@ -50,8 +49,5 @@ const styles = StyleSheet.create({
       },
       searchIcon: {
         marginLeft: 50,
-      },
-      skeleton: {
-
       },
 });

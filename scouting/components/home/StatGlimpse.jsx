@@ -1,22 +1,30 @@
 import fillerImage from '../../assets/interface-icons/filler-image.png';
 
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Animated } from 'react-native';
 
-export default function StatGlimpse({ name, teamNumber, driveBase, intake }) {
+export default function StatGlimpse({ name, teamNumber, driveBase, intake, isLoading }) {
   return (
     <View style={styles.scoutingDataGlimpsePiece}>
 
         <View style={styles.metadata}>
+          {isLoading? (
+            <View style={styles.greyBox}/>
+          ):(
+            <>
             <Text style={styles.headerSmaller}>{name} ({teamNumber})</Text>
 
             <View style={styles.stats}>
                 <Text style={styles.text}>Intake: {intake}</Text>
                 <Text style={styles.text}>Drive Base: {driveBase}</Text>
             </View>
+            </>
+          )}
         </View>
+        
+          <Image style={styles.fillerImage} alt="filler image" source={fillerImage} />
 
-        <Image style={styles.fillerImage} alt="filler image" source={fillerImage} />
+
     </View>
   );
 }
@@ -48,5 +56,11 @@ const styles = StyleSheet.create({
     fillerImage: {
       width: 120,
       height: '100%',
+    },
+    greyBox: {
+      //will adjust to text size
+      width: 0,
+      height: 0,
+      backgroundColor: '#616161',
     },
   });
