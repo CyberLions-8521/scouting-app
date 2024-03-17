@@ -36,12 +36,15 @@ export default function CreateProfile({ navigation }) {
     const submitProfile = async () => {
         // This function will be used to submit the robot profile to the server through a POST request
         const profileData = {
-            teamName,
-            teamNumber,
-            drivebase,
-            autonomous,
-            intake,
-            additionalDetails,
+            profile: {
+                teamName,
+                teamNumber,
+                drivebase,
+                autonomous,
+                intake,
+                additionalDetails,
+            },
+            matches: [],
         };
 
         // The server will then add the robot profile to the database
