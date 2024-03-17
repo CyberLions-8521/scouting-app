@@ -1,62 +1,64 @@
-import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import axios from 'axios';
 
 import { Entypo } from '../../index.js';
 
-export default function MatchStats({ navigation }) {
+export default function MatchStats({ route, navigation }) {
 
-    const [scoutData, setScoutData] = useState([
-        {
-            index: 1,
-            name: 'The Cyberlions',
-            teamNumber: 8521,
-            score: 78,
-            matchType: 'Qualifiers',
-            matchNum: 1,
-            teleopScore: 60,
-            autonomousScore: 14,
-            mounted:'Yes',
-            keynote:'Yes',
-            harmony: 'Yes',
-            teamImage: require('../../assets/images/robbie-transparent.png'),
-        },
-    ]);
+    const [robotProfileData, setRobotProfileData] = useState();
+    const [robotMatchData, setRobotMatchData] = useState();
+    const { teamNumber, matchNumber } = route.params;
+
+    useEffect(() => {
+        axios.get(`http://10.0.2.2:3000/getRobot/${teamNumber}}`)
+        .then((response) => {
+            setRobotProfileData(response.data);
+        });
+
+        axios.get(`http://10.0.2.2:3000/getMatch/${teamNumber}/${matchNumber}`)
+        .then((response) => {
+            setRobotMatchData(response.data);
+        });
+    });
 
     return (
 
         <>
             <View style={s.topPiece} />
-
             <View style={s.container}>
 
             <View style={s.buttonPiece}>
                 <Entypo name={'chevron-left'} size={30} color={'#616161'} onPress={() => navigation.goBack()} />
             </View>
 
-                <View style={s.teamMain}>
-                    <View style={s.teamNameNum}>
-                        <Text style={s.header}>{scoutData.name}</Text>
-                        <Text style={s.subHeader}>{scoutData.teamNumber}</Text>
+            {robotMatchData &&
+                <>
+                    <View style={s.teamMain}>
+                        <View style={s.teamNameNum}>
+                            <Text style={s.header}>{robotProfileData.profile.teamName}</Text>
+                            <Text style={s.subHeader}>{robotProfileData.profile.teamNumber}</Text>
+                        </View>
+                        <Image style={s.image} source={require('../../assets/interface-icons/filler-image.png')} />
                     </View>
-                    <Image style={s.image} source={require('../../assets/interface-icons/filler-image.png')} />
-                </View>
 
-                <View style={s.teamDesc}>
-                    <Text style={s.teamDescText}>Match Number: {scoutData.matchNum}</Text>
-                    <Text style={s.teamDescText}>Score: {scoutData.score}</Text>
-                    <Text style={s.teamDescText}>Match Type: {scoutData.matchType}</Text>
-                    <Text style={s.teamDescText} />
+                    <View style={s.teamDesc}>
 
-                    <Text style={s.teamDescText}>Teleop Score: {scoutData.teleopScore}</Text>
-                    <Text style={s.teamDescText}>Autonomous Score: {scoutData.autonomousScore}</Text>
-                    <Text style={s.teamDescText} />
+                        <Text style={s.teamDescText}>Match Number: {robotMatchData.matchNumber}</Text>
+                        <Text style={s.teamDescText}>Match Type: {robotMatchData.matchType}</Text>
 
-                    <Text style={s.teamDescText}>Mounted: {scoutData.mounted}</Text>
-                    <Text style={s.teamDescText}>Keynote: {scoutData.keynote}</Text>
-                    <Text style={s.teamDescText}>Harmony with others: {scoutData.harmony}</Text>
-                    <Text style={s.teamDescText} />
-                </View>
+                        <Text style={s.teamDescText}>Teleop Amp Count: {robotMatchData.teleOpAmp}</Text>
+                        <Text style={s.teamDescText}>Teleop Speaker Count: {robotMatchData.teleOpSpeaker}</Text>
+
+                        <Text style={s.teamDescText}>Autonomous Amp Count: {robotMatchData.autoAmp}</Text>
+                        <Text style={s.teamDescText}>Autonomous Speaker Count: {robotMatchData.autoSpeaker}</Text>
+
+                        <Text style={s.teamDescText}>Climbed: {robotMatchData.climbed.toString()}</Text>
+                        <Text style={s.teamDescText}>Coopertition: {robotMatchData.coopertition.toString()}</Text>
+                        <Text style={s.teamDescText}>High Note: {robotMatchData.highNote.toString()}</Text>
+                    </View>
+                </>
+            }
             </View>
         </>
     );
@@ -70,7 +72,7 @@ const s = StyleSheet.create({
         backgroundColor: 'white',
 
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
     },
 
     topPiece: {
@@ -123,5 +125,5 @@ const s = StyleSheet.create({
 
     teamDescText: {
         fontSize: 14,
-    }
+    },
 });

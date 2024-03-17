@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { View, Text, StyleSheet, Pressable, Image, Suspense, Alert, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, ScrollView } from 'react-native';
 import StatGlimpse from '../components/home/StatGlimpse.jsx';
 import informationIcon from '../assets/interface-icons/info.png';
 
@@ -57,10 +57,8 @@ export default function Home({ navigation }) {
 
                 {robotList?.map((robot) =>
 
-                  <Pressable key={robot.profile.teamNumber} onPress={() => {
-                    navigation.navigate('Search');
-                  }}>
-                    <StatGlimpse name={robot.profile.teamName} teamNumber={robot.profile.teamNumber} driveBase={robot.profile.driveBase} intake={robot.profile.intake} />
+                  <Pressable key={robot.profile.teamNumber}>
+                     <StatGlimpse name={robot.profile.teamName} teamNumber={robot.profile.teamNumber} driveBase={robot.profile.driveBase} intake={robot.profile.intake} />
                   </Pressable>
 
                 )}

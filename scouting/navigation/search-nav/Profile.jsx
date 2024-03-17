@@ -4,7 +4,7 @@ import { Entypo } from '../../index.js';
 import axios from 'axios';
 
 export default function Profile({ route, navigation }) {
-    const [scoutData, setScoutData] = useState();
+    const [robotProfileData, setRobotProfileData] = useState();
 
     // we are destructuring the teamNumber key from the route.params object
     const { teamNumber } = route.params;
@@ -12,7 +12,7 @@ export default function Profile({ route, navigation }) {
     useEffect(() => {
         axios.get(`http://10.0.2.2:3000/getRobot/${teamNumber}}`)
         .then((response) => {
-            setScoutData(response.data);
+          setRobotProfileData(response.data);
         });
     }, [teamNumber]);
 
@@ -27,34 +27,42 @@ export default function Profile({ route, navigation }) {
             <View style={styles.middlePieceContainer}>
                 <View style={styles.middlePiece}>
 
-                {scoutData && <>
+                {robotProfileData && <>
                     <View style={styles.teamMain}>
                         <View style={styles.teamSubMain}>
-                            <Text style={styles.header}>{scoutData.profile.teamName}</Text>
-                            <Text style={styles.subText}>{scoutData.profile.teamNumber}</Text>
+                            <Text style={styles.header}>{robotProfileData.profile.teamName}</Text>
+                            <Text style={styles.subText}>{robotProfileData.profile.teamNumber}</Text>
                         </View>
 
                         <Image style={styles.image}source={require('../../assets/interface-icons/filler-image.png')}/>
                     </View>
 
                     <View style={styles.robotDetails}>
-                        <Text style={styles.text}>Drivebase: {scoutData.profile.driveBase}</Text>
-                        <Text style={styles.text}>Autonomous: {scoutData.profile.autonomous.toString()}</Text>
-                        <Text style={styles.text}>Intake: {scoutData.profile.intake}</Text>
-                        <Text style={styles.text}>Additional Details: {scoutData.profile.additionalDetails}</Text>
+                        <Text style={styles.text}>Drivebase: {robotProfileData.profile.driveBase}</Text>
+                        <Text style={styles.text}>Autonomous: {robotProfileData.profile.autonomous.toString()}</Text>
+                        <Text style={styles.text}>Intake: {robotProfileData.profile.intake}</Text>
+                        <Text style={styles.text}>Additional Details: {robotProfileData.profile.additionalDetails}</Text>
                     </View>
-                    </>
-                    }
+                  </>
+                }
 
-                    <ScrollView style={styles.matchSection}>
-                        <Pressable onPress={()=>navigation.navigate('MatchStats')}>
-                            <View style={styles.matches}>
-                                <Text style={styles.text}>Match Number: {'5'}</Text>
-                                <Text style={styles.text}>Score: {'5'}</Text>
-                            </View>
-                        </Pressable>
+                <ScrollView style={styles.matchSection}>
+                    {robotProfileData?.matches?.map((match) =>
+                      <Pressable key={`${robotProfileData.profile.teamName} match ${match.matchNumber}`}
+                        onPress={() => navigation.navigate('MatchStats',
 
-                    </ScrollView>
+                          // route robot team number and specific match to display in the matchstats component
+                          { teamNumber: robotProfileData.profile.teamNumber, matchNumber: match.matchNumber }
+                        )}>
+
+                          <View style={styles.matches}>
+                              <Text style={styles.text}> Match Number: {match.matchNumber} </Text>
+                              <Text style={styles.text}> Match Type: {match.matchType} </Text>
+                          </View>
+
+                      </Pressable>
+                    )}
+                </ScrollView>
 
                 </View>
             </View>
@@ -107,7 +115,6 @@ const styles = StyleSheet.create({
       borderWidth: 2.5,
       borderColor: '#C8C8C8',
       padding: 15,
-      paddingRight: 200,
 
       marginTop: 10,
       marginBottom: 10,
