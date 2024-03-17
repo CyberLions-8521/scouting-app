@@ -7,7 +7,7 @@ import SearchRobotsSkeleton from '../../components/search/SearchRobotsSkeleton';
 // navigation can be called anything. this is just a component of the Stack.screen element
 export default function SearchRobots({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
-  //const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -15,11 +15,10 @@ export default function SearchRobots({ navigation }) {
     setRefreshing(false);
   };
 
-  /*
+  
   const handleSearch = (query) => {
     setSearchQuery(query)
   };
-  */
 
     return (
         <>
@@ -32,14 +31,19 @@ export default function SearchRobots({ navigation }) {
                   <TextInput
                   style={styles.searchbar} 
                   placeholder={'Search'}
-                  //value={searchQuery}
-                  //onChangeText={setSearchQuery}
+                  value={searchQuery}
+                  onChangeText={handleSearch}
                   />
                 </View>
                 <View style={styles.viewScoutingData}>
-
-                  {/*  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>} */}
-                  <ScrollView> 
+                  <ScrollView
+                    refreshControl={
+                      <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                      />
+                    }
+                  > 
                     <View style={styles.scoutingDataGlimpses}>
                       <Suspense fallback={<SearchRobotsSkeleton/>}>
                         <Pressable onPress={()=>navigation.navigate('Profile')}>

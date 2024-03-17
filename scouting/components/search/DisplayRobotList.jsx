@@ -23,7 +23,11 @@ export default function DisplayRobotList({searchQuery}) {
         <>
             {genData
             ?.filter((robot) => robot._id !== 'robotID')
-            //.filter((robot) => robot.teamName && robot.teamName.toLowerCase().includes(searchQuery.toLowerCase())) // Apply search filter with null check
+            .filter(
+                (robot) => 
+                    robot.profile.teamName &&
+                    robot.profile.teamName.toLowerCase().includes(searchQuery.toLowerCase())) 
+                    // Apply search filter with null check
             .map((robot) =>
                 <View key={robot.robotID}>
                     <StatGlimpse 
