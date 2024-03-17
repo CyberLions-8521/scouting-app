@@ -7,35 +7,36 @@ import axios from 'axios';
 
 export default function SelectProfile({ navigation }) {
 
-  const [profileData, setProfileData] = useState([]);
+  const [profileData, setProfileData] = useState();
 
-	useEffect(() => {
-		async function fetchData() {
-			try {
-				const response = await axios.get('http://10.0.2.2:3000/getProfile');
-				setProfileData(response.data);
-			}
-			catch (error) {
-				console.error('Error making a GET request:', error);
-			}
-		}
-		fetchData();
-	}, [setProfileData]);
+  useEffect(() => {
+    axios.get('http://10.0.2.2:3000/robotList')
+    .then((response) => {
+      setProfileData(response.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }, []);
 
   return (
     <>
       <View style={styles.container}>
         <View style={styles.topPiece} />
+
         <View style={styles.middlePiece}>
           <Text style={styles.header}>Select Robot to Scout</Text>
+
           <ScrollView style={styles.viewSelection}>
             <Suspense fallback={<SelectProfileSkeleton />}>
 
-              {profileData?.map(robot => {
+              {profileData?.map((robot) =>
+
                 <Pressable key={robot.robotID} onPress={() => navigation.navigate('RecordGame', { robot: robot })}>
-                  <DisplayProfile profileData={profileData} />
-                </Pressable>;
-              })}
+                  <DisplayProfile profileData={robot} />
+                </Pressable>
+
+              )}
 
             </Suspense>
           </ScrollView>
