@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Pressable, ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
-import CheckBox from '@react-native-community/checkbox';
 import { Entypo } from '../../index.js';
 import Counter from '../../components/record/Counter';
 import CheckRecord from '../../components/record/CheckRecord.jsx';
 
 import axios from 'axios';
 
-export default function RecordGame({ navigation, route: { params: { robot } } }) {
+export default function RecordGame({ route, navigation }) {
 
-    const robotView = robot;
-    const robotID = robotView.robotID;
+    const { robot } = route.params;
+    const robotTeamNumber = robot.profile.teamNumber;
 
     const matchTypeSelection = [
         { label: 'Practice Match', value: 'Practice Match' },
@@ -24,7 +23,7 @@ export default function RecordGame({ navigation, route: { params: { robot } } })
     const [matchNumber, setMatchNumber] = useState(null);
 
     const [coopertition, setCoopertition] = useState(false);
-    const [harmony, setHarmony] = useState(false);
+    const [highNote, setHighNote] = useState(false);
     const [climbed, setClimbed] = useState(false);
     const [trap, setTrap] = useState(false);
 
@@ -41,7 +40,7 @@ export default function RecordGame({ navigation, route: { params: { robot } } })
             matchType,
             matchNumber,
             coopertition,
-            harmony,
+            highNote,
             climbed,
             teleOpSpeaker,
             teleOpAmp,
@@ -52,8 +51,11 @@ export default function RecordGame({ navigation, route: { params: { robot } } })
 
         // The server will then add the match data to the database
         try {
-            const response = axios.post(`http://10.0.2.2:3000/addMatch/${robotID}`, matchData);
-            console.log(response);
+
+            // quickly convert everything that needs to be an integer to an integer
+            matchData.matchNumber = Number(matchNumber);
+
+            axios.post(`http://10.0.2.2:3000/addMatch/${robotTeamNumber}`, matchData);
         }
         catch (error) {
             console .error('Error making a POST request:', error);
@@ -72,8 +74,8 @@ export default function RecordGame({ navigation, route: { params: { robot } } })
                 <ScrollView contentContainerStyle={{ paddingBottom: 130 }}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                         <View style={{flexDirection: 'column'}}>
-                            <Text style={styles.headerText}>{robotView.profile.teamName}</Text>
-                            <Text style={styles.subText}>Team {robotView.profile.teamNumber}</Text>
+                            <Text style={styles.headerText}>{robot.profile.teamName}</Text>
+                            <Text style={styles.subText}>Team {robot.profile.teamNumber}</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', gap: 10 }}>
@@ -82,7 +84,7 @@ export default function RecordGame({ navigation, route: { params: { robot } } })
                     </View>
                     <View style={styles.checkboxes}>
                         <CheckRecord checkboxTitle={'Cooperition'} stateValue={coopertition} changeState={setCoopertition} />
-                        <CheckRecord checkboxTitle={'High Note'} stateValue={harmony} changeState={setHarmony} />
+                        <CheckRecord checkboxTitle={'High Note'} stateValue={highNote} changeState={setHighNote} />
                         <CheckRecord checkboxTitle={'Climbed'} stateValue={climbed} changeState={setClimbed} />
                         <CheckRecord checkboxTitle={'Trap'} stateValue={trap} changeState={setTrap} />
                     </View>
