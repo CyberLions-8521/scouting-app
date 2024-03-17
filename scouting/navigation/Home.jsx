@@ -58,7 +58,7 @@ export default function Home({ navigation }) {
                 {robotList?.map((robot) =>
 
                   <Pressable key={robot.profile.teamNumber} onPress={() => {
-                    navigation.navigate('Profile');
+                    navigation.navigate('Search');
                   }}>
                     <StatGlimpse name={robot.profile.teamName} teamNumber={robot.profile.teamNumber} driveBase={robot.profile.driveBase} intake={robot.profile.intake} />
                   </Pressable>
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   scoutingDataGlimpses: {
-    maxHeight: '82%',
+    maxHeight: '83%',
   },
   bottomPiece: {
     width: '100%',

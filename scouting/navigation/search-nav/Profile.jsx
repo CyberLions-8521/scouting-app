@@ -3,37 +3,18 @@ import { View, Text, Image, StyleSheet, ScrollView, Pressable } from 'react-nati
 import { Entypo } from '../../index.js';
 import axios from 'axios';
 
-export default function Profile({ navigation }) {
-    const [scoutData, setScoutData] = useState([
-        {
-            name: 'The Cyberlions',
-            teamNumber: 8521,
-            teamImage: require('../../assets/images/robbie-transparent.png'),
-            index: 1,
-            drivebase: 'Swerve Drive',
-            autonomous: 'Yes',
-            weight: '80 pounds',
-            intake: 'human and ground',
-        },
-    ]);
+export default function Profile({ route, navigation }) {
+    const [scoutData, setScoutData] = useState();
 
-    const [matchData, setMatchData] = useState([
-        {
-            index: 1,
-            matchNumber: 42,
-            score: 95,
-        },
-        {
-            index: 2,
-            matchNumber: 73,
-            score: 42,
-        },
-        {
-            index: 3,
-            matchNumber: 76,
-            score: 110,
-        },
-    ]);
+    // we are destructuring the teamNumber key from the route.params object
+    const { teamNumber } = route.params;
+
+    useEffect(() => {
+        axios.get(`http://10.0.2.2:3000/getRobot/${teamNumber}}`)
+        .then((response) => {
+            setScoutData(response.data);
+        });
+    }, [teamNumber]);
 
     return (
         <View style={styles.container}>
@@ -46,107 +27,33 @@ export default function Profile({ navigation }) {
             <View style={styles.middlePieceContainer}>
                 <View style={styles.middlePiece}>
 
+                {scoutData && <>
                     <View style={styles.teamMain}>
                         <View style={styles.teamSubMain}>
-                            <Text style={styles.header}>{scoutData.name}</Text>
-                            <Text style={styles.subText}>{scoutData.teamNumber}{scoutData.teamNumber}</Text>
+                            <Text style={styles.header}>{scoutData.profile.teamName}</Text>
+                            <Text style={styles.subText}>{scoutData.profile.teamNumber}</Text>
                         </View>
 
                         <Image style={styles.image}source={require('../../assets/interface-icons/filler-image.png')}/>
                     </View>
 
                     <View style={styles.robotDetails}>
-                        <Text style={styles.text}>Drivebase: {scoutData.drivebase}</Text>
-                        <Text style={styles.text}>Autonomous: {scoutData.autonomous}</Text>
-                        <Text style={styles.text}>Weight: {scoutData.weight}</Text>
-                        <Text style={styles.text}>Intake: {scoutData.intake}</Text>
-                        <Text style={styles.text}>Additional Details:</Text>
+                        <Text style={styles.text}>Drivebase: {scoutData.profile.driveBase}</Text>
+                        <Text style={styles.text}>Autonomous: {scoutData.profile.autonomous.toString()}</Text>
+                        <Text style={styles.text}>Intake: {scoutData.profile.intake}</Text>
+                        <Text style={styles.text}>Additional Details: {scoutData.profile.additionalDetails}</Text>
                     </View>
+                    </>
+                    }
 
                     <ScrollView style={styles.matchSection}>
                         <Pressable onPress={()=>navigation.navigate('MatchStats')}>
                             <View style={styles.matches}>
-                                <Text style={styles.text}>Match Number: {matchData.matchNumber}</Text>
-                                <Text style={styles.text}>Score: {matchData.score}</Text>
+                                <Text style={styles.text}>Match Number: {'5'}</Text>
+                                <Text style={styles.text}>Score: {'5'}</Text>
                             </View>
                         </Pressable>
 
-                        <Pressable onPress={()=>navigation.navigate('MatchStats')}>
-                            <View style={styles.matches}>
-                                <Text style={styles.text}>Match Number: {matchData.matchNumber}</Text>
-                                <Text style={styles.text}>Score: {matchData.score}</Text>
-                            </View>
-                        </Pressable>
-
-                        <Pressable onPress={()=>navigation.navigate('MatchStats')}>
-                            <View style={styles.matches}>
-                                <Text style={styles.text}>Match Number: {matchData.matchNumber}</Text>
-                                <Text style={styles.text}>Score: {matchData.score}</Text>
-                            </View>
-                        </Pressable>
-
-                        <Pressable onPress={()=>navigation.navigate('MatchStats')}>
-                            <View style={styles.matches}>
-                                <Text style={styles.text}>Match Number: {matchData.matchNumber}</Text>
-                                <Text style={styles.text}>Score: {matchData.score}</Text>
-                            </View>
-                        </Pressable>
-
-                        <Pressable onPress={()=>navigation.navigate('MatchStats')}>
-                            <View style={styles.matches}>
-                                <Text style={styles.text}>Match Number: {matchData.matchNumber}</Text>
-                                <Text style={styles.text}>Score: {matchData.score}</Text>
-                            </View>
-                        </Pressable>
-
-                        <Pressable onPress={()=>navigation.navigate('MatchStats')}>
-                            <View style={styles.matches}>
-                                <Text style={styles.text}>Match Number: {matchData.matchNumber}</Text>
-                                <Text style={styles.text}>Score: {matchData.score}</Text>
-                            </View>
-                        </Pressable>
-
-                        <Pressable onPress={()=>navigation.navigate('MatchStats')}>
-                            <View style={styles.matches}>
-                                <Text style={styles.text}>Match Number: {matchData.matchNumber}</Text>
-                                <Text style={styles.text}>Score: {matchData.score}</Text>
-                            </View>
-                        </Pressable>
-
-                        <Pressable onPress={()=>navigation.navigate('MatchStats')}>
-                            <View style={styles.matches}>
-                                <Text style={styles.text}>Match Number: {matchData.matchNumber}</Text>
-                                <Text style={styles.text}>Score: {matchData.score}</Text>
-                            </View>
-                        </Pressable>
-
-                        <Pressable onPress={()=>navigation.navigate('MatchStats')}>
-                            <View style={styles.matches}>
-                                <Text style={styles.text}>Match Number: {matchData.matchNumber}</Text>
-                                <Text style={styles.text}>Score: {matchData.score}</Text>
-                            </View>
-                        </Pressable>
-
-                        <Pressable onPress={()=>navigation.navigate('MatchStats')}>
-                            <View style={styles.matches}>
-                                <Text style={styles.text}>Match Number: {matchData.matchNumber}</Text>
-                                <Text style={styles.text}>Score: {matchData.score}</Text>
-                            </View>
-                        </Pressable>
-
-                        <Pressable onPress={()=>navigation.navigate('MatchStats')}>
-                            <View style={styles.matches}>
-                                <Text style={styles.text}>Match Number: {matchData.matchNumber}</Text>
-                                <Text style={styles.text}>Score: {matchData.score}</Text>
-                            </View>
-                        </Pressable>
-
-                        <Pressable onPress={()=>navigation.navigate('MatchStats')}>
-                            <View style={styles.matches}>
-                                <Text style={styles.text}>Match Number: {matchData.matchNumber}</Text>
-                                <Text style={styles.text}>Score: {matchData.score}</Text>
-                            </View>
-                        </Pressable>
                     </ScrollView>
 
                 </View>

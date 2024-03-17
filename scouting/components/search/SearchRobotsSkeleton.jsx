@@ -13,10 +13,7 @@ export default function SearchRobotsSkeleton(){
                 </View>
                 <View styles={styles.viewScoutingData}>
                     <StatGlimpse isLoading={true}/>
-                    <StatGlimpse isLoading={true}/>
-                    <StatGlimpse isLoading={true}/>
-                    <StatGlimpse isLoading={true}/>
-                    <StatGlimpse isLoading={true}/>
+
                 </View>
             </View>
         <View styles={styles.bottomPiece}/>
