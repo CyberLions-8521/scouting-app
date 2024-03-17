@@ -86,7 +86,7 @@ export default function RecordGame({ navigation, route: { params: { robot } } })
                         <CheckRecord checkboxTitle={'Climbed'} stateValue={climbed} changeState={setClimbed} />
                         <CheckRecord checkboxTitle={'Trap'} stateValue={trap} changeState={setTrap} />
                     </View>
-                    <Text style={{ marginTop: 30 }}>Add +1 for each NOTE scored below. The point value of each note will be calculated automatically</Text>
+                    <Text style={{ marginTop: 30 }}>Add +1 for each NOTE scored. Ex: robot puts 1 note in AMP</Text>
                     <View style={{ marginTop: 30, gap: 20 }}>
                         <View>
                             <Text style={styles.headerText}>Teleoperation</Text>

@@ -9,8 +9,7 @@ import axios from 'axios';
 export default function CreateProfile({ navigation }) {
 
     const [teamName, setTeamName] = useState('');
-    const [teamNumber, setTeamNumber] = useState('');
-    const [weight, setWeight] = useState('');
+    const [teamNumber, setTeamNumber] = useState();
 
     const drivebaseSelection = [
         { label: 'Mecanum', value: 'Mecanum' },
@@ -39,7 +38,6 @@ export default function CreateProfile({ navigation }) {
         const profileData = {
             teamName,
             teamNumber,
-            weight,
             drivebase,
             autonomous,
             intake,
@@ -48,6 +46,7 @@ export default function CreateProfile({ navigation }) {
 
         // The server will then add the robot profile to the database
         try {
+            // the profile data should be in an object called profile
             const reponse = await axios.post('http://10.0.2.2:3000/addProfile', profileData);
             console.log(reponse);
         }
@@ -77,8 +76,7 @@ export default function CreateProfile({ navigation }) {
                                 <TextInput value={teamName} style={styles.bigInput} placeholder={'Team Name'} onChangeText={value => setTeamName(value)}/>
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <TextInput value={teamNumber} style={styles.smallInput} placeholder={'Team Number'} keyboardType={'numeric'} onChangeText={value => setTeamNumber(value)}/>
-                                {/* <TextInput value={weight} style={styles.smallInput} placeholder={'Weight'} keyboardType={'numeric'} onChangeText={value => setWeight(value)}/> */}
+                                <TextInput value={teamNumber} style={styles.smallInput} placeholder={'Team Number'} keyboardType={'numeric'} onChangeText={value => setTeamNumber(Number(value))}/>
                             </View>
                             <View style={{marginTop: 10}}>
                                 <Text style={styles.headerText}>Drivebase</Text>

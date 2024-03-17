@@ -32,7 +32,7 @@ export default function SelectProfile({ navigation }) {
 
               {profileData?.map((robot) =>
 
-                <Pressable key={robot.robotID} onPress={() => navigation.navigate('RecordGame', { robot: robot })}>
+                <Pressable key={'recording:' + robot.profile.teamNumber} onPress={() => navigation.navigate('RecordGame', { robot: robot })}>
                   <DisplayProfile profileData={robot} />
                 </Pressable>
 
