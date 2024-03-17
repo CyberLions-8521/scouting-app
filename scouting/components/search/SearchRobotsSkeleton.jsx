@@ -14,10 +14,7 @@ export default function SearchRobotsSkeleton(){
                 </View>
                 <View styles={styles.viewScoutingData}>
                     <StatGlimpse/>
-                    <StatGlimpse/>
-                    <StatGlimpse/>
-                    <StatGlimpse/>
-                    <StatGlimpse/>
+
                 </View>
             </View>
         <View styles={styles.bottomPiece}/>

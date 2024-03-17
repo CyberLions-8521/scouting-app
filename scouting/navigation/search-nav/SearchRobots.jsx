@@ -1,25 +1,25 @@
-import { React, useState, Suspense } from 'react';
+import { React, useState, useEffect, Suspense } from 'react';
 import { View, Text, StyleSheet, TextInput, ScrollView, Pressable, RefreshControl } from 'react-native';
 import { AntDesign } from '../../index';
-import DisplayRobotList from '../../components/search/DisplayRobotList';
+// import DisplayRobot from '../../components/search/DisplayRobot';
 import SearchRobotsSkeleton from '../../components/search/SearchRobotsSkeleton';
 
-// navigation can be called anything. this is just a component of the Stack.screen element
+import StatGlimpse from '../../components/home/StatGlimpse';
+
+import axios from 'axios';
+
 export default function SearchRobots({ navigation }) {
-  const [refreshing, setRefreshing] = useState(false);
-  //const [searchQuery, setSearchQuery] = useState('');
+  const [genData, setGenData] = useState();
 
-  const onRefresh = async () => {
-    setRefreshing(true);
-    await fetchRobotList();
-    setRefreshing(false);
-  };
-
-  /*
-  const handleSearch = (query) => {
-    setSearchQuery(query)
-  };
-  */
+  useEffect(() => {
+    axios.get('http://10.0.2.2:3000/robotList')
+    .then((response) => {
+      setGenData(response.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }, []);
 
     return (
         <>
@@ -30,7 +30,7 @@ export default function SearchRobots({ navigation }) {
                 <View style={styles.searchSection}>
                   <AntDesign style={styles.searchIcon}name="search1" size={25} color={'black'} />
                   <TextInput
-                  style={styles.searchbar} 
+                  style={styles.searchbar}
                   placeholder={'Search'}
                   //value={searchQuery}
                   //onChangeText={setSearchQuery}
@@ -38,18 +38,27 @@ export default function SearchRobots({ navigation }) {
                 </View>
                 <View style={styles.viewScoutingData}>
 
-                  {/*  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>} */}
-                  <ScrollView> 
+                  <ScrollView>
+
                     <View style={styles.scoutingDataGlimpses}>
                       <Suspense fallback={<SearchRobotsSkeleton/>}>
-                        <Pressable onPress={()=>navigation.navigate('Profile')}>
-                          {DisplayRobotList}
-                        </Pressable>
+
+                          {genData?.map((robot) =>
+
+                            <Pressable key={robot.profile.teamNumber}
+                              onPress={() => {
+                                navigation.navigate('Profile', { teamNumber: robot.profile.teamNumber });
+                              }
+                            }>
+                              <StatGlimpse name={robot.profile.teamName} teamNumber={robot.profile.teamNumber} driveBase={robot.profile.driveBase} intake={robot.profile.intake} />
+                            </Pressable>
+
+                          )}
+
                       </Suspense>
-
                     </View>
-                  </ScrollView>
 
+                  </ScrollView>
                 </View>
               </View>
             </View>
