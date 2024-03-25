@@ -1,17 +1,29 @@
 import fillerImage from '../../assets/interface-icons/filler-image.png';
-
 import React, { useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, Animated } from 'react-native';
 
-export default function StatGlimpse({ name, teamNumber, driveBase, intake }) {
+export default function StatGlimpseSkeleton() {
+//const greyBoxWidth = useRef(new Animated.Value(0)).current;
+  /*
+  useEffect({
+    if (isLoading) {
+       Animated.timing(greyBoxWidth, {
+         toValue: 0,
+         duration: 0,
+         useNativeDriver: false,
+       }).start();
+     }
+  }, [isLoading]);
+  */
+
   return (
     <View style={styles.scoutingDataGlimpsePiece}>
         <View style={styles.metadata}>
             <>
-              <Text style={styles.headerSmaller}>{name} ({teamNumber})</Text>
+              <View style={styles.headerSkeleton}/>
               <View style={styles.stats}>
-                  <Text style={styles.text}>Intake: {intake}</Text>
-                  <Text style={styles.text}>Drive Base: {driveBase}</Text>
+                  <View style={styles.textSkeleton1}/>
+                  <View style={styles.textSkeleton2}/>
               </View>
             </>
         </View>
@@ -21,13 +33,24 @@ export default function StatGlimpse({ name, teamNumber, driveBase, intake }) {
 }
 
 const styles = StyleSheet.create({
-    headerSmaller: {
-      color: '#616161',
-      fontSize: 14,
+    headerSkeleton: {
+      backgroundColor: '#E9EBEE',
+      width: 170,
+      height: 25,
+      borderRadius: 5,
     },
-    text: {
-      color: '#616161',
-      fontSize: 12,
+    textSkeleton1: {
+      backgroundColor: '#E9EBEE',
+      width: 100,
+      marginBottom: 10,
+      height: 20,
+      borderRadius: 5,
+    },
+    textSkeleton2: {
+      backgroundColor: '#E9EBEE',
+      width: 130,
+      height: 20,
+      borderRadius: 5,
     },
     scoutingDataGlimpsePiece: {
         flexDirection: 'row',

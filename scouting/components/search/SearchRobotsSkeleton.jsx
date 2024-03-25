@@ -1,23 +1,28 @@
 import { React } from 'react';
 import { View, Skeleton, StyleSheet, Text } from 'react-native';
 import { AntDesign } from '../../index';
-import StatGlimpse from '../../components/home/StatGlimpse';
+import StatGlimpseSkeleton from '../../components/home/StatGlimpseSkeleton';
 
+//added multiple StatGlimpses to fill up the skeleton screen
 export default function SearchRobotsSkeleton(){
     return (
-        <View styles={styles.container}>
-        <View styles={styles.topPiece}/>
-            <View styles={styles.middlePiece}>
-                <View styles={styles.searchbar}>
-                    <AntDesign style={styles.searchIcon}name="search1" size={25} color={'black'} />
+            <View style={styles.container}>
+              <View style={styles.topPiece} />
+              <View style={styles.middlePiece}>
+                <Text style={styles.header}>Get Started Scouting</Text>
+                <View style={styles.searchSection}>
+                  <AntDesign style={styles.searchIcon}name="search1" size={25} color={'black'} />
+                  <View style={styles.searchbar}/>
                 </View>
-                <View styles={styles.viewScoutingData}>
-                    <StatGlimpse isLoading={true}/>
+                <View style={styles.viewScoutingData}>
+                <StatGlimpseSkeleton/>
+                <StatGlimpseSkeleton/>
+                <StatGlimpseSkeleton/>
+                <StatGlimpseSkeleton/>
+                </View>
 
-                </View>
             </View>
-        <View styles={styles.bottomPiece}/>
-    </View>
+          </View>
     );
 }
 
@@ -28,6 +33,12 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         flexDirection: 'column',
+      },
+      header: {
+        color: '#616161',
+        textAlign: 'center',
+        fontSize: 17,
+        marginBottom: 10,
       },
       topPiece: {
         width: '100%',
@@ -42,10 +53,26 @@ const styles = StyleSheet.create({
         gap: 10,
         alignItems: 'center',
       },
-      searchbar: {
+      searchSection: {
         width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: '#616161',
+        borderWidth: 2.5,
+        padding: 5,
+      },
+      searchbar: {
         maxHeight: 40,
         paddingLeft: 10,
+        width: '100%'
+      },
+      searchIcon: {
+        marginLeft: 50,
+      },
+      viewScoutingData: {
+        width: '100%',
+        maxHeight: '84%',
       },
       searchIcon: {
         marginLeft: 50,

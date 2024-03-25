@@ -3,13 +3,22 @@ import { View, Text, StyleSheet, TextInput, ScrollView, Pressable, RefreshContro
 import { AntDesign } from '../../index';
 // import DisplayRobot from '../../components/search/DisplayRobot';
 import SearchRobotsSkeleton from '../../components/search/SearchRobotsSkeleton';
-
 import StatGlimpse from '../../components/home/StatGlimpse';
-
 import axios from 'axios';
 
 export default function SearchRobots({ navigation }) {
-  const [genData, setGenData] = useState();
+  const [genData, setGenData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredData = genData.filter((robot) =>
+    robot.profile.teamName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    robot.profile.teamNumber.toString().includes(searchQuery)
+
+  );
+  
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
 
   useEffect(() => {
     axios.get('http://10.0.2.2:3000/robotList')
@@ -23,6 +32,7 @@ export default function SearchRobots({ navigation }) {
 
     return (
         <>
+          <Suspense fallback={<SearchRobotsSkeleton/>}>
             <View style={styles.container}>
               <View style={styles.topPiece} />
               <View style={styles.middlePiece}>
@@ -31,20 +41,15 @@ export default function SearchRobots({ navigation }) {
                   <AntDesign style={styles.searchIcon}name="search1" size={25} color={'black'} />
                   <TextInput
                   style={styles.searchbar}
-                  placeholder={'Search'}
-                  //value={searchQuery}
-                  //onChangeText={setSearchQuery}
+                  placeholder={'Search by name or team #'}
+                  value={searchQuery}
+                  onChangeText={handleSearch}
                   />
                 </View>
                 <View style={styles.viewScoutingData}>
-
                   <ScrollView>
-
                     <View style={styles.scoutingDataGlimpses}>
-                      <Suspense fallback={<SearchRobotsSkeleton/>}>
-
-                          {genData?.map((robot) =>
-
+                          {filteredData.map((robot) =>
                             <Pressable key={robot.profile.teamNumber}
                               onPress={() => {
                                 navigation.navigate('Profile', { teamNumber: robot.profile.teamNumber });
@@ -52,16 +57,13 @@ export default function SearchRobots({ navigation }) {
                             }>
                               <StatGlimpse name={robot.profile.teamName} teamNumber={robot.profile.teamNumber} driveBase={robot.profile.driveBase} intake={robot.profile.intake} />
                             </Pressable>
-
                           )}
-
-                      </Suspense>
                     </View>
-
                   </ScrollView>
                 </View>
               </View>
             </View>
+          </Suspense>
         </>
     );
 }
