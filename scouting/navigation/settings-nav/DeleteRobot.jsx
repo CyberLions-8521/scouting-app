@@ -22,22 +22,29 @@ export default function DeleteRobot({ navigation }) {
     }, [setRobotList]); //Updates on page load and when setRobotList changes
 
     const removeRobot = async (teamNumber) => {
-
       // remove robot from robotList and update list on screen
       await axios.get(`http://10.0.2.2:3000/removeRobot/${teamNumber}`);
         let newList = await axios.get('http://10.0.2.2:3000/robotList');
         setRobotList((prev) => newList.data);
     };
 
-    const displayData = robotList.map((robot) =>
-        <Pressable onPress={() => removeRobot(robot.profile.teamNumber)}>
-          <View key={robot.robotID} style={styles.teamSelection}>
+    //epic notes
+    //robotList's length is 0 before it loads in
+    //the skeleton is displayed with ? (truthy vs falsy)
+
+    const displayData = robotList.length > 0 ? (
+      robotList.map((robot) =>
+          <Pressable onPress={() => removeRobot(robot.profile.teamNumber)}>
+            <View key={robot.robotID} style={styles.teamSelection}>
               <View style={styles.teamName}>
-                  <Text>{robot.profile.teamNumber} - {robot.profile.teamName}</Text>
+                <Text>{robot.profile.teamNumber} - {robot.profile.teamName}</Text>
               </View>
               <Image source={tImg} style={styles.teamImage} />
-          </View>
-        </Pressable>
+            </View>
+          </Pressable>
+      )
+    ) : (
+      <DeleteRobotSkeleton/>
     );
 
     return (
@@ -55,9 +62,7 @@ export default function DeleteRobot({ navigation }) {
           <Text style={styles.subText}>This action CANNOT BE UNDONE. DO NOT CLICK PROFILES YOU DO NOT WANT TO DELETE.</Text>
 
           <ScrollView style={styles.robotListContainer}>
-            <Suspense fallback={ <DeleteRobotSkeleton/> }>
               {displayData}
-            </Suspense>
           </ScrollView>
 
         </View>

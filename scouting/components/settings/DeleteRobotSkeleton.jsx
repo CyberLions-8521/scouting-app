@@ -48,13 +48,13 @@ const s = StyleSheet.create({
     teamName: {
         height: 20,
         width:180,
-        backgroundColor: 'lightgray',
+        backgroundColor: '#f0f0f0',
     },
 
     teamImage: {
         width: 50,
         height: 50,
-        backgroundColor: 'lightgray',
+        backgroundColor: '#f0f0f0',
     },
 
     robotListContainer: {
