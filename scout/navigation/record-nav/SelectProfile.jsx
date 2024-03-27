@@ -10,7 +10,7 @@ export default function SelectProfile({ navigation }) {
   const [profileData, setProfileData] = useState();
 
   useEffect(() => {
-    axios.get('http://localhost:3000/robotList')
+    axios.get('http://bckend.team8521.com/robotList')
     .then((response) => {
       setProfileData(response.data);
     })
@@ -24,7 +24,7 @@ export default function SelectProfile({ navigation }) {
   const onRefresh = () => {
     setIsRefreshing(true);
 
-    axios.get('http://localhost:3000/robotList')
+    axios.get('http://bckend.team8521.com/robotList')
     .then((response) => {
       setProfileData(response.data);
     })

@@ -11,7 +11,7 @@ export default function DeleteRobot({ navigation }) {
     const [robotList, setRobotList] = useState([]);
 
     useEffect(() => {
-      axios.get('http://localhost:3000/robotList') //imports data using axios
+      axios.get('http://bckend.team8521.com/robotList') //imports data using axios
         .then((response) => { //sets robotList to the data
           setRobotList(response.data);
         })
@@ -26,7 +26,7 @@ export default function DeleteRobot({ navigation }) {
     const onRefresh = () => {
       setIsRefreshing(true);
 
-      axios.get('http://localhost:3000/robotList')
+      axios.get('http://bckend.team8521.com/robotList')
       .then((response) => {
         setRobotList(response.data);
       })
@@ -40,8 +40,8 @@ export default function DeleteRobot({ navigation }) {
     const removeRobot = async (teamNumber) => {
 
       // remove robot from robotList and update list on screen
-      await axios.get(`http://localhost:3000/removeRobot/${teamNumber}`);
-        let newList = await axios.get('http://localhost:3000/robotList');
+      await axios.get(`http://bckend.team8521.com/removeRobot/${teamNumber}`);
+        let newList = await axios.get('http://bckend.team8521.com/robotList');
         setRobotList((prev) => newList.data);
     };
 

@@ -55,7 +55,7 @@ export default function RecordGame({ route, navigation }) {
             // quickly convert everything that needs to be an integer to an integer
             matchData.matchNumber = Number(matchNumber);
 
-            axios.post(`http://localhost:3000/addMatch/${robotTeamNumber}`, matchData);
+            axios.post(`http://bckend.team8521.com/addMatch/${robotTeamNumber}`, matchData);
         }
         catch (error) {
             console .error('Error making a POST request:', error);

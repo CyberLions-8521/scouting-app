@@ -16,7 +16,7 @@ export default function Home({ navigation }) {
   useEffect(() => {
     setIsLoading(true);
 
-    axios.get('http://localhost:3000/robotList')
+    axios.get('http://bckend.team8521.com/robotList')
     .then((response) => {
       alterRobotList(response.data);
       setIsLoading(false);
@@ -35,7 +35,7 @@ export default function Home({ navigation }) {
   const onRefresh = () => {
     setIsRefreshing(true);
 
-    axios.get('http://localhost:3000/robotList')
+    axios.get('http://bckend.team8521.com/robotList')
     .then((response) => {
       alterRobotList(response.data);
       setIsLoading(false);

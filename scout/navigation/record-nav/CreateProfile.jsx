@@ -55,7 +55,7 @@ export default function CreateProfile({ navigation }) {
             profileData.profile.teamNumber = Number(teamNumber);
 
             // the profile data should be in an object called profile
-            await axios.post('http://localhost:3000/addProfile', profileData);
+            await axios.post('http://bckend.team8521.com/addProfile', profileData);
         }
         catch (error) {
             console.error('Error making a POST request:', error);

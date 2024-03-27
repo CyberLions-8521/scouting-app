@@ -12,7 +12,7 @@ export default function SearchRobots({ navigation }) {
   const [genData, setGenData] = useState();
 
   useEffect(() => {
-    axios.get('http://localhost:3000/robotList')
+    axios.get('http://bckend.team8521.com/robotList')
     .then((response) => {
       setGenData(response.data);
     })
@@ -26,7 +26,7 @@ export default function SearchRobots({ navigation }) {
   const onRefresh = () => {
     setIsRefreshing(true);
 
-    axios.get('http://localhost:3000/robotList')
+    axios.get('http://bckend.team8521.com/robotList')
     .then((response) => {
       setGenData(response.data);
     })
