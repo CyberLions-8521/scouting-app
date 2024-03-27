@@ -47,12 +47,6 @@ export default function Home({ navigation }) {
     setIsRefreshing(false);
   };
 
-  const [closeInfo, setCloseInfo] = useState(false);
-
-  let manageCloseInfo = () => {
-    setCloseInfo((prev) => true);
-  };
-
   return (
     <>
       <View style={styles.container}>
@@ -60,8 +54,7 @@ export default function Home({ navigation }) {
 
         <View style={styles.middlePiece}>
 
-          {closeInfo ? <></> :
-            <View style={styles.getStarted}>
+          <View style={styles.getStarted}>
               <Text style={styles.header}>Get Started Scouting</Text>
 
               <View style={styles.important}>
@@ -71,12 +64,8 @@ export default function Home({ navigation }) {
                 </View>
 
                 <Text style={styles.importantText}>Scouting is the process of recording data for strategy, so take note!</Text>
-
-                <Pressable onPress={manageCloseInfo}>
-                  <Text style={styles.hyperlink}>Let's Get Going!</Text>
-                </Pressable>
               </View>
-            </View>}
+          </View>
 
             <View style={styles.viewScoutingData}>
               <Text style={styles.header}>View Scouting Data</Text>
@@ -131,7 +120,7 @@ const styles = StyleSheet.create({
   getStarted: {
     minHeight: '15%',
     width: '100%',
-    gap: 10,
+    gap: 20,
   },
   viewScoutingData: {
     width: '100%',
@@ -169,7 +158,7 @@ const styles = StyleSheet.create({
 
   important: {
     maxWidth: '100%',
-    maxHeight: '100%',
+    height: 80,
     backgroundColor: '#e9ebee',
     borderRadius: 5,
     gap: 5,

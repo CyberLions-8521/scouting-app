@@ -3,22 +3,68 @@ import fillerImage from '../../assets/interface-icons/filler-image.png';
 import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 
-export default function StatGlimpse() {
+// This is the skeleton for the StatGlimpse component
+// Code is verbose because I wrote the main view element four times instead of making a new jsx file
+export default function StatGlimpseSkeleton() {
 
   return (
-    <View style={styles.scoutingDataGlimpsePiece}>
+    <>
+        <View style={styles.scoutingDataGlimpsePiece}>
 
-      <View style={styles.metadata}>
-        <View style={styles.headerSmaller} />
+        <View style={styles.metadata}>
+            <View style={styles.headerSmaller} />
 
-        <View style={styles.stats}>
-            <View style={styles.textTypeOne} />
-            <View style={styles.textTypeTwo} />
+            <View style={styles.stats}>
+                <View style={styles.textTypeOne} />
+                <View style={styles.textTypeTwo} />
+            </View>
         </View>
-      </View>
 
-      <Image style={styles.fillerImage} alt="filler image" source={fillerImage} />
-    </View>
+        <Image style={styles.fillerImage} alt="filler image" source={fillerImage} />
+        </View>
+
+        <View style={styles.scoutingDataGlimpsePiece}>
+
+        <View style={styles.metadata}>
+            <View style={styles.headerSmaller} />
+
+            <View style={styles.stats}>
+                <View style={styles.textTypeOne} />
+                <View style={styles.textTypeTwo} />
+            </View>
+        </View>
+
+        <Image style={styles.fillerImage} alt="filler image" source={fillerImage} />
+        </View>
+
+        <View style={styles.scoutingDataGlimpsePiece}>
+
+        <View style={styles.metadata}>
+            <View style={styles.headerSmaller} />
+
+            <View style={styles.stats}>
+                <View style={styles.textTypeOne} />
+                <View style={styles.textTypeTwo} />
+            </View>
+        </View>
+
+        <Image style={styles.fillerImage} alt="filler image" source={fillerImage} />
+        </View>
+
+        <View style={styles.scoutingDataGlimpsePiece}>
+
+        <View style={styles.metadata}>
+            <View style={styles.headerSmaller} />
+
+            <View style={styles.stats}>
+                <View style={styles.textTypeOne} />
+                <View style={styles.textTypeTwo} />
+            </View>
+        </View>
+
+        <Image style={styles.fillerImage} alt="filler image" source={fillerImage} />
+        </View>
+    </>
   );
 }
 

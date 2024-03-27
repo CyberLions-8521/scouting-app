@@ -12,58 +12,89 @@ export default function SearchRobots({ navigation }) {
   const [genData, setGenData] = useState();
 
   useEffect(() => {
-    axios.get('http://10.0.2.2:3000/robotList')
+    axios.get('http://localhost:3000/robotList')
     .then((response) => {
       setGenData(response.data);
     })
     .catch((error) => {
-      console.error(error);
+      console.log(error);
     });
   }, []);
 
-    return (
-        <>
-            <View style={styles.container}>
-              <View style={styles.topPiece} />
-              <View style={styles.middlePiece}>
-                <Text style={styles.header}>Get Started Scouting</Text>
-                <View style={styles.searchSection}>
-                  <AntDesign style={styles.searchIcon}name="search1" size={25} color={'black'} />
-                  <TextInput
-                  style={styles.searchbar}
-                  placeholder={'Search'}
-                  //value={searchQuery}
-                  //onChangeText={setSearchQuery}
-                  />
-                </View>
-                <View style={styles.viewScoutingData}>
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
-                  <ScrollView>
+  const onRefresh = () => {
+    setIsRefreshing(true);
 
-                    <View style={styles.scoutingDataGlimpses}>
-                      <Suspense fallback={<SearchRobotsSkeleton/>}>
+    axios.get('http://localhost:3000/robotList')
+    .then((response) => {
+      setGenData(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
-                          {genData?.map((robot) =>
+    setIsRefreshing(false);
+  };
 
-                            <Pressable key={robot.profile.teamNumber}
-                              onPress={() => {
-                                navigation.navigate('Profile', { teamNumber: robot.profile.teamNumber });
-                              }
-                            }>
-                              <StatGlimpse name={robot.profile.teamName} teamNumber={robot.profile.teamNumber} driveBase={robot.profile.driveBase} intake={robot.profile.intake} />
-                            </Pressable>
+  // search functionality
+  const [searchValue, setSearchValue] = useState('');
 
-                          )}
+  const handleSearch = (text) => {
+    setSearchValue(text);
+    const filteredData = genData.filter((robot) => {
+      return robot.profile.teamName.toLowerCase().includes(text.toLowerCase());
+    });
 
-                      </Suspense>
-                    </View>
+    // updating robot list based on the filter information
+    setGenData(filteredData);
 
-                  </ScrollView>
-                </View>
-              </View>
+    // edge case for when the search bar is empty
+    if (text === ''){
+      onRefresh();
+    }
+  };
+
+  return (
+    <>
+        <View style={styles.container}>
+          <View style={styles.topPiece} />
+          <View style={styles.middlePiece}>
+            <Text style={styles.header}>Get Started Scouting</Text>
+            <View style={styles.searchSection}>
+              <AntDesign style={styles.searchIcon}name="search1" size={25} color={'black'} />
+              <TextInput
+              style={styles.searchbar}
+              placeholder={'Search by Team Name'}
+              value={searchValue}
+              onChangeText={handleSearch}
+              />
             </View>
-        </>
-    );
+            <View style={styles.viewScoutingData}>
+
+              <ScrollView
+                refreshControl={
+                  <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+                }
+              >
+                  <Suspense fallback={<SearchRobotsSkeleton />}>
+                      {genData?.map((robot) =>
+
+                        <Pressable key={robot.profile.teamNumber}
+                          onPress={() => {
+                            navigation.navigate('Profile', { teamNumber: robot.profile.teamNumber });
+                          }
+                        }>
+                          <StatGlimpse name={robot.profile.teamName} teamNumber={robot.profile.teamNumber} driveBase={robot.profile.driveBase} intake={robot.profile.intake} />
+                        </Pressable>
+                      )}
+                  </Suspense>
+              </ScrollView>
+            </View>
+          </View>
+        </View>
+    </>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -81,7 +112,6 @@ const styles = StyleSheet.create({
     },
     middlePiece: {
       width: '90%',
-      maxHeight: '100%',
       paddingTop: 20,
       paddingBottom: 20,
       gap: 10,
@@ -98,6 +128,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       borderColor: '#616161',
       borderWidth: 2.5,
+      padding: 5,
     },
     searchIcon:{
       marginLeft: 50,
@@ -110,12 +141,7 @@ const styles = StyleSheet.create({
     },
     viewScoutingData: {
       width: '100%',
-      maxHeight: '84%',
-    },
-    bottomPiece: {
-      width: '100%',
-      height: '8%',
-      backgroundColor: '#E1584B',
+      maxHeight: '83%',
     },
     header: {
       color: '#616161',

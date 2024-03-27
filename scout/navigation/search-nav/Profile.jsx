@@ -10,7 +10,7 @@ export default function Profile({ route, navigation }) {
     const { teamNumber } = route.params;
 
     useEffect(() => {
-        axios.get(`http://10.0.2.2:3000/getRobot/${teamNumber}}`)
+        axios.get(`http://localhost:3000/getRobot/${teamNumber}}`)
         .then((response) => {
           setRobotProfileData(response.data);
         });

@@ -8,7 +8,7 @@ export default function SettingsPanel({ navigation }) {
     <>
       <View style={styles.container}>
         <View style={styles.topPiece} />
-        
+
         <View style={styles.middlePiece}>
           <View style={styles.titleContainer}>
             <Pressable onPress={() => navigation.navigate('PasswordPrompt')}>
