@@ -1,19 +1,19 @@
 import fillerImage from '../../assets/interface-icons/filler-image.png';
 
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 
-export default function StatGlimpse({ name, teamNumber, driveBase, intake, isLoading }) {
+export default function StatGlimpse() {
 
   return (
     <View style={styles.scoutingDataGlimpsePiece}>
 
       <View style={styles.metadata}>
-        <Text style={styles.headerSmaller}>{name} ({teamNumber})</Text>
+        <View style={styles.headerSmaller} />
 
         <View style={styles.stats}>
-          <Text style={styles.text}>Intake: {intake}</Text>
-          <Text style={styles.text}>Drive Base: {driveBase}</Text>
+            <View style={styles.textTypeOne} />
+            <View style={styles.textTypeTwo} />
         </View>
       </View>
 
@@ -24,12 +24,27 @@ export default function StatGlimpse({ name, teamNumber, driveBase, intake, isLoa
 
 const styles = StyleSheet.create({
     headerSmaller: {
-      color: '#616161',
-      fontSize: 14,
+      backgroundColor: '#e8e6e6',
+      borderRadius: 5,
+      width: 150,
+      minHeight: 16,
     },
-    text: {
-      color: '#616161',
-      fontSize: 12,
+    textTypeOne: {
+        backgroundColor: '#e8e6e6',
+        fontSize: 12,
+        borderRadius: 5,
+        width: 75,
+        minHeight: 16,
+    },
+    textTypeTwo: {
+        backgroundColor: '#e8e6e6',
+        fontSize: 12,
+        borderRadius: 5,
+        width: 115,
+        minHeight: 16,
+    },
+    stats: {
+        gap: 5,
     },
     scoutingDataGlimpsePiece: {
         flexDirection: 'row',
@@ -42,7 +57,7 @@ const styles = StyleSheet.create({
         borderBottomColor: '#d3d3d3',
     },
     metadata: {
-        gap: 10,
+        gap: 5,
         maxWidth: '60%',
     },
     fillerImage: {

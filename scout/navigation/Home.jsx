@@ -1,6 +1,7 @@
 import React, { useEffect, useState} from 'react';
-import { View, Text, StyleSheet, Pressable, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, ScrollView, RefreshControl } from 'react-native';
 import StatGlimpse from '../components/home/StatGlimpse.jsx';
+import StatGlimpseSkeleton from '../components/home/StatGlimpseSkeleton.jsx';
 import informationIcon from '../assets/interface-icons/info.png';
 
 import axios from 'axios';
@@ -9,16 +10,42 @@ export default function Home({ navigation }) {
 
   const [robotList, alterRobotList] = useState();
 
+  // isLoading will allow the display of a skeleton screen while data is being fetched
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    axios.get('http://10.0.2.2:3000/robotList')
+    setIsLoading(true);
+
+    axios.get('http://localhost:3000/robotList')
     .then((response) => {
       alterRobotList(response.data);
+      setIsLoading(false);
     })
     .catch((error) => {
       console.error(error);
     });
 
   }, []);
+
+  // refresh use state allows refreshing for new robot data on the home page
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // this is the refresh callback when the user pulls down on the screen
+  // updating the array will automatically re-render the home screen
+  const onRefresh = () => {
+    setIsRefreshing(true);
+
+    axios.get('http://localhost:3000/robotList')
+    .then((response) => {
+      alterRobotList(response.data);
+      setIsLoading(false);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+    setIsRefreshing(false);
+  };
 
   const [closeInfo, setCloseInfo] = useState(false);
 
@@ -53,14 +80,17 @@ export default function Home({ navigation }) {
 
             <View style={styles.viewScoutingData}>
               <Text style={styles.header}>View Scouting Data</Text>
-              <ScrollView style={styles.scoutingDataGlimpses}>
+              <ScrollView style={styles.scoutingDataGlimpses}
+                refreshControl={
+                  <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+                }
+              >
 
-                {robotList?.map((robot) =>
-
+                { isLoading ? <StatGlimpseSkeleton /> :
+                  robotList?.map((robot) =>
                   <Pressable key={robot.profile.teamNumber}>
                      <StatGlimpse name={robot.profile.teamName} teamNumber={robot.profile.teamNumber} driveBase={robot.profile.driveBase} intake={robot.profile.intake} />
                   </Pressable>
-
                 )}
 
               </ScrollView>
