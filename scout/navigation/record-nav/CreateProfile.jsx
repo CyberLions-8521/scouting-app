@@ -107,7 +107,7 @@ export default function CreateProfile({ navigation }) {
                                 {intakeDropdown === 'Other' ? <TextInput style={styles.bigInput} placeholder={'Other Intake'} onChangeText={value => setIntake(value)}/> : <></>}
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                                <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
+                                <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 20, gap: 5}}>
                                     <CheckBox disabled={false} value={autonomous} onValueChange={(newVal) => {setAutonomous(newVal)}} tintColors={{ true: '#E1584B', false: '' }}/>
                                     <Text style={styles.subText}>Autonomous</Text>
                                 </View>

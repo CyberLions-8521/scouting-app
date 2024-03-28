@@ -17,7 +17,7 @@ export default function StatGlimpse({ name, teamNumber, driveBase, intake, isLoa
         </View>
       </View>
 
-      <Image style={styles.fillerImage} alt="filler image" source={fillerImage} />
+      {/* <Image style={styles.fillerImage} alt="filler image" source={fillerImage} /> */}
     </View>
   );
 }
