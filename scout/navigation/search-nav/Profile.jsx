@@ -38,7 +38,7 @@ export default function Profile({ route, navigation }) {
                     </View>
 
                     <View style={styles.robotDetails}>
-                        <Text style={styles.text}>Drivebase: {robotProfileData.profile.driveBase}</Text>
+                        <Text style={styles.text}>Drivebase: {robotProfileData.profile.drivebase}</Text>
                         <Text style={styles.text}>Autonomous: {robotProfileData.profile.autonomous.toString()}</Text>
                         <Text style={styles.text}>Intake: {robotProfileData.profile.intake}</Text>
                         <Text style={styles.text}>Additional Details: {robotProfileData.profile.additionalDetails}</Text>
@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
     },
     matchSection:{
       gap: 100,
+      maxHeight: 290,
     },
     matches:{
       flexDirection: 'column',

@@ -46,6 +46,8 @@ export default function SearchRobots({ navigation }) {
       return robot.profile.teamName.toLowerCase().includes(text.toLowerCase());
     });
 
+    setFilteredItems(items.filter(item => item.name.toLowerCase().includes(searchText.toLowerCase())));
+
     // updating robot list based on the filter information
     setGenData(filteredData);
 
@@ -85,7 +87,7 @@ export default function SearchRobots({ navigation }) {
                             navigation.navigate('Profile', { teamNumber: robot.profile.teamNumber });
                           }
                         }>
-                          <StatGlimpse name={robot.profile.teamName} teamNumber={robot.profile.teamNumber} driveBase={robot.profile.driveBase} intake={robot.profile.intake} />
+                          <StatGlimpse name={robot.profile.teamName} teamNumber={robot.profile.teamNumber} driveBase={robot.profile.drivebase} intake={robot.profile.intake} />
                         </Pressable>
                       )}
                   </Suspense>

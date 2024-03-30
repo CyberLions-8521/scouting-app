@@ -78,7 +78,7 @@ export default function Home({ navigation }) {
                 { isLoading ? <StatGlimpseSkeleton /> :
                   robotList?.map((robot) =>
                   <Pressable key={robot.profile.teamNumber}>
-                     <StatGlimpse name={robot.profile.teamName} teamNumber={robot.profile.teamNumber} driveBase={robot.profile.driveBase} intake={robot.profile.intake} />
+                     <StatGlimpse name={robot.profile.teamName} teamNumber={robot.profile.teamNumber} driveBase={robot.profile.drivebase} intake={robot.profile.intake} />
                   </Pressable>
                 )}
 
