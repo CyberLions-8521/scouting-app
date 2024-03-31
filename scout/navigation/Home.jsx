@@ -68,7 +68,7 @@ export default function Home({ navigation }) {
           </View>
 
             <View style={styles.viewScoutingData}>
-              <Text style={styles.header}>View Scouting Data</Text>
+              <Text style={styles.header}>View Scouting Datas</Text>
               <ScrollView style={styles.scoutingDataGlimpses}
                 refreshControl={
                   <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
