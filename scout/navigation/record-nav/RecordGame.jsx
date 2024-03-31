@@ -34,6 +34,7 @@ export default function RecordGame({ route, navigation }) {
     const [autoAmp, setAutoAmp] = useState(0);
 
     const [comment, setComment] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const submitMatch = async () => {
         // This function will be used to submit the match data to the server through a POST request
@@ -52,11 +53,15 @@ export default function RecordGame({ route, navigation }) {
 
         // The server will then add the match data to the database
         try {
+            // change color of the submit button to indicate that the data is being submitted
+            setIsSubmitting(true);
 
             // quickly convert everything that needs to be an integer to an integer
             matchData.matchNumber = Number(matchNumber);
 
             axios.post(`http://bckend.team8521.com/addMatch/${robotTeamNumber}`, matchData);
+
+            setIsSubmitting(false);
         }
         catch (error) {
             console .error('Error making a POST request:', error);
@@ -121,7 +126,7 @@ export default function RecordGame({ route, navigation }) {
                             <Text style={styles.headerText}>Additional Comments</Text>
                             <TextInput value={comment} style={styles.detailInput} multiline={true} onChangeText={value => setComment(value)}/>
                         </View>
-                        <Pressable style={styles.submitButton} onPress={submitMatch}>
+                        <Pressable style={isSubmitting ? styles.highlightedSubmitButton : styles.submitButton} onPress={submitMatch}>
                             <Text style={styles.submitButtonText}>Submit</Text>
                         </Pressable>
                         </KeyboardAwareScrollView>
@@ -223,6 +228,18 @@ const styles = StyleSheet.create({
         marginTop: 30,
         borderRadius: 5,
         borderColor: '#E1584B',
+        borderWidth: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'flex-end',
+    },
+    highlightedSubmitButton: {
+        width: 80,
+        height: 40,
+        backgroundColor: '#DD695E',
+        marginTop: 30,
+        borderRadius: 5,
+        borderColor: '#CF4F43',
         borderWidth: 2,
         justifyContent: 'center',
         alignItems: 'center',

@@ -34,6 +34,7 @@ export default function CreateProfile({ navigation }) {
     const [intakeDropdown, setIntakeDropdown] = useState('');
 
     const [additionalDetails, setAdditionalDetails] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const submitProfile = async () => {
         // This function will be used to submit the robot profile to the server through a POST request
@@ -51,12 +52,15 @@ export default function CreateProfile({ navigation }) {
 
         // The server will then add the robot profile to the database
         try {
+            // change color of the submit button to indicate that the data is being submitted
+            setIsSubmitting(true);
 
             // quickly convert everything that needs to be an integer to an integer
             profileData.profile.teamNumber = Number(teamNumber);
 
             // the profile data should be in an object called profile
             await axios.post('http://bckend.team8521.com/addProfile', profileData);
+            setIsSubmitting(false);
         }
         catch (error) {
             console.error('Error making a POST request:', error);
@@ -72,7 +76,7 @@ export default function CreateProfile({ navigation }) {
                 <View style={styles.header}>
                     <Entypo name={'chevron-left'} size={30} color={'#616161'} onPress={() => navigation.goBack()} />
                     <Text style={styles.headerText}>Create Robot Profile</Text>
-                    <Pressable style={styles.submitButton} onPress={submitProfile}>
+                    <Pressable style={isSubmitting ? styles.highlightedSubmitButton : styles.submitButton} onPress={submitProfile}>
                         <Text style={styles.submitButtonText}>Submit</Text>
                     </Pressable>
                 </View>
@@ -112,7 +116,7 @@ export default function CreateProfile({ navigation }) {
                                 </View>
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                                     <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 20, gap: 5}}>
-                                        <CheckBox disabled={false} value={autonomous} onValueChange={(newVal) => {setAutonomous(newVal)}} tintColors={{ true: '#E1584B', false: '' }}/>
+                                        <CheckBox disabled={false} value={autonomous} onValueChange={(newVal) => setAutonomous(newVal)} tintColors={{ true: '#E1584B', false: '' }}/>
                                         <Text style={styles.subText}>Autonomous</Text>
                                     </View>
                                 </View>
@@ -176,6 +180,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#F27468',
         borderRadius: 5,
         borderColor: '#E1584B',
+        borderWidth: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    highlightedSubmitButton: {
+        width: 80,
+        height: 40,
+        backgroundColor: '#DD695E',
+        borderRadius: 5,
+        borderColor: '#CF4F43',
         borderWidth: 2,
         justifyContent: 'center',
         alignItems: 'center',
