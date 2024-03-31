@@ -10,7 +10,7 @@ export default function Profile({ route, navigation }) {
     const { teamNumber } = route.params;
 
     useEffect(() => {
-        axios.get(`http://10.0.2.2:3000/getRobot/${teamNumber}}`)
+        axios.get(`http://bckend.team8521.com/getRobot/${teamNumber}}`)
         .then((response) => {
           setRobotProfileData(response.data);
         });
@@ -38,7 +38,7 @@ export default function Profile({ route, navigation }) {
                     </View>
 
                     <View style={styles.robotDetails}>
-                        <Text style={styles.text}>Drivebase: {robotProfileData.profile.driveBase}</Text>
+                        <Text style={styles.text}>Drivebase: {robotProfileData.profile.drivebase}</Text>
                         <Text style={styles.text}>Autonomous: {robotProfileData.profile.autonomous.toString()}</Text>
                         <Text style={styles.text}>Intake: {robotProfileData.profile.intake}</Text>
                         <Text style={styles.text}>Additional Details: {robotProfileData.profile.additionalDetails}</Text>
@@ -48,7 +48,7 @@ export default function Profile({ route, navigation }) {
 
                 <ScrollView style={styles.matchSection}>
                     {robotProfileData?.matches?.map((match) =>
-                      <Pressable key={`${robotProfileData.profile.teamName} match ${match.matchNumber}`}
+                      <Pressable key={`${robotProfileData.profile.teamName} match ${match.matchNumber} matchType ${match.matchType}`}
                         onPress={() => navigation.navigate('MatchStats',
 
                           // route robot team number and specific match to display in the matchstats component
@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
     },
     matchSection:{
       gap: 100,
+      maxHeight: 290,
     },
     matches:{
       flexDirection: 'column',

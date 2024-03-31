@@ -4,6 +4,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { Entypo } from '../../index.js';
 import Counter from '../../components/record/Counter';
 import CheckRecord from '../../components/record/CheckRecord.jsx';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import axios from 'axios';
 
@@ -33,6 +34,7 @@ export default function RecordGame({ route, navigation }) {
     const [autoAmp, setAutoAmp] = useState(0);
 
     const [comment, setComment] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const submitMatch = async () => {
         // This function will be used to submit the match data to the server through a POST request
@@ -51,11 +53,15 @@ export default function RecordGame({ route, navigation }) {
 
         // The server will then add the match data to the database
         try {
+            // change color of the submit button to indicate that the data is being submitted
+            setIsSubmitting(true);
 
             // quickly convert everything that needs to be an integer to an integer
             matchData.matchNumber = Number(matchNumber);
 
-            axios.post(`http://10.0.2.2:3000/addMatch/${robotTeamNumber}`, matchData);
+            axios.post(`http://bckend.team8521.com/addMatch/${robotTeamNumber}`, matchData);
+
+            setIsSubmitting(false);
         }
         catch (error) {
             console .error('Error making a POST request:', error);
@@ -72,6 +78,7 @@ export default function RecordGame({ route, navigation }) {
                     <Entypo name={'chevron-left'} size={30} color={'#616161'} onPress={() => navigation.goBack()} />
                 </View>
                 <ScrollView contentContainerStyle={{ paddingBottom: 130 }}>
+                    <KeyboardAwareScrollView extraHeight={50}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                         <View style={{flexDirection: 'column'}}>
                             <Text style={styles.headerText}>{robot.profile.teamName}</Text>
@@ -119,9 +126,10 @@ export default function RecordGame({ route, navigation }) {
                             <Text style={styles.headerText}>Additional Comments</Text>
                             <TextInput value={comment} style={styles.detailInput} multiline={true} onChangeText={value => setComment(value)}/>
                         </View>
-                        <Pressable style={styles.submitButton} onPress={submitMatch}>
+                        <Pressable style={isSubmitting ? styles.highlightedSubmitButton : styles.submitButton} onPress={submitMatch}>
                             <Text style={styles.submitButtonText}>Submit</Text>
                         </Pressable>
+                        </KeyboardAwareScrollView>
                     </ScrollView>
                 </View>
             </View>
@@ -192,6 +200,7 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'column',
         marginTop: 20,
+        gap: 5,
     },
     pointInput: {
         width: 75,
@@ -219,6 +228,18 @@ const styles = StyleSheet.create({
         marginTop: 30,
         borderRadius: 5,
         borderColor: '#E1584B',
+        borderWidth: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'flex-end',
+    },
+    highlightedSubmitButton: {
+        width: 80,
+        height: 40,
+        backgroundColor: '#DD695E',
+        marginTop: 30,
+        borderRadius: 5,
+        borderColor: '#CF4F43',
         borderWidth: 2,
         justifyContent: 'center',
         alignItems: 'center',

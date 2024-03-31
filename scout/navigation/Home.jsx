@@ -1,6 +1,7 @@
 import React, { useEffect, useState} from 'react';
-import { View, Text, StyleSheet, Pressable, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, ScrollView, RefreshControl } from 'react-native';
 import StatGlimpse from '../components/home/StatGlimpse.jsx';
+import StatGlimpseSkeleton from '../components/home/StatGlimpseSkeleton.jsx';
 import informationIcon from '../assets/interface-icons/info.png';
 
 import axios from 'axios';
@@ -9,10 +10,16 @@ export default function Home({ navigation }) {
 
   const [robotList, alterRobotList] = useState();
 
+  // isLoading will allow the display of a skeleton screen while data is being fetched
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    axios.get('http://10.0.2.2:3000/robotList')
+    setIsLoading(true);
+
+    axios.get('http://bckend.team8521.com/robotList')
     .then((response) => {
       alterRobotList(response.data);
+      setIsLoading(false);
     })
     .catch((error) => {
       console.error(error);
@@ -20,10 +27,24 @@ export default function Home({ navigation }) {
 
   }, []);
 
-  const [closeInfo, setCloseInfo] = useState(false);
+  // refresh use state allows refreshing for new robot data on the home page
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  let manageCloseInfo = () => {
-    setCloseInfo((prev) => true);
+  // this is the refresh callback when the user pulls down on the screen
+  // updating the array will automatically re-render the home screen
+  const onRefresh = () => {
+    setIsRefreshing(true);
+
+    axios.get('http://bckend.team8521.com/robotList')
+    .then((response) => {
+      alterRobotList(response.data);
+      setIsLoading(false);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+    setIsRefreshing(false);
   };
 
   return (
@@ -33,8 +54,7 @@ export default function Home({ navigation }) {
 
         <View style={styles.middlePiece}>
 
-          {closeInfo ? <></> :
-            <View style={styles.getStarted}>
+          <View style={styles.getStarted}>
               <Text style={styles.header}>Get Started Scouting</Text>
 
               <View style={styles.important}>
@@ -44,23 +64,22 @@ export default function Home({ navigation }) {
                 </View>
 
                 <Text style={styles.importantText}>Scouting is the process of recording data for strategy, so take note!</Text>
-
-                <Pressable onPress={manageCloseInfo}>
-                  <Text style={styles.hyperlink}>Let's Get Going!</Text>
-                </Pressable>
               </View>
-            </View>}
+          </View>
 
             <View style={styles.viewScoutingData}>
-              <Text style={styles.header}>View Scouting Data</Text>
-              <ScrollView style={styles.scoutingDataGlimpses}>
+              <Text style={styles.header}>View Scouting Datas</Text>
+              <ScrollView style={styles.scoutingDataGlimpses}
+                refreshControl={
+                  <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+                }
+              >
 
-                {robotList?.map((robot) =>
-
-                  <Pressable key={robot.profile.teamNumber}>
-                     <StatGlimpse name={robot.profile.teamName} teamNumber={robot.profile.teamNumber} driveBase={robot.profile.driveBase} intake={robot.profile.intake} />
+                { isLoading ? <StatGlimpseSkeleton /> :
+                  robotList?.map((robot) =>
+                  <Pressable key={robot.profile.teamNumber} onPress={() => navigation.navigate('Search')}>
+                     <StatGlimpse name={robot.profile.teamName} teamNumber={robot.profile.teamNumber} driveBase={robot.profile.drivebase} intake={robot.profile.intake} />
                   </Pressable>
-
                 )}
 
               </ScrollView>
@@ -101,7 +120,7 @@ const styles = StyleSheet.create({
   getStarted: {
     minHeight: '15%',
     width: '100%',
-    gap: 10,
+    gap: 20,
   },
   viewScoutingData: {
     width: '100%',
@@ -139,7 +158,7 @@ const styles = StyleSheet.create({
 
   important: {
     maxWidth: '100%',
-    maxHeight: '100%',
+    height: 80,
     backgroundColor: '#e9ebee',
     borderRadius: 5,
     gap: 5,

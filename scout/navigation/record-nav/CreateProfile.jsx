@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, Pressable, ScrollView } from 'react-
 import { Dropdown } from 'react-native-element-dropdown';
 import CheckBox from '@react-native-community/checkbox';
 import { Entypo } from '../../index.js';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import axios from 'axios';
 
@@ -33,6 +34,7 @@ export default function CreateProfile({ navigation }) {
     const [intakeDropdown, setIntakeDropdown] = useState('');
 
     const [additionalDetails, setAdditionalDetails] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const submitProfile = async () => {
         // This function will be used to submit the robot profile to the server through a POST request
@@ -50,12 +52,15 @@ export default function CreateProfile({ navigation }) {
 
         // The server will then add the robot profile to the database
         try {
+            // change color of the submit button to indicate that the data is being submitted
+            setIsSubmitting(true);
 
             // quickly convert everything that needs to be an integer to an integer
             profileData.profile.teamNumber = Number(teamNumber);
 
             // the profile data should be in an object called profile
-            await axios.post('http://10.0.2.2:3000/addProfile', profileData);
+            await axios.post('http://bckend.team8521.com/addProfile', profileData);
+            setIsSubmitting(false);
         }
         catch (error) {
             console.error('Error making a POST request:', error);
@@ -71,54 +76,60 @@ export default function CreateProfile({ navigation }) {
                 <View style={styles.header}>
                     <Entypo name={'chevron-left'} size={30} color={'#616161'} onPress={() => navigation.goBack()} />
                     <Text style={styles.headerText}>Create Robot Profile</Text>
-                    <Pressable style={styles.submitButton} onPress={submitProfile}>
+                    <Pressable style={isSubmitting ? styles.highlightedSubmitButton : styles.submitButton} onPress={submitProfile}>
                         <Text style={styles.submitButtonText}>Submit</Text>
                     </Pressable>
                 </View>
-                <ScrollView contentContainerStyle={{ paddingBottom: 130 }}>
-                    <Text style={styles.headerText}>General Information</Text>
-                    <View style={{flexDirection: 'row'}}>
-                        <View style={styles.inputContainer}>
-                            <View>
-                                <TextInput value={teamName} style={styles.bigInput} placeholder={'Team Name'} onChangeText={value => setTeamName(value)}/>
-                            </View>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <TextInput value={teamNumber} style={styles.smallInput} placeholder={'Team Number'} keyboardType={'numeric'} onChangeText={value => setTeamNumber(value)}/>
-                            </View>
-                            <View style={{marginTop: 10}}>
-                                <Text style={styles.headerText}>Drivebase</Text>
-                                <Dropdown style={styles.dropdown} selectedTextStyle={{color: 'white', fontSize: 15 }} placeholderStyle={{color: 'white', fontSize: 15}} iconColor={'white'} value={drivebaseDropdown} data={drivebaseSelection} 
-                                onChange={(selection) => {
-                                    setDrivebaseDropdown(selection.value);
-                                    setDrivebase(selection.value);
-                                }}
-                                    labelField={'label'}
-                                    valueField={'value'}
-                                    placeholder={'Drivebase'}
-                                />
 
-                                {/*This ternary operator allows for manual input of drivebase if selected 'Other'*/}
-                                {drivebaseDropdown === 'Other' ? <TextInput style={styles.bigInput} placeholder={'Other Drivebase'} onChangeText={value => setDrivebase(value)}/> : <></>}
-                            </View>
-                            <View style={{marginTop: 10}}>
-                                <Text style={styles.headerText}>Intake</Text>
-                                <Dropdown style={styles.dropdown} selectedTextStyle={{color: 'white', fontSize: 15 }} placeholderStyle={{color: 'white', fontSize: 15}} iconColor={'white'} value={intakeDropdown} data={intakeSelection} onChange={(selection) => {setIntakeDropdown(selection.value); setIntake(selection.value)}} labelField={'label'} valueField={'value'} placeholder={'Intake'} />
+                {/* KeyboardAwareScrollView changes the content padding of the scrollview, causing the scrollview to have extra bottom padding while not distrubing any of the other components in the screen */}
+                <ScrollView>
+                    <KeyboardAwareScrollView extraHeight={150}>
+                        <Text style={styles.headerText}>General Information</Text>
+                        <View style={{flexDirection: 'row'}}>
+                            <View style={styles.inputContainer}>
+                                <View>
+                                    <TextInput value={teamName} style={styles.bigInput} placeholder={'Team Name'} onChangeText={value => setTeamName(value)}/>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                    <TextInput value={teamNumber} style={styles.smallInput} placeholder={'Team Number'} keyboardType={'numeric'} onChangeText={value => setTeamNumber(value)}/>
+                                </View>
+                                <View style={{marginTop: 10}}>
+                                    <Text style={styles.headerText}>Drivebase</Text>
+                                    <Dropdown style={styles.dropdown} selectedTextStyle={{color: 'white', fontSize: 15 }} placeholderStyle={{color: 'white', fontSize: 15}} iconColor={'white'} value={drivebaseDropdown} data={drivebaseSelection} 
+                                    onChange={(selection) => {
+                                        setDrivebaseDropdown(selection.value);
+                                        setDrivebase(selection.value);
+                                    }}
+                                        labelField={'label'}
+                                        valueField={'value'}
+                                        placeholder={'Drivebase'}
+                                    />
 
-                                {intakeDropdown === 'Other' ? <TextInput style={styles.bigInput} placeholder={'Other Intake'} onChangeText={value => setIntake(value)}/> : <></>}
-                            </View>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                                <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
-                                    <CheckBox disabled={false} value={autonomous} onValueChange={(newVal) => {setAutonomous(newVal)}} tintColors={{ true: '#E1584B', false: '' }}/>
-                                    <Text style={styles.subText}>Autonomous</Text>
+                                    {/*This ternary operator allows for manual input of drivebase if selected 'Other'*/}
+                                    {drivebaseDropdown === 'Other' ? <TextInput style={styles.bigInput} placeholder={'Other Drivebase'} onChangeText={value => setDrivebase(value)}/> : <></>}
+                                </View>
+                                <View style={{marginTop: 10}}>
+                                    <Text style={styles.headerText}>Intake</Text>
+                                    <Dropdown style={styles.dropdown} selectedTextStyle={{color: 'white', fontSize: 15 }} placeholderStyle={{color: 'white', fontSize: 15}} iconColor={'white'} value={intakeDropdown} data={intakeSelection} onChange={(selection) => {setIntakeDropdown(selection.value); setIntake(selection.value)}} labelField={'label'} valueField={'value'} placeholder={'Intake'} />
+
+                                    {intakeDropdown === 'Other' ? <TextInput style={styles.bigInput} placeholder={'Other Intake'} onChangeText={value => setIntake(value)}/> : <></>}
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                                    <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 20, gap: 5}}>
+                                        <CheckBox disabled={false} value={autonomous} onValueChange={(newVal) => setAutonomous(newVal)} tintColors={{ true: '#E1584B', false: '' }}/>
+                                        <Text style={styles.subText}>Autonomous</Text>
+                                    </View>
                                 </View>
                             </View>
+
                         </View>
-                        {/*This is where image would go*/}
-                    </View>
-                    <View style={{marginTop: 20}}>
-                        <Text style={styles.headerText}>Additional Details</Text>
-                        <TextInput value={additionalDetails} style={styles.detailInput} multiline={true} onChangeText={value => setAdditionalDetails(value)}/>
-                    </View>
+                        <View style={{marginTop: 20}}>
+                            <Text style={styles.headerText}>Additional Details</Text>
+                                <View>
+                                    <TextInput value={additionalDetails} style={styles.detailInput} multiline={true} onChangeText={value => setAdditionalDetails(value)}/>
+                                </View>
+                        </View>
+                    </KeyboardAwareScrollView>
                 </ScrollView>
             </View>
         </View>
@@ -169,6 +180,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#F27468',
         borderRadius: 5,
         borderColor: '#E1584B',
+        borderWidth: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    highlightedSubmitButton: {
+        width: 80,
+        height: 40,
+        backgroundColor: '#DD695E',
+        borderRadius: 5,
+        borderColor: '#CF4F43',
         borderWidth: 2,
         justifyContent: 'center',
         alignItems: 'center',
@@ -226,7 +247,6 @@ const styles = StyleSheet.create({
         width: '100%',
         fontSize: 15,
         minHeight: 100,
-        maxHeight: 200,
         marginTop: 10,
         paddingHorizontal: 10,
         borderColor: 'gray',

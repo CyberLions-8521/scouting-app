@@ -1,40 +1,23 @@
 import fillerImage from '../../assets/interface-icons/filler-image.png';
 
-import React, { useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, Animated } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
 export default function StatGlimpse({ name, teamNumber, driveBase, intake, isLoading }) {
-  const greyBoxWidth = useRef(new Animated.Value(0)).current;
 
-  // useEffect({
-  //   if (isLoading) {
-  //     Animated.timing(greyBoxWidth, {
-  //       toValue: 0,
-  //       duration: 0,
-  //       useNativeDriver: false,
-  //     }).start();
-  //   }
-  // }, [isLoading]);
   return (
     <View style={styles.scoutingDataGlimpsePiece}>
 
-        <View style={styles.metadata}>
-          {isLoading ? (
-            <Animated.View style={[styles.greyBox, {width: greyBoxWidth}]}/>
+      <View style={styles.metadata}>
+        <Text style={styles.headerSmaller}>{name} ({teamNumber})</Text>
 
-            ) : (
-
-            <>
-              <Text style={styles.headerSmaller}>{name} ({teamNumber})</Text>
-
-              <View style={styles.stats}>
-                  <Text style={styles.text}>Intake: {intake}</Text>
-                  <Text style={styles.text}>Drive Base: {driveBase}</Text>
-              </View>
-            </>
-          )}
+        <View style={styles.stats}>
+          <Text style={styles.text}>Intake: {intake}</Text>
+          <Text style={styles.text}>Drive Base: {driveBase}</Text>
         </View>
-          <Image style={styles.fillerImage} alt="filler image" source={fillerImage} />
+      </View>
+
+      {/* <Image style={styles.fillerImage} alt="filler image" source={fillerImage} /> */}
     </View>
   );
 }
@@ -61,7 +44,6 @@ const styles = StyleSheet.create({
     metadata: {
         gap: 10,
         maxWidth: '60%',
-        flexWrap: 'wrap',
     },
     fillerImage: {
       width: 120,

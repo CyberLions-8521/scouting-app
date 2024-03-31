@@ -1,5 +1,5 @@
 import React, { Suspense, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, RefreshControl } from 'react-native';
 import SelectProfileSkeleton from '../../components/record/SelectProfileSkeleton';
 import DisplayProfile from '../../components/record/DisplayProfile';
 
@@ -10,7 +10,7 @@ export default function SelectProfile({ navigation }) {
   const [profileData, setProfileData] = useState();
 
   useEffect(() => {
-    axios.get('http://10.0.2.2:3000/robotList')
+    axios.get('http://bckend.team8521.com/robotList')
     .then((response) => {
       setProfileData(response.data);
     })
@@ -18,6 +18,22 @@ export default function SelectProfile({ navigation }) {
       console.error(error);
     });
   }, []);
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setIsRefreshing(true);
+
+    axios.get('http://bckend.team8521.com/robotList')
+    .then((response) => {
+      setProfileData(response.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+    setIsRefreshing(false);
+  };
 
   return (
     <>
@@ -27,7 +43,11 @@ export default function SelectProfile({ navigation }) {
         <View style={styles.middlePiece}>
           <Text style={styles.header}>Select Robot to Scout</Text>
 
-          <ScrollView style={styles.viewSelection}>
+          <ScrollView style={styles.viewSelection}
+            refreshControl={
+              <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+            }
+          >
             <Suspense fallback={<SelectProfileSkeleton />}>
 
               {profileData?.map((robot) =>

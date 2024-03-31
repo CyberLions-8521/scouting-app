@@ -1,5 +1,5 @@
 import React, { Suspense, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, ScrollView, RefreshControl } from 'react-native';
 import DeleteRobotSkeleton from '../../components/settings/DeleteRobotSkeleton';
 import { Entypo } from '../..';
 import axios from 'axios';
@@ -11,7 +11,7 @@ export default function DeleteRobot({ navigation }) {
     const [robotList, setRobotList] = useState([]);
 
     useEffect(() => {
-      axios.get('http://10.0.2.2:3000/robotList') //imports data using axios
+      axios.get('http://bckend.team8521.com/robotList') //imports data using axios
         .then((response) => { //sets robotList to the data
           setRobotList(response.data);
         })
@@ -21,11 +21,27 @@ export default function DeleteRobot({ navigation }) {
 
     }, [setRobotList]); //Updates on page load and when setRobotList changes
 
+    const [isRefreshing, setIsRefreshing] = useState(false);
+
+    const onRefresh = () => {
+      setIsRefreshing(true);
+
+      axios.get('http://bckend.team8521.com/robotList')
+      .then((response) => {
+        setRobotList(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+      setIsRefreshing(false);
+    };
+
     const removeRobot = async (teamNumber) => {
 
       // remove robot from robotList and update list on screen
-      await axios.get(`http://10.0.2.2:3000/removeRobot/${teamNumber}`);
-        let newList = await axios.get('http://10.0.2.2:3000/robotList');
+      await axios.get(`http://bckend.team8521.com/removeRobot/${teamNumber}`);
+        let newList = await axios.get('http://bckend.team8521.com/robotList');
         setRobotList((prev) => newList.data);
     };
 
@@ -54,8 +70,12 @@ export default function DeleteRobot({ navigation }) {
 
           <Text style={styles.subText}>This action CANNOT BE UNDONE. DO NOT CLICK PROFILES YOU DO NOT WANT TO DELETE.</Text>
 
-          <ScrollView style={styles.robotListContainer}>
-            <Suspense fallback={ <DeleteRobotSkeleton/> }>
+          <ScrollView style={styles.robotListContainer}
+            refreshControl={
+              <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+            }
+          >
+            <Suspense fallback={ <DeleteRobotSkeleton /> }>
               {displayData}
             </Suspense>
           </ScrollView>
