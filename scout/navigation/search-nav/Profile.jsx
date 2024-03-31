@@ -48,7 +48,7 @@ export default function Profile({ route, navigation }) {
 
                 <ScrollView style={styles.matchSection}>
                     {robotProfileData?.matches?.map((match) =>
-                      <Pressable key={`${robotProfileData.profile.teamName} match ${match.matchNumber}`}
+                      <Pressable key={`${robotProfileData.profile.teamName} match ${match.matchNumber} matchType ${match.matchType}`}
                         onPress={() => navigation.navigate('MatchStats',
 
                           // route robot team number and specific match to display in the matchstats component

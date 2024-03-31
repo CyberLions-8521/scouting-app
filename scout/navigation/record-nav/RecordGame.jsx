@@ -4,6 +4,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { Entypo } from '../../index.js';
 import Counter from '../../components/record/Counter';
 import CheckRecord from '../../components/record/CheckRecord.jsx';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import axios from 'axios';
 
@@ -72,6 +73,7 @@ export default function RecordGame({ route, navigation }) {
                     <Entypo name={'chevron-left'} size={30} color={'#616161'} onPress={() => navigation.goBack()} />
                 </View>
                 <ScrollView contentContainerStyle={{ paddingBottom: 130 }}>
+                    <KeyboardAwareScrollView extraHeight={50}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                         <View style={{flexDirection: 'column'}}>
                             <Text style={styles.headerText}>{robot.profile.teamName}</Text>
@@ -122,6 +124,7 @@ export default function RecordGame({ route, navigation }) {
                         <Pressable style={styles.submitButton} onPress={submitMatch}>
                             <Text style={styles.submitButtonText}>Submit</Text>
                         </Pressable>
+                        </KeyboardAwareScrollView>
                     </ScrollView>
                 </View>
             </View>
